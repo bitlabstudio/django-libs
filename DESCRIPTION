@@ -1,0 +1,3 @@
+A collection of things that we re-use in every Django project, such as
+custom middlewares, testrunner, templates, templatetags, test mixins,
+test factories etc...

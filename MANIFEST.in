@@ -1,0 +1,7 @@
+include AUTHORS
+include LICENSE
+include DESCRIPTION
+include CHANGELOG.txt
+include README.md
+graft django_libs 
+exclude *.orig *.pyc

@@ -1,3 +1,10 @@
+=== 0.3 (ongoing development) ===
+
+
+=== 0.2 ===
+
+- Added custom testrunner (see docs/testrunner.rst)
+
 === 0.1 ===
 
-Initial commit
+- Initial commit

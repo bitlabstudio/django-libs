@@ -6,6 +6,9 @@ and applications.
 
 Here are some things that this project provides:
 
+* A custom testrunner that uses django-nose for discovering tests and
+  django-coverage for automatically generating a coverage report on each test
+  run
 * A factory for creating User objects
 
 Installation

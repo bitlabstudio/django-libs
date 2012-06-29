@@ -25,6 +25,8 @@ Usage
 See the docs folder for descriptions of the different tools this project
 provides.
 
+Or read the docs here: http://django-libs.readthedocs.org/en/latest/
+
 Contribute
 ----------
 

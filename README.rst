@@ -4,12 +4,29 @@ Django Libs
 This project aims to provide commonly used building blocks for Django projects
 and applications.
 
-Here are some things that this project provides:
+__Current features__:
 
 * A custom testrunner that uses django-nose for discovering tests and
   django-coverage for automatically generating a coverage report on each test
   run
 * A factory for creating User objects
+
+__Coming soon__:
+
+* View mixins to make class based views private for authenticated users
+* TestCase mixins to ease the process of testing views via ``self.client.get``
+* Extensive fabfile for checking pep8 compliancy, running tests, importing
+  and exporting the database and locale files, dumping and loading fixtures
+  etc.
+* Useful shell scripts to be installed on the server for various maintenance
+  and deployment tasks
+* Templatetag for displaying the currently selected main navigation item
+* Custom test_email_backend that sends emails to your own address no matter
+  who the recepient is
+* Smart urlpatterns to serve static and media files when you set DEBUG=False
+  locally, no need to setup Apache on your development machine
+* A set of templates for django-registration and some partials for rendering
+  forms compatible with Twitter Bootstrap.
 
 Installation
 ------------

@@ -13,6 +13,7 @@ Contents:
 
    testrunner
    factories
+   test_mixins
 
 
 

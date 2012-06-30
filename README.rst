@@ -10,11 +10,11 @@ __Current features__:
   django-coverage for automatically generating a coverage report on each test
   run
 * A factory for creating User objects
+* TestCase mixins to ease the process of testing views via ``self.client.get``
 
 __Coming soon__:
 
 * View mixins to make class based views private for authenticated users
-* TestCase mixins to ease the process of testing views via ``self.client.get``
 * Extensive fabfile for checking pep8 compliancy, running tests, importing
   and exporting the database and locale files, dumping and loading fixtures
   etc.

@@ -6,6 +6,11 @@
 Welcome to django-libs's documentation!
 =======================================
 
+django-libs provides useful tools and helpers that can be used in almost all
+Django applications. By putting all these into one central package we hope to
+ease our maintenance work across multiple Django projects and to reduce tedious
+(and erroneous) copy and paste orgies.
+
 Contents:
 
 .. toctree::

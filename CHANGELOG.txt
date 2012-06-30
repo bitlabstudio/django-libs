@@ -1,5 +1,9 @@
-=== 0.3 (ongoing development) ===
+=== 0.4 (ongoing development) ===
 
+=== 0.3 ===
+
+- Added test mixins to ease the process of writing integration tests with
+  self.client.get. See the docs for further explanation.
 
 === 0.2 ===
 

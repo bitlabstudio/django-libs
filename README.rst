@@ -4,7 +4,7 @@ Django Libs
 This project aims to provide commonly used building blocks for Django projects
 and applications.
 
-__Current features__:
+**Current features**:
 
 * A custom testrunner that uses django-nose for discovering tests and
   django-coverage for automatically generating a coverage report on each test
@@ -12,7 +12,7 @@ __Current features__:
 * A factory for creating User objects
 * TestCase mixins to ease the process of testing views via ``self.client.get``
 
-__Coming soon__:
+**Coming soon**:
 
 * View mixins to make class based views private for authenticated users
 * Extensive fabfile for checking pep8 compliancy, running tests, importing

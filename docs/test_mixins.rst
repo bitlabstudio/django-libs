@@ -36,7 +36,7 @@ Tutorial
 
 It is a good idea to write a test that calls your view before you actually
 write the view. And when you are at it, you might just as well test if a view
-that is protected by ``login_required``, actually _does_ require the user to
+that is protected by ``login_required``, actually *does* require the user to
 be logged in. Walking down that road, you might also just as well try to call
 the view and manipulate the URL so that this user tries to access another
 user's objects. And so on, and so forth...

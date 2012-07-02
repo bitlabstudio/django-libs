@@ -50,7 +50,7 @@ Let's assume that you have defined your ``urls.py`` like this::
     url(r'^invoice/(?P<pk>\d+)/', InvoiceDetailView.as_view(), name='invoice_detail'),
     ...
 
-In order to test such a view, you would create a
+In order to test such a view, you would create an
 ``integration_tests/views_tests.py`` file and create a test case for this
 view::
 
@@ -88,7 +88,7 @@ view actually needs some kwargs. A proper call would look like this::
         resp = self.client.get(reverse(self.get_view_name(), kwargs={
             'pk': invoice.pk}))
 
-This is can get annoying when you need to call the view many times because most 
+This can get annoying when you need to call the view many times because most 
 of the time you might call the view with the same kwargs. So let's centralize
 the kwargs as well::
 

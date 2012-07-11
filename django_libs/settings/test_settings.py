@@ -34,7 +34,7 @@ SOUTH_TESTS_MIGRATE = False
 TEST_RUNNER = 'django_libs.testrunner.NoseCoverageTestRunner'
 COVERAGE_MODULE_EXCLUDES = [
     'tests$', 'settings$', 'urls$', 'locale$',
-    'migrations', 'fixtures', 'admin$', 'django_extensions',
+    'migrations', 'fixtures', 'admin.py$', 'django_extensions',
 ]
 COVERAGE_MODULE_EXCLUDES += EXTERNAL_APPS
 COVERAGE_MODULE_EXCLUDES += DJANGO_APPS

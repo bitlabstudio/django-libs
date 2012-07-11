@@ -1,5 +1,9 @@
 === 0.4 (ongoing development) ===
 
+- Changed test_settings.py so that only 'admin.py$' files are excluded from
+  coverage. Before this change, an app with the name 'foobar_admin' would
+  be completely excluded from coverage, which is bad.
+
 === 0.3 ===
 
 - Added test mixins to ease the process of writing integration tests with

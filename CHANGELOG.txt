@@ -1,4 +1,6 @@
-=== 0.4 (ongoing development) ===
+=== 0.5 (ongoing development) ===
+
+=== 0.4 ===
 
 - Changed test_settings.py so that only 'admin.py$' files are excluded from
   coverage. Before this change, an app with the name 'foobar_admin' would

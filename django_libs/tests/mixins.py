@@ -16,7 +16,7 @@ class ViewTestMixin(object):
 
         If the view expects request.GET data to include this, you can override
         this method and return the proper data for the test."""
-        return None
+        return {}
 
     def get_view_name(self):
         """

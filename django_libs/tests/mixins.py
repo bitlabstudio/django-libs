@@ -113,7 +113,7 @@ class ViewTestMixin(object):
         """
         if not url:
             url = self.get_url()
-        resp = self.client.get(url, data=self.get_data())
+        resp = self.client.get(url)
         self.assertRedirects(resp,
             '{0}?next={1}'.format(reverse('auth_login'), url))
         return resp

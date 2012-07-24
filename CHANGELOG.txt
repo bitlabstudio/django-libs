@@ -1,4 +1,6 @@
-=== 0.5 (ongoing development) ===
+=== 0.6 (ongoing development) ===
+
+=== 0.5 ===
 
 - Added new method ``get_data_payload`` to ``ViewTestMixin`` that allows you
   to call all your views with given POST or GET data. (See docs)

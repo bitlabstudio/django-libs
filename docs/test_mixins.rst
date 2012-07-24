@@ -143,6 +143,31 @@ For this reason the ``ViewTestMixin`` provides a few convenience methods::
             self.should_redirect_to_login_view_when_anonymous()
             self.should_be_callable_when_authenticated(user)
 
+If your view expectes some data payload (either POST or GET data), then you
+can set ``self.data_payload`` in your test. If all your tests need the same
+data, you can override the ``get_data_payload()`` method::
+
+    class InvoiceDetailViewTestCase(ViewTestMixin, TestCase):
+        ...
+        def get_data_payload(self):
+            # If you stick to this implementation, you can still change the
+            # data payload for ``some`` of your tests.
+            if hasattr(self, 'data_payload'):
+                return self.data_payload
+            return {'foo': 'bar', }
+
+        def test_view(self):
+            user = UserFactory()
+            self.should_redirect_to_login_view_when_anonymous()
+
+            # Now your view will be called with the given data payload
+            self.should_be_callable_when_authenticated(user)
+
+            self.data_payload = {'foobar': 'barfoo'}
+            # Now you have changed the standard payload to be returned by
+            # ``get_data_payload``
+            self.should_be_callable_when_authenticated(user)
+
 Further methods are:
 
 * should_be_callable_when_anonymous

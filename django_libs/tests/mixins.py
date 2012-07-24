@@ -10,12 +10,14 @@ from django_libs.tests.factories import UserFactory
 class ViewTestMixin(object):
     """Mixin that provides commonly tested assertions."""
 
-    def get_data(self):
+    def get_data_payload(self):
         """
         Returns a dictionairy providing GET data payload sent to the view.
 
         If the view expects request.GET data to include this, you can override
         this method and return the proper data for the test."""
+        if hasattr(self, 'data_payload'):
+            return self.data_payload
         return {}
 
     def get_view_name(self):
@@ -128,7 +130,7 @@ class ViewTestMixin(object):
         """
         if not url:
             url = self.get_url()
-        resp = self.client.get(url, data=self.get_data())
+        resp = self.client.get(url, data=self.get_data_payload())
         self.assertEqual(resp.status_code, 200)
         return resp
 
@@ -144,7 +146,7 @@ class ViewTestMixin(object):
         if not url:
             url = self.get_url()
         self.login(user)
-        resp = self.client.get(url, data=self.get_data())
+        resp = self.client.get(url, data=self.get_data_payload())
         self.assertEqual(resp.status_code, 200)
         return resp
 
@@ -164,10 +166,10 @@ class ViewTestMixin(object):
             url = self.get_url()
         user_no_permissions = UserFactory()
         self.login(user_no_permissions)
-        resp = self.client.get(url, data=self.get_data())
+        resp = self.client.get(url, data=self.get_data_payload())
         self.assertRedirects(resp,
             '{0}?next={1}'.format(reverse('auth_login'), url))
 
         self.login(user)
-        resp = self.client.get(url, data=self.get_data())
+        resp = self.client.get(url, data=self.get_data_payload())
         self.assertEqual(resp.status_code, 200)

@@ -1,5 +1,8 @@
 === 0.5 (ongoing development) ===
 
+- Added new method ``get_data_payload`` to ``ViewTestMixin`` that allows you
+  to call all your views with given POST or GET data. (See docs)
+
 === 0.4 ===
 
 - Changed test_settings.py so that only 'admin.py$' files are excluded from

@@ -1,4 +1,6 @@
-=== 0.6 (ongoing development) ===
+=== 0.7 (ongoing development) ===
+
+=== 0.6 ===
 
 - Added JSONResponseMixin as suggested in the official Django docs
 

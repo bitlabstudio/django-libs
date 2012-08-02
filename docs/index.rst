@@ -19,7 +19,7 @@ Contents:
    testrunner
    factories
    test_mixins
-
+   views_mixins
 
 
 Indices and tables

@@ -1,5 +1,7 @@
 === 0.6 (ongoing development) ===
 
+- Added JSONResponseMixin as suggested in the official Django docs
+
 === 0.5 ===
 
 - Added new method ``get_data_payload`` to ``ViewTestMixin`` that allows you

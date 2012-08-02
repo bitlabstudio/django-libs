@@ -11,6 +11,7 @@ and applications.
   run
 * A factory for creating User objects
 * TestCase mixins to ease the process of testing views via ``self.client.get``
+* A JSONResponseMixin
 
 **Coming soon**:
 

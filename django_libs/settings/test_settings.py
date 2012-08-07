@@ -10,6 +10,8 @@ lines::
 """
 from myproject.settings import INSTALLED_APPS, EXTERNAL_APPS, DJANGO_APPS
 
+PREPEND_WWW = False
+
 INSTALLED_APPS.append('django_nose')
 
 

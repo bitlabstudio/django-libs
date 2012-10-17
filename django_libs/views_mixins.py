@@ -1,7 +1,26 @@
 """Useful mixins for class based views."""
 import json
 
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.views.generic import DetailView
+
+
+class DetailViewWithPostAction(DetailView):
+    """
+    Mixin to handle custom post actions in a DetailView.
+
+    """
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        for key in self.request.POST.keys():
+            if key.startswith('post_'):
+                getattr(self, key)()
+                break
+        success_url_handler = getattr(self, 'get_success_url_%s' % key, False)
+        if not success_url_handler:
+            success_url_handler = getattr(self, 'get_success_url')
+        success_url = success_url_handler()
+        return HttpResponseRedirect(success_url)
 
 
 class JSONResponseMixin(object):

@@ -12,7 +12,9 @@ and applications.
 * A factory for creating User objects
 * TestCase mixins to ease the process of testing views via ``self.client.get``
 * A JSONResponseMixin
+* A DetailView mixin which is able to handle custom post actions
 * Template tag to provide field's verbose names
+* Template tag for displaying the currently selected main navigation item
 
 **Coming soon**:
 
@@ -22,7 +24,6 @@ and applications.
   etc.
 * Useful shell scripts to be installed on the server for various maintenance
   and deployment tasks
-* Templatetag for displaying the currently selected main navigation item
 * Custom test_email_backend that sends emails to your own address no matter
   who the recepient is
 * Smart urlpatterns to serve static and media files when you set DEBUG=False

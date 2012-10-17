@@ -12,6 +12,7 @@ and applications.
 * A factory for creating User objects
 * TestCase mixins to ease the process of testing views via ``self.client.get``
 * A JSONResponseMixin
+* Template tag to provide field's verbose names
 
 **Coming soon**:
 

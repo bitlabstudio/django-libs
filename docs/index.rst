@@ -20,6 +20,7 @@ Contents:
    factories
    test_mixins
    views_mixins
+   libs_tags
 
 
 Indices and tables

@@ -7,7 +7,16 @@ from django.views.generic import DetailView
 
 class DetailViewWithPostAction(DetailView):
     """
-    Mixin to handle custom post actions in a DetailView.
+    Generic class based view to handle custom post actions in a DetailView.
+
+    When you derive from this class, your buttons need to be called
+    `post_actionname` and you have to implement action handlers with the
+    name `post_actionname` and url retrievers with the name
+    `get_success_url_post_actionname`.
+
+    If all actions should have the same success url, you can also implement
+    `get_success_url`, which will be used as a fallback in case that no
+    specific url retrieve has been implemented.
 
     """
     def post(self, request, *args, **kwargs):

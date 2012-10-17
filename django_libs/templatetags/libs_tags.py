@@ -27,6 +27,12 @@ def navactive(request, url, exact=0):
     """
     Returns ``active`` if the given URL is in the url path, otherwise ''.
 
+    Usage::
+
+        {% load libs_tags %}
+        ...
+        <li class="{% navactive request "/news/" exact=1 %}">
+
     :param request: A request instance.
     :param url: A string representing a part of the URL that needs to exist
       in order for this method to return ``True``.

@@ -12,7 +12,8 @@ and applications.
 * A factory for creating User objects
 * TestCase mixins to ease the process of testing views via ``self.client.get``
 * A JSONResponseMixin
-* New generic class based view DetailViewWithPostAction which is able to handle custom post actions.
+* New generic class based view DetailViewWithPostAction which is able to
+  handle custom post actions.
 * Template filter to provide field's verbose names
 * Template tag for displaying the currently selected main navigation item
 

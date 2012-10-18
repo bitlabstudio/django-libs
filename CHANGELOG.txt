@@ -1,5 +1,8 @@
 === 0.8 (ongoing development) ===
 
+- Added template tag ``navactive`` and template filter ``get_verbose``.
+- Added DetailViewWithPostAction to handle custom post actions.
+
 === 0.7 ===
 
 - Set PREPEND_WWW to False in test_settings.

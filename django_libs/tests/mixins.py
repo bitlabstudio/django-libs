@@ -10,6 +10,23 @@ from django_libs.tests.factories import UserFactory
 class ViewTestMixin(object):
     """Mixin that provides commonly tested assertions."""
 
+    def assert404(self, message=None, kwargs=None):
+        """
+        A shortcut for a common assertion on a 404 status code.
+
+        :message: The message to display if the assertion fails
+        :kwargs: View kwargs can be overridden. This is e.g. necessary if
+            you make an assert404 for a deleted object, where the object.pk
+            was assigned in get_view_kwargs.
+
+        """
+        resp = self.client.get(self.get_url(
+            view_kwargs=kwargs or self.get_view_kwargs()))
+        self.assertEqual(resp.status_code, 404, msg=(
+            message or
+            'If called with the wrong data, the view should not be callable'
+        ))
+
     def get_data_payload(self):
         """
         Returns a dictionairy providing GET data payload sent to the view.

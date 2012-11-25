@@ -10,13 +10,13 @@ from django_libs.tests.factories import UserFactory
 class ViewTestMixin(object):
     """Mixin that provides commonly tested assertions."""
 
-    def assert404(self, message=None, kwargs=None):
+    def is_not_callable(self, message=None, kwargs=None):
         """
         A shortcut for a common assertion on a 404 status code.
 
         :message: The message to display if the assertion fails
         :kwargs: View kwargs can be overridden. This is e.g. necessary if
-            you make an assert404 for a deleted object, where the object.pk
+            you call is_not_callable for a deleted object, where the object.pk
             was assigned in get_view_kwargs.
 
         """

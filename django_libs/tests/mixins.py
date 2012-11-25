@@ -10,7 +10,47 @@ from django_libs.tests.factories import UserFactory
 class ViewTestMixin(object):
     """Mixin that provides commonly tested assertions."""
 
-    def is_not_callable(self, message=None, kwargs=None):
+    def is_callable(self, method='get', data=None, message=None, kwargs=None,
+                    user=None, anonymous=False):
+        """
+        A shortcut for an assertion on status code 200 or 302.
+
+        :method: 'get' or 'post'
+        :data: Post data or get data payload.
+        :message: Lets you override the assertion message.
+        :kwargs: Lets you override the view kwargs.
+        :user: If user argument is given, it logs it in first.
+        :anonymous: If True, it logs out the user first. Default is False
+
+        If no arguments are given, it makes the assertion according to the
+        current test situation.
+
+        """
+        if user:
+            self.login(user)
+        if anonymous:
+            self.client.logout()
+        if method.lower() == 'get':
+            resp = self.client.get(
+                self.get_url(kwargs=kwargs or self.get_view_kwargs()),
+                data=data or self.get_data_payload()
+            )
+            self.assertEqual(resp.status_code, 200, msg=(
+                message or
+                'If called with the correct data, the view should be callable.'
+            ))
+        if method.lower() == 'post':
+            resp = self.client.post(
+                self.get_url(kwargs=kwargs or self.get_view_kwargs()),
+                data=data or self.get_data_payload()
+            )
+            self.assertEqual(resp.status_code, 302, msg=(
+                message or
+                'If posted with the correct data, the view should be callable.'
+            ))
+
+    def is_not_callable(self, message=None, kwargs=None, user=None,
+                        anonymous=False):
         """
         A shortcut for a common assertion on a 404 status code.
 
@@ -18,8 +58,17 @@ class ViewTestMixin(object):
         :kwargs: View kwargs can be overridden. This is e.g. necessary if
             you call is_not_callable for a deleted object, where the object.pk
             was assigned in get_view_kwargs.
+        :user: If a user is given, it logs it in first.
+        :anonymous: If True, it logs out the user first. Default is False
+
+        If no arguments are given, it makes the assertion according to the
+        current test situation.
 
         """
+        if user:
+            self.login(user)
+        if anonymous:
+            self.client.logout()
         resp = self.client.get(self.get_url(
             view_kwargs=kwargs or self.get_view_kwargs()))
         self.assertEqual(resp.status_code, 404, msg=(
@@ -32,7 +81,9 @@ class ViewTestMixin(object):
         Returns a dictionairy providing GET data payload sent to the view.
 
         If the view expects request.GET data to include this, you can override
-        this method and return the proper data for the test."""
+        this method and return the proper data for the test.
+
+        """
         if hasattr(self, 'data_payload'):
             return self.data_payload
         return {}

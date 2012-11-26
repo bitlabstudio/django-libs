@@ -32,7 +32,7 @@ class ViewTestMixin(object):
             self.client.logout()
         if method.lower() == 'get':
             resp = self.client.get(
-                self.get_url(kwargs=kwargs or self.get_view_kwargs()),
+                self.get_url(view_kwargs=kwargs or self.get_view_kwargs()),
                 data=data or self.get_data_payload()
             )
             self.assertEqual(resp.status_code, 200, msg=(

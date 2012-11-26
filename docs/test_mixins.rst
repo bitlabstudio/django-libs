@@ -168,7 +168,57 @@ data, you can override the ``get_data_payload()`` method::
             # ``get_data_payload``
             self.should_be_callable_when_authenticated(user)
 
-Further methods are:
+
+"is_callable" and "is_not_callable"
+-----------------------------------
+
+If a view becomes more complex, you might end up with rather many assertions
+for many different situations. If you take all these cases into account when 
+testing, which you probably should, you will write a lot of::
+
+    def test_view(self):
+        # case 1
+        resp = self.client.get(self.get_url())
+        self.assertEqual(resp.status_code, 200)
+        # case 2
+        resp = ...
+        self.assertEqual(...)
+        # case 3
+        ...
+
+``is_callable`` and ``is_not_callable`` let you quickly assign different values
+to customize your actual assertion case in one method call.
+``is_callable`` makes an assertion on status code 200 or 302 based on what
+method ('post' or 'get') you provide.
+``is_not_callable`` makes an assertion on status code 404.
+
+
++---------------+-----------------------------------------------------------+
+| Argument      | Definition                                                |
++===============+===========================================================+
+| ``method``    | (only ``is_callable``)                                    |
+|               | String that defines if either 'post' or 'get' is used     |
++---------------+-----------------------------------------------------------+
+| ``data``      | dictionary with GET data payload or POST data. If not     |
+|               | provided it calls ``self.get_data_payload()`` instead.    |
++---------------+-----------------------------------------------------------+
+| ``kwargs``    | dictionary to overwrite view kwargs. If not provided, it  |
+|               | calls ``self.get_view_kwargs()`` instead.                 |
++---------------+-----------------------------------------------------------+
+| ``user``      | Assign a user instance to log this user in first. As in   |
+|               | ``self.should_be_callable_when_authenticated()`` the      |
+|               | password is expected to be 'test123'.                     |
++---------------+-----------------------------------------------------------+
+| ``anonymous`` | If this is assigned ``True``, the user is logged out      |
+|               | before the assertion. So basically you test with an       |
+|               | anonymous user. Default is ``False``.                     |
++---------------+-----------------------------------------------------------+
+
+You can also define no arguments to test according to your current situation.
+Then still, it is a handy shortcut.
+
+
+**Further methods are:**
 
 * should_be_callable_when_anonymous
 * should_be_callable_when_has_correct_permissions

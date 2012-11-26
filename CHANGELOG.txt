@@ -1,5 +1,7 @@
 === 0.9 (ongoing development) ===
 
+- Added ``is_callable`` and ``is_not_callable`` to ViewTestMixin.
+
 === 0.8 ===
 
 - Added template tag ``navactive`` and template filter ``get_verbose``.

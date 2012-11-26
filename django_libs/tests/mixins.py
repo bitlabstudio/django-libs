@@ -38,16 +38,16 @@ class ViewTestMixin(object):
             self.assertEqual(resp.status_code, 200, msg=(
                 message or
                 'If called with the correct data, the view should be callable.'
-            ))
+                ' Got status code of {0}'.format(resp.status_code)))
         if method.lower() == 'post':
             resp = self.client.post(
-                self.get_url(kwargs=kwargs or self.get_view_kwargs()),
+                self.get_url(view_kwargs=kwargs or self.get_view_kwargs()),
                 data=data or self.get_data_payload()
             )
             self.assertEqual(resp.status_code, 302, msg=(
                 message or
                 'If posted with the correct data, the view should be callable.'
-            ))
+                ' Got status code of {0}'.format(resp.status_code)))
 
     def is_not_callable(self, message=None, data=None, kwargs=None, user=None,
                         anonymous=False):
@@ -77,7 +77,7 @@ class ViewTestMixin(object):
         self.assertEqual(resp.status_code, 404, msg=(
             message or
             'If called with the wrong data, the view should not be callable'
-        ))
+            ' Got status code of {0}'.format(resp.status_code)))
 
     def get_data_payload(self):
         """

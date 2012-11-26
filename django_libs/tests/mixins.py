@@ -49,12 +49,13 @@ class ViewTestMixin(object):
                 'If posted with the correct data, the view should be callable.'
             ))
 
-    def is_not_callable(self, message=None, kwargs=None, user=None,
+    def is_not_callable(self, message=None, data=None, kwargs=None, user=None,
                         anonymous=False):
         """
         A shortcut for a common assertion on a 404 status code.
 
         :message: The message to display if the assertion fails
+        :data: Get data payload.
         :kwargs: View kwargs can be overridden. This is e.g. necessary if
             you call is_not_callable for a deleted object, where the object.pk
             was assigned in get_view_kwargs.
@@ -69,8 +70,10 @@ class ViewTestMixin(object):
             self.login(user)
         if anonymous:
             self.client.logout()
-        resp = self.client.get(self.get_url(
-            view_kwargs=kwargs or self.get_view_kwargs()))
+        resp = self.client.get(
+            self.get_url(view_kwargs=kwargs or self.get_view_kwargs()),
+            data=data or self.get_data_payload()
+        )
         self.assertEqual(resp.status_code, 404, msg=(
             message or
             'If called with the wrong data, the view should not be callable'

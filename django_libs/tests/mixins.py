@@ -48,6 +48,7 @@ class ViewTestMixin(object):
                 message or
                 'If posted with the correct data, the view should be callable.'
                 ' Got status code of {0}'.format(resp.status_code)))
+        return resp
 
     def is_not_callable(self, message=None, data=None, kwargs=None, user=None,
                         anonymous=False):
@@ -78,6 +79,7 @@ class ViewTestMixin(object):
             message or
             'If called with the wrong data, the view should not be callable'
             ' Got status code of {0}'.format(resp.status_code)))
+        return resp
 
     def get_data_payload(self):
         """

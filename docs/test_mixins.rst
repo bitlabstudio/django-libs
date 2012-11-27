@@ -196,8 +196,7 @@ method ('post' or 'get') you provide.
 +---------------+-----------------------------------------------------------+
 | Argument      | Definition                                                |
 +===============+===========================================================+
-| ``method``    | (only ``is_callable``)                                    |
-|               | String that defines if either 'post' or 'get' is used     |
+| ``method``    | String that defines if either 'post' or 'get' is used.    |
 +---------------+-----------------------------------------------------------+
 | ``data``      | dictionary with GET data payload or POST data. If not     |
 |               | provided it calls ``self.get_data_payload()`` instead.    |

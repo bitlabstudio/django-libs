@@ -15,7 +15,7 @@ class ViewTestMixin(object):
         """
         A shortcut for an assertion on status code 200 or 302.
 
-        :method: 'get' or 'post'
+        :method: 'get' or 'post'. Default is 'get'.
         :data: Post data or get data payload.
         :message: Lets you override the assertion message.
         :kwargs: Lets you override the view kwargs.
@@ -39,7 +39,7 @@ class ViewTestMixin(object):
                 message or
                 'If called with the correct data, the view should be callable.'
                 ' Got status code of {0}'.format(resp.status_code)))
-        if method.lower() == 'post':
+        elif method.lower() == 'post':
             resp = self.client.post(
                 self.get_url(view_kwargs=kwargs or self.get_view_kwargs()),
                 data=data or self.get_data_payload()
@@ -48,15 +48,18 @@ class ViewTestMixin(object):
                 message or
                 'If posted with the correct data, the view should be callable.'
                 ' Got status code of {0}'.format(resp.status_code)))
+        else:
+            raise Exception('Not a valid request method: "{0}"'.format(method))
         return resp
 
-    def is_not_callable(self, message=None, data=None, kwargs=None, user=None,
-                        anonymous=False):
+    def is_not_callable(self, method='get', message=None, data=None,
+                        kwargs=None, user=None, anonymous=False):
         """
         A shortcut for a common assertion on a 404 status code.
 
+        :method: 'get' or 'post'. Default is 'get'.
         :message: The message to display if the assertion fails
-        :data: Get data payload.
+        :data: Get data payload or post data.
         :kwargs: View kwargs can be overridden. This is e.g. necessary if
             you call is_not_callable for a deleted object, where the object.pk
             was assigned in get_view_kwargs.
@@ -71,10 +74,18 @@ class ViewTestMixin(object):
             self.login(user)
         if anonymous:
             self.client.logout()
-        resp = self.client.get(
-            self.get_url(view_kwargs=kwargs or self.get_view_kwargs()),
-            data=data or self.get_data_payload()
-        )
+        if method.lower() == 'get':
+            resp = self.client.get(
+                self.get_url(view_kwargs=kwargs or self.get_view_kwargs()),
+                data=data or self.get_data_payload()
+            )
+        elif method.lower() == 'post':
+            resp = self.client.post(
+                self.get_url(view_kwargs=kwargs or self.get_view_kwargs()),
+                data=data or self.get_data_payload()
+            )
+        else:
+            raise Exception('Not a valid request method: "{0}"'.format(method))
         self.assertEqual(resp.status_code, 404, msg=(
             message or
             'If called with the wrong data, the view should not be callable'

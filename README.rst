@@ -16,6 +16,9 @@ and applications.
   handle custom post actions.
 * Template filter to provide field's verbose names
 * Template tag for displaying the currently selected main navigation item
+* Custom test_email_backend that sends emails to your own address no matter
+  who the recepient is
+* Functions to test callable or non-callable views
 
 **Coming soon**:
 
@@ -25,8 +28,6 @@ and applications.
   etc.
 * Useful shell scripts to be installed on the server for various maintenance
   and deployment tasks
-* Custom test_email_backend that sends emails to your own address no matter
-  who the recepient is
 * Smart urlpatterns to serve static and media files when you set DEBUG=False
   locally, no need to setup Apache on your development machine
 * A set of templates for django-registration and some partials for rendering

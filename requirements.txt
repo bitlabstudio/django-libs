@@ -4,6 +4,7 @@
 # Packages essential to this app. Needed by anyone who wants to use this app.
 # ===========================================================================
 Sphinx
+django-mailer
 factory_boy
 
 

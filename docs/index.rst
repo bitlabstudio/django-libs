@@ -16,11 +16,13 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   testrunner
    factories
-   test_mixins
-   views_mixins
    libs_tags
+   test_email_backend
+   test_mixins
+   testrunner
+   utils_email
+   views_mixins
 
 
 Indices and tables

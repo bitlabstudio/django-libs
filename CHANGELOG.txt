@@ -1,6 +1,8 @@
 === 0.9 (ongoing development) ===
 
 - Added ``is_callable`` and ``is_not_callable`` to ViewTestMixin.
+- Added test_email_backend.py.
+- Added ``send_email`` to utils_email.py.
 
 === 0.8 ===
 

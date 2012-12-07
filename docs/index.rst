@@ -23,6 +23,7 @@ Contents:
    testrunner
    utils_email
    views_mixins
+   views
 
 
 Indices and tables

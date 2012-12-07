@@ -19,6 +19,7 @@ and applications.
 * Custom test_email_backend that sends emails to your own address no matter
   who the recepient is
 * Functions to test callable or non-callable views
+* Dummy views to test your 404 and 500 templates
 
 **Coming soon**:
 

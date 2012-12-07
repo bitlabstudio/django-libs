@@ -3,6 +3,7 @@
 - Added ``is_callable`` and ``is_not_callable`` to ViewTestMixin.
 - Added test_email_backend.py.
 - Added ``send_email`` to utils_email.py.
+- Added test views for testing 404 and 500 templates.
 
 === 0.8 ===
 

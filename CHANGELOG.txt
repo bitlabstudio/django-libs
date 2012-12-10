@@ -1,4 +1,6 @@
-=== 0.10 (ongoing development) ===
+=== 0.11 (ongoing development) ===
+
+=== 0.10 ===
 
 - Added AjaxResponseMixin
 - Added AjaxRedirectMiddleware

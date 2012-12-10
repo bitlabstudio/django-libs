@@ -1,8 +1,34 @@
 """Useful mixins for class based views."""
 import json
+import os
 
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic import DetailView
+
+
+class AjaxResponseMixin(object):
+    """
+    A mixin that prepends `ajax_` to the template name when it is an ajax call.
+
+    This gives you the chance to return partial templates when it is an ajax
+    call, so you can render the output inside of a modal, for example.
+
+    """
+    ajax_template_prefix = 'ajax_'
+
+    def get_template_names(self):
+        names = super(AjaxResponseMixin, self).get_template_names()
+        if self.request.is_ajax():
+            count = 0
+            for name in names:
+                filename_split = list(os.path.split(name))
+                old_filename = filename_split[-1]
+                new_filename = '{0}{1}'.format(
+                    self.ajax_template_prefix, old_filename)
+                filename_split[-1] = new_filename
+                names[count] = os.path.join(*filename_split)
+                count += 1
+        return names
 
 
 class DetailViewWithPostAction(DetailView):

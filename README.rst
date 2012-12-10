@@ -20,6 +20,9 @@ and applications.
   who the recepient is
 * Functions to test callable or non-callable views
 * Dummy views to test your 404 and 500 templates
+* AjaxRedirectMiddleware for jQuery AJAX calls that return 301 redirects
+* AjaxResponseMixin for views that can return their normal template or a
+  partial template when it is an ajax call
 
 **Coming soon**:
 

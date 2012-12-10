@@ -24,6 +24,7 @@ Contents:
    utils_email
    views_mixins
    views
+   middlewares
 
 
 Indices and tables

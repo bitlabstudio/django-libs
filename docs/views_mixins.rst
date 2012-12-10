@@ -1,6 +1,27 @@
 Views Mixins
 ===========
 
+AjaxResponseMixin
+-----------------
+
+Use this with views that can be called normally or from an AJAX call. Usually,
+when you call a view normally, you will have ``{% extends "base.html" %}`` at
+the beginning of the view's template. However, when you call the same view
+from an AJAX call you just want to update a partial region of your page,
+therefore the view needs to return that partial template only.
+
+You can use this by inheriting the class::
+
+    from django_libs.views_mixins import AjaxResponseMixin
+
+    class MyView(AjaxResponseMixin, CreateView):
+        ajax_template_prefix = 'partials/ajax_'
+
+The attribute ``ajax_template_prefix`` defaults to ``ajax_``. If you would
+like to store your app's ajax templates in a different way, for example in
+a subfolder called ``partials``, you can override that attribute in your
+class.
+
 DetailViewWithPostAction
 ------------------------
 

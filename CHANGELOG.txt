@@ -1,5 +1,8 @@
 === 0.10 (ongoing development) ===
 
+- Added AjaxResponseMixin
+- Added AjaxRedirectMiddleware
+
 === 0.9 ===
 
 - Added ``is_callable`` and ``is_not_callable`` to ViewTestMixin.

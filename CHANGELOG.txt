@@ -1,4 +1,6 @@
-=== 0.11 (ongoing development) ===
+=== 0.12 (ongoing development) ===
+
+=== 0.11 ===
 
 - Added RapidPrototypingView which allows you to render any template by typing
   it's path into the URL.

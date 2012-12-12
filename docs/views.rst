@@ -4,6 +4,8 @@ Views
 Http404TestView & Http500TestView
 ---------------------------------
 
+Warning: These views are deprecated. Use the ``RapidPrototypingView`` instead.
+
 Simple template views that use the ``404.html`` and ``500.html`` template.
 Just create this template in your project's `templates`` folder and add the
 views to your ``urls.py``::
@@ -15,3 +17,28 @@ views to your ``urls.py``::
         url(r'^500/$', Http500TestView.as_view()),
         ...
     )
+
+
+RapidPrototypingView
+--------------------
+
+This view allows you to render any template even when there is no URL hooked
+up and no view implemented. This allows your designers to quickly start writing 
+HTML templates even before your developers have created views for those
+templates.
+
+In order to use this view, hook it up in your ``urls.py``::
+
+    from django_libs.views import RapidPrototypingView
+    urlpatterns += patterns(
+        '',
+        url(r'^prototype/(?P<template_path>.*)$',
+            RapidPrototypingView.as_view(),
+            name='prototype')
+        ...
+    )
+
+Now you can call any template by adding it's path to the URL of the view::
+
+    localhost:8000/prototype/404.html
+    localhost:8000/prototype/cms/partials/main_menu.html

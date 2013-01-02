@@ -25,6 +25,7 @@ Contents:
    views_mixins
    views
    middlewares
+   context_processors
 
 
 Indices and tables

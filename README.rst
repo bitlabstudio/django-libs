@@ -25,6 +25,8 @@ and applications.
 * AjaxRedirectMiddleware for jQuery AJAX calls that return 301 redirects
 * AjaxResponseMixin for views that can return their normal template or a
   partial template when it is an ajax call
+* A context processor to add your analytics tracking code to your template
+  context.
 
 **Coming soon**:
 

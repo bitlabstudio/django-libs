@@ -1,4 +1,8 @@
-=== 0.12 (ongoing development) ===
+=== 0.13 (ongoing development) ===
+
+=== 0.12 ===
+
+- Added analytics context processor.
 
 === 0.11 ===
 

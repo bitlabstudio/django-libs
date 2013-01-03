@@ -26,6 +26,7 @@ Contents:
    views
    middlewares
    context_processors
+   decorators
 
 
 Indices and tables

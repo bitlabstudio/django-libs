@@ -27,6 +27,8 @@ and applications.
   partial template when it is an ajax call
 * A context processor to add your analytics tracking code to your template
   context.
+* A decorator ``lockfile`` for wrapping ``handle`` methods of admin commands
+  so that they never run twice at the same time.
 
 **Coming soon**:
 

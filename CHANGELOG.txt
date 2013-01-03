@@ -1,4 +1,6 @@
-=== 0.13 (ongoing development) ===
+=== 0.13 (ongoing) ===
+
+- Added lockfile decorator
 
 === 0.12 ===
 

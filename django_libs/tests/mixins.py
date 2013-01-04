@@ -55,11 +55,7 @@ class ViewTestMixin(object):
             raise Exception('Not a valid request method: "{0}"'.format(method))
 
         if and_redirects_to:
-            if '/' in and_redirects_to:
-                redirect_url = and_redirects_to
-            else:
-                redirect_url = reverse(and_redirects_to)
-            self.assertRedirects(resp, redirect_url, msg_prefix=(
+            self.assertRedirects(resp, and_redirects_to, msg_prefix=(
                 'The view did not redirect as expected.'))
         return resp
 

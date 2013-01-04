@@ -193,28 +193,27 @@ method ('post' or 'get') you provide.
 ``is_not_callable`` makes an assertion on status code 404.
 
 
-+---------------+-----------------------------------------------------------+
-| Argument      | Definition                                                |
-+===============+===========================================================+
-| ``method``    | String that defines if either 'post' or 'get' is used.    |
-+---------------+-----------------------------------------------------------+
-| ``data``      | dictionary with GET data payload or POST data. If not     |
-|               | provided it calls ``self.get_data_payload()`` instead.    |
-+---------------+-----------------------------------------------------------+
-| ``kwargs``    | dictionary to overwrite view kwargs. If not provided, it  |
-|               | calls ``self.get_view_kwargs()`` instead.                 |
-+---------------+-----------------------------------------------------------+
-| ``user``      | Assign a user instance to log this user in first. As in   |
-|               | ``self.should_be_callable_when_authenticated()`` the      |
-|               | password is expected to be 'test123'.                     |
-+---------------+-----------------------------------------------------------+
-| ``anonymous`` | If this is assigned ``True``, the user is logged out      |
-|               | before the assertion. So basically you test with an       |
-|               | anonymous user. Default is ``False``.                     |
-+---------------+-----------------------------------------------------------+
-| ``and_redirects_to`` | If set, it performs an ``assertRedirects``         |
-|                      | assertion.                                         |
-+---------------+-----------------------------------------------------------+
++----------------------+-----------------------------------------------------------+
+| Argument             | Definition                                                |
++======================+===========================================================+
+| ``method``           | String that defines if either 'post' or 'get' is used.    |
++----------------------+-----------------------------------------------------------+
+| ``data``             | dictionary with GET data payload or POST data. If not     |
+|                      | provided it calls ``self.get_data_payload()`` instead.    |
++----------------------+-----------------------------------------------------------+
+| ``kwargs``           | dictionary to overwrite view kwargs. If not provided, it  |
+|                      | calls ``self.get_view_kwargs()`` instead.                 |
++----------------------+-----------------------------------------------------------+
+| ``user``             | Assign a user instance to log this user in first. As in   |
+|                      | ``self.should_be_callable_when_authenticated()`` the      |
+|                      | password is expected to be 'test123'.                     |
++----------------------+-----------------------------------------------------------+
+| ``anonymous``        | If this is assigned ``True``, the user is logged out      |
+|                      | before the assertion. So basically you test with an       |
+|                      | anonymous user. Default is ``False``.                     |
++----------------------+-----------------------------------------------------------+
+| ``and_redirects_to`` | If set, it performs an ``assertRedirects`` assertion.     |
++----------------------+-----------------------------------------------------------+
 
 You can also define no arguments to test according to your current situation.
 Then still, it is a handy shortcut.

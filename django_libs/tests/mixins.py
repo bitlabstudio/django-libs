@@ -11,7 +11,7 @@ class ViewTestMixin(object):
     """Mixin that provides commonly tested assertions."""
 
     def is_callable(self, method='get', data=None, message=None, kwargs=None,
-                    user=None, anonymous=False):
+                    user=None, anonymous=False, and_redirects_to=None):
         """
         A shortcut for an assertion on status code 200 or 302.
 
@@ -21,6 +21,9 @@ class ViewTestMixin(object):
         :kwargs: Lets you override the view kwargs.
         :user: If user argument is given, it logs it in first.
         :anonymous: If True, it logs out the user first. Default is False
+        :and_redirects_to: If set, it additionally makes an assertRedirect on
+            whatever string is given. This can be either a relative url or a
+            name.
 
         If no arguments are given, it makes the assertion according to the
         current test situation.
@@ -35,7 +38,7 @@ class ViewTestMixin(object):
                 self.get_url(view_kwargs=kwargs or self.get_view_kwargs()),
                 data=data or self.get_data_payload()
             )
-            self.assertEqual(resp.status_code, 200, msg=(
+            self.assertTrue(resp.status_code in [200, 302], msg=(
                 message or
                 'If called with the correct data, the view should be callable.'
                 ' Got status code of {0}'.format(resp.status_code)))
@@ -44,12 +47,20 @@ class ViewTestMixin(object):
                 self.get_url(view_kwargs=kwargs or self.get_view_kwargs()),
                 data=data or self.get_data_payload()
             )
-            self.assertEqual(resp.status_code, 302, msg=(
+            self.assertTrue(resp.status_code in [200, 302], msg=(
                 message or
                 'If posted with the correct data, the view should be callable.'
                 ' Got status code of {0}'.format(resp.status_code)))
         else:
             raise Exception('Not a valid request method: "{0}"'.format(method))
+
+        if and_redirects_to:
+            if '/' in and_redirects_to:
+                redirect_url = and_redirects_to
+            else:
+                redirect_url = reverse(and_redirects_to)
+            self.assertRedirects(resp, redirect_url, msg_prefix=(
+                'The view did not redirect as expected.'))
         return resp
 
     def is_not_callable(self, method='get', message=None, data=None,

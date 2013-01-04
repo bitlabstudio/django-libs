@@ -29,6 +29,8 @@ and applications.
   context.
 * A decorator ``lockfile`` for wrapping ``handle`` methods of admin commands
   so that they never run twice at the same time.
+* A ``getCookie`` js function that can be used to retrieve the csrf token
+  for AJAX POST requests.
 
 **Coming soon**:
 

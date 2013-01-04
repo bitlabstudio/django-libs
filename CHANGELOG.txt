@@ -1,5 +1,8 @@
 === 0.14 (ongoing) ===
 
+- Added ``getCookie`` js function that can be used to retrieve the csrf token
+  for AJAX POST requests.
+
 === 0.13 ===
 
 - Added lockfile decorator

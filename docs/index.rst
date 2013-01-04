@@ -27,6 +27,7 @@ Contents:
    middlewares
    context_processors
    decorators
+   javascript 
 
 
 Indices and tables

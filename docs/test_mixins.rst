@@ -212,6 +212,9 @@ method ('post' or 'get') you provide.
 |               | before the assertion. So basically you test with an       |
 |               | anonymous user. Default is ``False``.                     |
 +---------------+-----------------------------------------------------------+
+| ``and_redirects_to`` | If set, it performs an ``assertRedirects``         |
+|                      | assertion.                                         |
++---------------+-----------------------------------------------------------+
 
 You can also define no arguments to test according to your current situation.
 Then still, it is a handy shortcut.

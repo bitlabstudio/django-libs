@@ -1,4 +1,6 @@
-=== 0.14 (ongoing) ===
+=== 0.15 (ongoing) ===
+
+=== 0.14 ===
 
 - Added ``getCookie`` js function that can be used to retrieve the csrf token
   for AJAX POST requests.

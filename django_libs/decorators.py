@@ -24,8 +24,10 @@ def lockfile(lockfile_name, lock_wait_timeout=-1):
                 return
             except LockTimeout:
                 return
-            result = func(*args, **kwargs)
-            lock.release()
+            try:
+                result = func(*args, **kwargs)
+            finally:
+                lock.release()
             return result
 
         return wrapper

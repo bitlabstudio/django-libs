@@ -208,7 +208,7 @@ class ViewTestMixin(object):
             url = self.get_url()
         resp = self.client.get(url)
         self.assertRedirects(resp,
-            '{0}?next={1}'.format(reverse('auth_login'), url))
+                             '{0}?next={1}'.format(reverse('auth_login'), url))
         return resp
 
     def should_be_callable_when_anonymous(self, url=None):
@@ -259,7 +259,7 @@ class ViewTestMixin(object):
         self.login(user_no_permissions)
         resp = self.client.get(url, data=self.get_data_payload())
         self.assertRedirects(resp,
-            '{0}?next={1}'.format(reverse('auth_login'), url))
+                             '{0}?next={1}'.format(reverse('auth_login'), url))
 
         self.login(user)
         resp = self.client.get(url, data=self.get_data_payload())

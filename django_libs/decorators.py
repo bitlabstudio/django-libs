@@ -1,5 +1,10 @@
 """Useful decorators for Django projects."""
-import functools
+from functools import wraps
+import re
+
+from django.http import Http404
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
 from lockfile import FileLock, AlreadyLocked, LockTimeout
 
 
@@ -14,8 +19,7 @@ def lockfile(lockfile_name, lock_wait_timeout=-1):
 
     """
     def decorator(func):
-
-        @functools.wraps(func)
+        @wraps(func)
         def wrapper(*args, **kwargs):
             lock = FileLock(lockfile_name)
             try:
@@ -32,3 +36,37 @@ def lockfile(lockfile_name, lock_wait_timeout=-1):
 
         return wrapper
     return decorator
+
+
+def get_username(identifier):
+    """Checks if a string is a email adress or not."""
+    pattern = re.compile('.+@\w+\..+')
+    if pattern.match(identifier):
+        try:
+            user = User.objects.get(email=identifier)
+        except:
+            raise Http404
+        else:
+            return user.username
+    else:
+        return identifier
+
+
+def http_auth(func):
+    @wraps(func)
+    def _decorator(request, *args, **kwargs):
+        """Decorator to handle http authorizations."""
+        if request.user.is_authenticated():
+            return func(request, *args, **kwargs)
+        if 'HTTP_AUTHORIZATION' in request.META.keys():
+            authmeth, auth = request.META['HTTP_AUTHORIZATION'].split(' ', 1)
+            if authmeth.lower() == 'basic':
+                auth = auth.strip().decode('base64')
+                identifier, password = auth.split(':', 1)
+                username = get_username(identifier)
+                user = authenticate(username=username, password=password)
+                if user:
+                    login(request, user)
+                    return func(request, *args, **kwargs)
+        raise Http404
+    return _decorator

@@ -62,7 +62,8 @@ class JSONResponseMixin(object):
     """
     A mixin that can be used to render a JSON response.
 
-    Taken from here: https://docs.djangoproject.com/en/dev/topics/class-based-views/#more-than-just-html
+    Taken from here: https://docs.djangoproject.com/en/dev/topics/
+    class-based-views/#more-than-just-html
 
     """
     response_class = HttpResponse

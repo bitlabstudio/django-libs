@@ -1,7 +1,7 @@
 """Tests for the templatetags of the ``project-kairos`` project."""
 from django.test import RequestFactory, TestCase
 
-from django_libs.templatetags.libs_tags import *
+from django_libs.templatetags.libs_tags import *  # NOQA
 
 
 class NavactiveTestCase(TestCase):

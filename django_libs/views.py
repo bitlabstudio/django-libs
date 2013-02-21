@@ -30,4 +30,4 @@ class RapidPrototypingView(TemplateView):
     def dispatch(self, request, *args, **kwargs):
         self.template_name = kwargs.get('template_path')
         return super(RapidPrototypingView, self).dispatch(request, *args,
-            **kwargs)
+                                                          **kwargs)

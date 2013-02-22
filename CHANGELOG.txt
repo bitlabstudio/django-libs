@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+=== 1.15 ===
+
 - Added call templatetag which allows to call any method with params in a
   template
 

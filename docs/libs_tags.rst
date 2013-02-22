@@ -1,6 +1,21 @@
 Libs Template Tags
 ==================
 
+
+call
+----
+
+``call`` is an assignemnt tag that allows you to call any method of any object
+with args and kwargs, just like you love to do it in Python and hate not to be
+able to do it in Django templates.
+
+Usage::
+
+    {% load libs_tags %}
+    {% call myobj.mymethod arg1 arg2 kwarg1=kwarg1 as result %}
+    {{ result }}
+
+
 get_verbose
 -----------
 

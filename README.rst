@@ -31,6 +31,7 @@ and applications.
   so that they never run twice at the same time.
 * A ``getCookie`` js function that can be used to retrieve the csrf token
   for AJAX POST requests.
+* A templatetag ``call`` which allows to call any method with params.
 
 **Coming soon**:
 

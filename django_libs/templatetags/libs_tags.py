@@ -5,6 +5,24 @@ from django.db.models.fields import FieldDoesNotExist
 register = template.Library()
 
 
+@register.assignment_tag
+def call(method, *args, **kwargs):
+    """
+    Allows to call any method of any object with parameters.
+
+    Because come on! It's bloody stupid that Django's templating engine doesn't
+    allow that.
+
+    Usage::
+
+        {% call myobj.mymethod myvar foobar=myvar2 as result %}
+
+    :param method: Any callable
+
+    """
+    return method(*args, **kwargs)
+
+
 @register.filter
 def get_verbose(obj, field_name=""):
     """

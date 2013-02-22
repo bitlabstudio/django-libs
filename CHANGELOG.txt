@@ -1,5 +1,8 @@
 === (ongoing) ===
 
+- Added call templatetag which allows to call any method with params in a
+  template
+
 === 0.14.1 ===
 
 - Improved lockfile decorator

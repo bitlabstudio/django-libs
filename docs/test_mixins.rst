@@ -179,7 +179,8 @@ testing, which you probably should, you will write a lot of::
     def test_view(self):
         # case 1
         resp = self.client.get(self.get_url())
-        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(resp.status_code, 200, msg=(
+            'If this then that, because foo is bar.'))
         # case 2
         resp = ...
         self.assertEqual(...)
@@ -188,9 +189,8 @@ testing, which you probably should, you will write a lot of::
 
 ``is_callable`` and ``is_not_callable`` let you quickly assign different values
 to customize your actual assertion case in one method call.
-``is_callable`` makes an assertion on status code 200 or 302 based on what
-method ('post' or 'get') you provide.
-``is_not_callable`` makes an assertion on status code 404.
+``is_callable`` by default makes an assertion on status code 200 and 302.
+``is_not_callable`` defaults to an assertion on status code 404.
 
 
 +----------------------+-----------------------------------------------------------+
@@ -213,6 +213,9 @@ method ('post' or 'get') you provide.
 |                      | anonymous user. Default is ``False``.                     |
 +----------------------+-----------------------------------------------------------+
 | ``and_redirects_to`` | If set, it performs an ``assertRedirects`` assertion.     |
++----------------------+-----------------------------------------------------------+
+| ``code``             | If set, it overrides the status code, the assertion is    |
+|                      | made with.                                                |
 +----------------------+-----------------------------------------------------------+
 
 You can also define no arguments to test according to your current situation.

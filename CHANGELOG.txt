@@ -1,5 +1,8 @@
 === (ongoing) ===
 
+- Added code param to is_callable and is_not_callable to override the 
+  expected status code.
+
 === 1.15 ===
 
 - Added call templatetag which allows to call any method with params in a

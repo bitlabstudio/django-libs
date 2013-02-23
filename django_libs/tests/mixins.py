@@ -11,7 +11,8 @@ class ViewTestMixin(object):
     """Mixin that provides commonly tested assertions."""
 
     def is_callable(self, method='get', data=None, message=None, kwargs=None,
-                    user=None, anonymous=False, and_redirects_to=None):
+                    user=None, anonymous=False, and_redirects_to=None,
+                    code=None):
         """
         A shortcut for an assertion on status code 200 or 302.
 
@@ -24,6 +25,8 @@ class ViewTestMixin(object):
         :and_redirects_to: If set, it additionally makes an assertRedirect on
             whatever string is given. This can be either a relative url or a
             name.
+        :code: Overrides the expected status code. Default is [200, 302].
+            Can either be a list of status codes or a single integer.
 
         If no arguments are given, it makes the assertion according to the
         current test situation.
@@ -38,21 +41,23 @@ class ViewTestMixin(object):
                 self.get_url(view_kwargs=kwargs or self.get_view_kwargs()),
                 data=data or self.get_data_payload()
             )
-            self.assertTrue(resp.status_code in [200, 302], msg=(
-                message or
-                'If called with the correct data, the view should be callable.'
-                ' Got status code of {0}'.format(resp.status_code)))
         elif method.lower() == 'post':
             resp = self.client.post(
                 self.get_url(view_kwargs=kwargs or self.get_view_kwargs()),
                 data=data or self.get_data_payload()
             )
-            self.assertTrue(resp.status_code in [200, 302], msg=(
-                message or
-                'If posted with the correct data, the view should be callable.'
-                ' Got status code of {0}'.format(resp.status_code)))
         else:
             raise Exception('Not a valid request method: "{0}"'.format(method))
+
+        if not code:
+            code = [200, 302]
+        if type(code) != list:
+            code = [code]
+
+        self.assertTrue(resp.status_code in [200, 302], msg=(
+            message or
+            'If called with the correct data, the view should be callable.'
+            ' Got status code of {0}'.format(resp.status_code)))
 
         if and_redirects_to:
             self.assertRedirects(resp, and_redirects_to, msg_prefix=(
@@ -60,7 +65,7 @@ class ViewTestMixin(object):
         return resp
 
     def is_not_callable(self, method='get', message=None, data=None,
-                        kwargs=None, user=None, anonymous=False):
+                        kwargs=None, user=None, anonymous=False, code=None):
         """
         A shortcut for a common assertion on a 404 status code.
 
@@ -72,6 +77,8 @@ class ViewTestMixin(object):
             was assigned in get_view_kwargs.
         :user: If a user is given, it logs it in first.
         :anonymous: If True, it logs out the user first. Default is False
+        :code: Overrides the expected status code. Default is [200, 302].
+            Can either be a list of status codes or a single integer.
 
         If no arguments are given, it makes the assertion according to the
         current test situation.
@@ -93,7 +100,13 @@ class ViewTestMixin(object):
             )
         else:
             raise Exception('Not a valid request method: "{0}"'.format(method))
-        self.assertEqual(resp.status_code, 404, msg=(
+
+        if not code:
+            code = [404]
+        if type(code) != list:
+            code = [code]
+
+        self.assertTrue(resp.status_code in code, msg=(
             message or
             'If called with the wrong data, the view should not be callable'
             ' Got status code of {0}'.format(resp.status_code)))

@@ -18,7 +18,8 @@ def send_email(request, extra_context, subject_template, body_template_plain,
     :param body_template: A string representing the path to the template of
         the email's body.
     :param from_email: String that represents the sender of the email.
-    :param recipients: A tuple of recipients. Similar to the ADMINS setting.
+    :param recipients: A list of tuples of recipients. The tuples are similar
+        to the ADMINS setting.
 
     """
     if request:

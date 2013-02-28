@@ -19,11 +19,40 @@ views to your ``urls.py``::
     )
 
 
+HybridView
+----------
+
+You often need to display a different home page for authenticated users. For
+example Facebook shows a login page when you visit their site but when you
+are logged in it shows your stream under the same URL.
+
+This ``HybridView`` does the same thing. Here is how you use it in your
+``urls.py``::
+
+    from django_libs.views import HybridView
+    from myapp.views import View1
+    from myapp2.views import func_based_view
+
+    view1 = View1.as_view(template_name='foo.html')
+    view2 = func_based_view
+    view2_kwargs = {'template_name': 'bar.html', }
+
+    urlpatterns += patterns(
+        '',
+        ...
+        url(r'^$',
+            HybridView.as_view(
+                view1=view1, view2=view2, view2_kwargs=view2_kwargs
+            ),
+        name='home',
+    )
+
+
 RapidPrototypingView
 --------------------
 
 This view allows you to render any template even when there is no URL hooked
-up and no view implemented. This allows your designers to quickly start writing 
+up and no view implemented. This allows your designers to quickly start writing
 HTML templates even before your developers have created views for those
 templates.
 

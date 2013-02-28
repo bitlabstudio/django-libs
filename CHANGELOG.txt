@@ -2,6 +2,7 @@
 
 - Added code param to is_callable and is_not_callable to override the 
   expected status code.
+- Added HybridView (see docs)
 
 === 1.15 ===
 

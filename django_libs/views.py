@@ -41,7 +41,9 @@ class HybridView(View):
             if not hasattr(cls, key):
                 raise TypeError("%s() received an invalid keyword %r. as_view "
                                 "only accepts arguments that are already "
-                                "attributes of the class." % (cls.__name__, key))
+                                "attributes of the class." % (
+                                    cls.__name__, key))
+
         def view(request, *args, **kwargs):
             self = cls(**initkwargs)
             if hasattr(self, 'get') and not hasattr(self, 'head'):

@@ -1,5 +1,10 @@
 === (ongoing) ===
 
+- Added SimpleTranslationMixin for models that are translated via
+  simple-translation
+- Added SimpleTranslationMixin for factories for models that are translated
+  via simple-translation
+
 === 1.16 ===
 
 - Added code param to is_callable and is_not_callable to override the 

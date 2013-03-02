@@ -22,6 +22,7 @@ Contents:
    test_mixins
    testrunner
    utils_email
+   models_mixins
    views_mixins
    views
    middlewares

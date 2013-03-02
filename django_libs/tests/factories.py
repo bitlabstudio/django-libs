@@ -16,6 +16,50 @@ from django.contrib.auth.models import User
 import factory
 
 
+class SimpleTranslationMixin(object):
+    """
+    Adds a ``_prepare`` method that takes care of creating a translation.
+
+    """
+
+    @staticmethod
+    def _get_translation_factory_and_field(self):
+        """
+        Should return a tuple of (TranslationFactory, 'fieldname').
+
+        ``TranslationFactory`` is the factory class that can create translation
+        objects for this objects.
+
+        ``fieldname`` is the name of the FK on the translation class that
+        points back to this object.
+
+        """
+        raise NotImplementedError()
+
+    @classmethod
+    def _prepare(cls, create, **kwargs):
+        """
+        Creates a ``PersonTranslation`` for this ``Person``.
+
+        Note that we will only create a translation if you create a new object
+        instead of just building it, because otherwise this object has no PK
+        and cannot be used to instantiate the translation.
+
+        """
+        language = kwargs.pop('language', 'en')
+        obj = super(SimpleTranslationMixin, cls)._prepare(create, **kwargs)
+        if create:
+            if language:
+                translation_factory, fk_field = \
+                    cls._get_translation_factory_and_field()
+                kwargs_ = {
+                    fk_field: obj,
+                    'language': language,
+                }
+                trans = translation_factory(**kwargs_)
+        return obj
+
+
 class UserFactory(factory.Factory):
     """
     Creates a new ``User`` object.

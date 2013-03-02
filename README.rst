@@ -32,6 +32,10 @@ and applications.
 * A ``getCookie`` js function that can be used to retrieve the csrf token
   for AJAX POST requests.
 * A templatetag ``call`` which allows to call any method with params.
+* A ``SimpleTranslationMixin`` which adds a ``get_translaion`` method to a
+  model that is registered with ``simple-translation``.
+* A ``SimpleTranslationMixin`` which makes it easier to write factories for
+  models that are registered with ``simple-translation``.
 
 **Coming soon**:
 

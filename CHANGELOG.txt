@@ -1,17 +1,19 @@
 === (ongoing) ===
 
+=== 0.17 ===
+
 - Added SimpleTranslationMixin for models that are translated via
   simple-translation
 - Added SimpleTranslationMixin for factories for models that are translated
   via simple-translation
 
-=== 1.16 ===
+=== 0.16 ===
 
 - Added code param to is_callable and is_not_callable to override the 
   expected status code.
 - Added HybridView (see docs)
 
-=== 1.15 ===
+=== 0.15 ===
 
 - Added call templatetag which allows to call any method with params in a
   template

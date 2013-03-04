@@ -33,16 +33,17 @@ This ``HybridView`` does the same thing. Here is how you use it in your
     from myapp.views import View1
     from myapp2.views import func_based_view
 
-    view1 = View1.as_view(template_name='foo.html')
-    view2 = func_based_view
-    view2_kwargs = {'template_name': 'bar.html', }
+    authed_view = View1.as_view(template_name='foo.html')
+    anonymous_view = func_based_view
+    anonymous_view_kwargs = {'template_name': 'bar.html', }
 
     urlpatterns += patterns(
         '',
         ...
         url(r'^$',
             HybridView.as_view(
-                view1=view1, view2=view2, view2_kwargs=view2_kwargs
+                authed_view=authed_view, anonymous_view=anonymous_view, 
+                anonymous_view_kwargs=anonymous_view_kwargs
             ),
         name='home',
     )

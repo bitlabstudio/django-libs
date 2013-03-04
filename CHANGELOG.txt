@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+- BACKWARDS INCOMPATIBLE: Changed attribute names on HybridView
+
 === 0.17 ===
 
 - Added SimpleTranslationMixin for models that are translated via

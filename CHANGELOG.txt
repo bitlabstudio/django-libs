@@ -1,5 +1,8 @@
 === (ongoing) ===
 
+- Added utility functions for loading functions and classes from strings and
+  settings.
+
 === 1.0 ===
 
 - BACKWARDS INCOMPATIBLE: Changed attribute names on HybridView

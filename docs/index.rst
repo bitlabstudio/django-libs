@@ -16,19 +16,20 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
+   context_processors
+   decorators
    factories
+   javascript 
    libs_tags
+   loaders
+   middlewares
+   models_mixins
    test_email_backend
    test_mixins
    testrunner
    utils_email
-   models_mixins
-   views_mixins
    views
-   middlewares
-   context_processors
-   decorators
-   javascript 
+   views_mixins
 
 
 Indices and tables

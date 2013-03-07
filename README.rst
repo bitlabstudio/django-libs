@@ -36,6 +36,7 @@ and applications.
   model that is registered with ``simple-translation``.
 * A ``SimpleTranslationMixin`` which makes it easier to write factories for
   models that are registered with ``simple-translation``.
+* Utilities for loading classes from a string like ``myproject.models.Foobar``.
 
 **Coming soon**:
 

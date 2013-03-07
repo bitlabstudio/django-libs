@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+=== 1.1 ===
+
 - Added utility functions for loading functions and classes from strings and
   settings.
 

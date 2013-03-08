@@ -58,3 +58,14 @@ to get the left and right side of a fully qualified name::
 
 In this example, ``modulename`` would be ``myproject.models`` and ``classname``
 would be ``FooBar``.
+
+If you need it more dynamically, you can also pass in a function that returns
+a fqn string::
+
+    # anywhere in your code
+    from django_libs.loaders import split_fqn
+
+    def function_that_returns_fqn_string():
+        return 'myproject.models.FooBar'
+
+    modulename, classname = split_fqn(function_that_returns_fqn_string)

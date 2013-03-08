@@ -16,5 +16,15 @@ def load_member_from_setting(setting_name, settings_module=None):
 
 
 def split_fqn(fqn):
-    """Returns the left and right part of the import."""
-    return fqn.rsplit('.', 1)
+    """
+    Returns the left and right part of the import.
+
+    ``fqn`` can be either a string of the form ``appname.modulename.ClassName``
+    or a function that returns such a string.
+
+    """
+    if hasattr(fqn, '__call__'):
+        fqn_string = fqn()
+    else:
+        fqn_string = fqn
+    return fqn_string.rsplit('.', 1)

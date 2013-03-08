@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+=== 1.2 ===
+
 - load_fqn can now also take a function instead of only a string.
 
 === 1.1 ===

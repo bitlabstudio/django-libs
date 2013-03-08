@@ -14,7 +14,7 @@ Use this function to load a member from a setting::
     FOOBAR_CLASS = 'myproject.models.FooBar'
 
     # anywhere in your code:
-    from django_libs.loaders import load_member_from_settin
+    from django_libs.loaders import load_member_from_setting
     cls = load_member_form_setting('FOOBAR_CLASS')
 
 If you are using the reusable app settings pattern, you can hand in an optional

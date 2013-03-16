@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+- Added {% load_context %} templatetag
+
 === 1.2 ===
 
 - load_fqn can now also take a function instead of only a string.

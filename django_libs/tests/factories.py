@@ -56,7 +56,7 @@ class SimpleTranslationMixin(object):
                     fk_field: obj,
                     'language': language,
                 }
-                trans = translation_factory(**kwargs_)
+                translation_factory(**kwargs_)
         return obj
 
 

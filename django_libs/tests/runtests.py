@@ -28,7 +28,8 @@ class NoseCoverageTestRunner(CoverageRunner, NoseTestSuiteRunner):
 
 
 def runtests(*test_args):
-    failures = NoseCoverageTestRunner(verbosity=2, interactive=True).run_tests(test_args)
+    failures = NoseCoverageTestRunner(verbosity=2, interactive=True).run_tests(
+        test_args)
     sys.exit(failures)
 
 

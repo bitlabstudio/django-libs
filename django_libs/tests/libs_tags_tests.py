@@ -4,6 +4,16 @@ from django.test import RequestFactory, TestCase
 from django_libs.templatetags.libs_tags import *  # NOQA
 
 
+class LoadContextNodeTestCase(TestCase):
+    """Tests for the ``LoadContextNode`` template node."""
+    def test_node(self):
+        node = LoadContextNode('django_libs.tests.test_context')
+        context = {}
+        node.render(context)
+        self.assertEqual(context['FOO'], 'bar')
+        self.assertEqual(context['BAR'], 'foo')
+
+
 class NavactiveTestCase(TestCase):
     """Tests for the ``navactive`` templatetag."""
     def test_tag(self):

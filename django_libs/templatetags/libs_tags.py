@@ -1,6 +1,9 @@
 """Templatetags for the ``django_libs`` project."""
+import importlib
+
 from django import template
 from django.db.models.fields import FieldDoesNotExist
+
 
 register = template.Library()
 
@@ -38,6 +41,32 @@ def get_verbose(obj, field_name=""):
         except FieldDoesNotExist:
             pass
     return ""
+
+
+class LoadContextNode(template.Node):
+    def __init__(self, fqn):
+        self.fqn = fqn
+
+    def render(self, context):
+        module = importlib.import_module(self.fqn)
+        for attr in dir(module):
+            if not attr.startswith('__'):
+                context[attr] = getattr(module, attr)
+        return ''
+
+
+@register.tag
+def load_context(parser, token):
+    try:
+        # split_contents() knows not to split quoted strings.
+        tag_name, fqn = token.split_contents()
+    except ValueError:
+        raise template.TemplateSyntaxError(
+            '%r tag requires a single argument' % token.contents.split()[0])
+    if not (fqn[0] == fqn[-1] and fqn[0] in ('"', "'")):
+        raise template.TemplateSyntaxError(
+            "%r tag's argument should be in quotes" % tag_name)
+    return LoadContextNode(fqn[1:-1])
 
 
 @register.simple_tag

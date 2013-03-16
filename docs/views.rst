@@ -72,3 +72,6 @@ Now you can call any template by adding it's path to the URL of the view::
 
     localhost:8000/prototype/404.html
     localhost:8000/prototype/cms/partials/main_menu.html
+
+Check out the ``load_context`` templatetag which allos you to create fake
+context variables for your template.

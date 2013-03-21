@@ -88,7 +88,7 @@ view actually needs some kwargs. A proper call would look like this::
         resp = self.client.get(reverse(self.get_view_name(), kwargs={
             'pk': invoice.pk}))
 
-This can get annoying when you need to call the view many times because most 
+This can get annoying when you need to call the view many times because most
 of the time you might call the view with the same kwargs. So let's centralize
 the kwargs as well::
 
@@ -173,7 +173,7 @@ data, you can override the ``get_data_payload()`` method::
 -----------------------------------
 
 If a view becomes more complex, you might end up with rather many assertions
-for many different situations. If you take all these cases into account when 
+for many different situations. If you take all these cases into account when
 testing, which you probably should, you will write a lot of::
 
     def test_view(self):
@@ -189,8 +189,18 @@ testing, which you probably should, you will write a lot of::
 
 ``is_callable`` and ``is_not_callable`` let you quickly assign different values
 to customize your actual assertion case in one method call.
-``is_callable`` by default makes an assertion on status code 200 and 302.
+``is_callable`` by default makes an assertion on status code 200.
 ``is_not_callable`` defaults to an assertion on status code 404.
+
+.. warning:: Note if you used previous versions, that ``is_callable`` will only
+    default to 200 in the future.
+    It's best to use ``and_redirects_to`` for a redirect assertion or if you
+    only want to make sure to get the right code set ``status_code`` to 302.
+
+    Also the ``code`` parameter changed into ``status_code``.
+
+    They can still be used, but you will get annoying warnings. So, you might
+    as well change it right away.
 
 
 +----------------------+-----------------------------------------------------------+
@@ -213,8 +223,10 @@ to customize your actual assertion case in one method call.
 |                      | anonymous user. Default is ``False``.                     |
 +----------------------+-----------------------------------------------------------+
 | ``and_redirects_to`` | If set, it performs an ``assertRedirects`` assertion.     |
+|                      | Note that, of course this will overwrite the              |
+|                      | ``status_code`` to 302.                                   |
 +----------------------+-----------------------------------------------------------+
-| ``code``             | If set, it overrides the status code, the assertion is    |
+| ``status_code``      | If set, it overrides the status code, the assertion is    |
 |                      | made with.                                                |
 +----------------------+-----------------------------------------------------------+
 

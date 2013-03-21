@@ -229,6 +229,10 @@ to customize your actual assertion case in one method call.
 | ``status_code``      | If set, it overrides the status code, the assertion is    |
 |                      | made with.                                                |
 +----------------------+-----------------------------------------------------------+
+| ``ajax``             | If ``True`` it will automatically set                     |
+|                      | ``HTTP_X_REQUESTED_WITH='XMLHttpRequest'`` to simulate    |
+|                      | an ajax call. Defaults to ``False``.                      |
++----------------------+-----------------------------------------------------------+
 
 You can also define no arguments to test according to your current situation.
 Then still, it is a handy shortcut.

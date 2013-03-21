@@ -117,7 +117,7 @@ class ViewTestMixin(object):
         sys.stderr.write(
             '\n\033[1;31mDeprecationWarning:\033[1;m'
             ' The ``code`` parameter of ``is_(not_)callable()`` will be'
-            ' changed to ``status_code`` in future versions.'
+            ' changed to ``status_code`` in future versions.\n'
         )
         return self._check_callable(
             method=method, data=data, message=message, kwargs=kwargs,
@@ -150,7 +150,7 @@ class ViewTestMixin(object):
         sys.stderr.write(
             '\n\033[1;31mDeprecationWarning:\033[1;m'
             ' The ``code`` parameter of ``is_(not_)callable()`` will be'
-            ' changed to ``status_code`` in future versions.'
+            ' changed to ``status_code`` in future versions.\n'
         )
         return self._check_callable(
             method=method, data=data, message=message, kwargs=kwargs,

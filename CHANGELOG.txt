@@ -1,5 +1,6 @@
 === (ongoing) ===
 
+- added ``ajax`` parameter to is_callable methods.
 - ``code`` parameter and assertions for redirects without ``and_redirects_to``
   have become deprecated.
 

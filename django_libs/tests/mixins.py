@@ -16,7 +16,7 @@ class ViewTestMixin(object):
     def _check_callable(self, method='get', data=None, message=None,
                         kwargs=None, user=None, anonymous=False,
                         and_redirects_to=None, status_code=None,
-                        called_by='is_callable'):
+                        called_by='is_callable', ajax=False):
         """
         The method that does the actual assertions for ``is_callable`` and
         ``is_not_callable``.
@@ -51,18 +51,20 @@ class ViewTestMixin(object):
             status_code = 200
         if not status_code and called_by == 'is_not_callable':
             status_code = 404
+        client_args = (
+            self.get_url(view_kwargs=kwargs or self.get_view_kwargs()),
+            data or self.get_data_payload(),
+        )
+        if ajax:
+            extra = {'HTTP_X_REQUESTED_WITH': 'XMLHttpRequest'}
+        else:
+            extra = {}
 
         # making the request
         if method.lower() == 'get':
-            resp = self.client.get(
-                self.get_url(view_kwargs=kwargs or self.get_view_kwargs()),
-                data=data or self.get_data_payload()
-            )
+            resp = self.client.get(*client_args, **extra)
         elif method.lower() == 'post':
-            resp = self.client.post(
-                self.get_url(view_kwargs=kwargs or self.get_view_kwargs()),
-                data=data or self.get_data_payload()
-            )
+            resp = self.client.post(*client_args, **extra)
         else:
             raise Exception('Not a valid request method: "{0}"'.format(method))
 
@@ -92,7 +94,7 @@ class ViewTestMixin(object):
 
     def is_callable(self, method='get', data=None, message=None, kwargs=None,
                     user=None, anonymous=False, and_redirects_to=None,
-                    status_code=None, code=None):
+                    status_code=None, code=None, ajax=False):
         """
         A shortcut for an assertion on status code 200 or 302.
 
@@ -122,11 +124,12 @@ class ViewTestMixin(object):
         return self._check_callable(
             method=method, data=data, message=message, kwargs=kwargs,
             user=user, anonymous=anonymous, and_redirects_to=and_redirects_to,
-            status_code=status_code, called_by='is_callable')
+            status_code=status_code, ajax=ajax, called_by='is_callable')
 
     def is_not_callable(self, method='get', message=None, data=None,
                         kwargs=None, user=None, anonymous=False,
-                        and_redirects_to=None, status_code=None, code=None):
+                        and_redirects_to=None, status_code=None, code=None,
+                        ajax=False):
         """
         A shortcut for a common assertion on a 404 status code.
 
@@ -155,7 +158,7 @@ class ViewTestMixin(object):
         return self._check_callable(
             method=method, data=data, message=message, kwargs=kwargs,
             user=user, anonymous=anonymous, and_redirects_to=and_redirects_to,
-            status_code=status_code, called_by='is_not_callable')
+            status_code=status_code, ajax=ajax, called_by='is_not_callable')
 
     def get_data_payload(self):
         """

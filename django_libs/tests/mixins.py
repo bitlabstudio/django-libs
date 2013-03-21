@@ -2,6 +2,8 @@
 Generally useful mixins for view tests (integration tests) of any project.
 
 """
+import sys
+
 from django.core.urlresolvers import reverse
 
 from django_libs.tests.factories import UserFactory
@@ -9,10 +11,88 @@ from django_libs.tests.factories import UserFactory
 
 class ViewTestMixin(object):
     """Mixin that provides commonly tested assertions."""
+    longMessage = True
+
+    def _check_callable(self, method='get', data=None, message=None,
+                        kwargs=None, user=None, anonymous=False,
+                        and_redirects_to=None, status_code=None,
+                        called_by='is_callable'):
+        """
+        The method that does the actual assertions for ``is_callable`` and
+        ``is_not_callable``.
+
+        :method: 'get' or 'post'. Default is 'get'.
+        :data: Post data or get data payload.
+        :message: Lets you override the assertion message.
+        :kwargs: Lets you override the view kwargs.
+        :user: If user argument is given, it logs it in first.
+        :anonymous: If True, it logs out the user first. Default is False
+        :and_redirects_to: If set, it additionally makes an assertRedirect on
+            whatever string is given. This can be either a relative url or a
+            name.
+        :status_code: Overrides the expected status code. Default is 200.
+            Can either be a list of status codes or a single integer.
+        :called_by: A string that is either 'is_callable' or 'is_not_callable'.
+
+
+        """
+        # Setting up defaults if not overwritten.
+        if called_by == 'is_not_callable':
+            message_addin = ' not'
+        elif called_by == 'is_callable':
+            message_addin = ''
+        if user:
+            self.login(user)
+        if anonymous:
+            self.client.logout()
+        if and_redirects_to:
+            status_code = 302
+        if not status_code and called_by == 'is_callable':
+            status_code = 200
+        if not status_code and called_by == 'is_not_callable':
+            status_code = 404
+
+        # making the request
+        if method.lower() == 'get':
+            resp = self.client.get(
+                self.get_url(view_kwargs=kwargs or self.get_view_kwargs()),
+                data=data or self.get_data_payload()
+            )
+        elif method.lower() == 'post':
+            resp = self.client.post(
+                self.get_url(view_kwargs=kwargs or self.get_view_kwargs()),
+                data=data or self.get_data_payload()
+            )
+        else:
+            raise Exception('Not a valid request method: "{0}"'.format(method))
+
+        # usage validation
+        if resp.status_code == 302 and not and_redirects_to:
+            # TODO
+            sys.stderr.write(
+                '\n\033[1;31mDeprecationWarning:\033[1;m'
+                ' Your response status code'
+                ' was 302, although ``and_redirects_to`` was not set.\n'
+                'Please use ``and_redirects_to`` for a test on redirects since'
+                ' the callable methods will default to 200 or 404 in the'
+                ' future.\n'
+            )
+
+        # assertions
+        if and_redirects_to:
+            self.assertRedirects(resp, and_redirects_to, msg_prefix=(
+                'The view did not redirect as expected.'))
+
+        else:
+            self.assertIn(resp.status_code, [status_code, 302], msg=(
+                message or
+                'The view should{0} be callable'.format(message_addin)))
+
+        return resp
 
     def is_callable(self, method='get', data=None, message=None, kwargs=None,
                     user=None, anonymous=False, and_redirects_to=None,
-                    code=None):
+                    status_code=None, code=None):
         """
         A shortcut for an assertion on status code 200 or 302.
 
@@ -25,47 +105,28 @@ class ViewTestMixin(object):
         :and_redirects_to: If set, it additionally makes an assertRedirect on
             whatever string is given. This can be either a relative url or a
             name.
-        :code: Overrides the expected status code. Default is [200, 302].
+        :status_code: Overrides the expected status code. Default is 200.
             Can either be a list of status codes or a single integer.
 
         If no arguments are given, it makes the assertion according to the
         current test situation.
 
         """
-        if user:
-            self.login(user)
-        if anonymous:
-            self.client.logout()
-        if method.lower() == 'get':
-            resp = self.client.get(
-                self.get_url(view_kwargs=kwargs or self.get_view_kwargs()),
-                data=data or self.get_data_payload()
-            )
-        elif method.lower() == 'post':
-            resp = self.client.post(
-                self.get_url(view_kwargs=kwargs or self.get_view_kwargs()),
-                data=data or self.get_data_payload()
-            )
-        else:
-            raise Exception('Not a valid request method: "{0}"'.format(method))
-
-        if not code:
-            code = [200, 302]
-        if type(code) != list:
-            code = [code]
-
-        self.assertTrue(resp.status_code in [200, 302], msg=(
-            message or
-            'If called with the correct data, the view should be callable.'
-            ' Got status code of {0}'.format(resp.status_code)))
-
-        if and_redirects_to:
-            self.assertRedirects(resp, and_redirects_to, msg_prefix=(
-                'The view did not redirect as expected.'))
-        return resp
+        status_code = code
+        # TODO
+        sys.stderr.write(
+            '\n\033[1;31mDeprecationWarning:\033[1;m'
+            ' The ``code`` parameter of ``is_(not_)callable()`` will be'
+            ' changed to ``status_code`` in future versions.'
+        )
+        return self._check_callable(
+            method=method, data=data, message=message, kwargs=kwargs,
+            user=user, anonymous=anonymous, and_redirects_to=and_redirects_to,
+            status_code=status_code, called_by='is_callable')
 
     def is_not_callable(self, method='get', message=None, data=None,
-                        kwargs=None, user=None, anonymous=False, code=None):
+                        kwargs=None, user=None, anonymous=False,
+                        and_redirects_to=None, status_code=None, code=None):
         """
         A shortcut for a common assertion on a 404 status code.
 
@@ -77,40 +138,24 @@ class ViewTestMixin(object):
             was assigned in get_view_kwargs.
         :user: If a user is given, it logs it in first.
         :anonymous: If True, it logs out the user first. Default is False
-        :code: Overrides the expected status code. Default is [200, 302].
+            :status_code: Overrides the expected status code. Default is 404.
             Can either be a list of status codes or a single integer.
 
         If no arguments are given, it makes the assertion according to the
         current test situation.
 
         """
-        if user:
-            self.login(user)
-        if anonymous:
-            self.client.logout()
-        if method.lower() == 'get':
-            resp = self.client.get(
-                self.get_url(view_kwargs=kwargs or self.get_view_kwargs()),
-                data=data or self.get_data_payload()
-            )
-        elif method.lower() == 'post':
-            resp = self.client.post(
-                self.get_url(view_kwargs=kwargs or self.get_view_kwargs()),
-                data=data or self.get_data_payload()
-            )
-        else:
-            raise Exception('Not a valid request method: "{0}"'.format(method))
-
-        if not code:
-            code = [404]
-        if type(code) != list:
-            code = [code]
-
-        self.assertTrue(resp.status_code in code, msg=(
-            message or
-            'If called with the wrong data, the view should not be callable'
-            ' Got status code of {0}'.format(resp.status_code)))
-        return resp
+        status_code = code
+        # TODO
+        sys.stderr.write(
+            '\n\033[1;31mDeprecationWarning:\033[1;m'
+            ' The ``code`` parameter of ``is_(not_)callable()`` will be'
+            ' changed to ``status_code`` in future versions.'
+        )
+        return self._check_callable(
+            method=method, data=data, message=message, kwargs=kwargs,
+            user=user, anonymous=anonymous, and_redirects_to=and_redirects_to,
+            status_code=status_code, called_by='is_not_callable')
 
     def get_data_payload(self):
         """

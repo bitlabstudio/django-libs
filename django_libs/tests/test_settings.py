@@ -48,6 +48,7 @@ EXTERNAL_APPS = [
 
 INTERNAL_APPS = [
     'django_libs',
+    'django_libs.tests.test_app',
 ]
 
 INSTALLED_APPS = EXTERNAL_APPS + INTERNAL_APPS

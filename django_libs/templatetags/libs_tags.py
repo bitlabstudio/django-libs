@@ -4,6 +4,8 @@ import importlib
 from django import template
 from django.db.models.fields import FieldDoesNotExist
 
+from ..utils import get_profile
+
 
 register = template.Library()
 
@@ -41,6 +43,11 @@ def get_verbose(obj, field_name=""):
         except FieldDoesNotExist:
             pass
     return ""
+
+
+@register.assignment_tag
+def get_profile_for(user):
+    return get_profile(user)
 
 
 class LoadContextNode(template.Node):

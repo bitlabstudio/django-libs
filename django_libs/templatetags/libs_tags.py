@@ -4,7 +4,7 @@ import importlib
 from django import template
 from django.db.models.fields import FieldDoesNotExist
 
-from ..utils import get_profile
+from django_libs import utils
 
 
 register = template.Library()
@@ -47,7 +47,7 @@ def get_verbose(obj, field_name=""):
 
 @register.assignment_tag
 def get_profile_for(user):
-    return get_profile(user)
+    return utils.get_profile(user)
 
 
 class LoadContextNode(template.Node):

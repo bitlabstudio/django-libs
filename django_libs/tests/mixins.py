@@ -69,7 +69,8 @@ class ViewTestMixin(object):
             raise Exception('Not a valid request method: "{0}"'.format(method))
 
         # usage validation
-        if resp.status_code == 302 and not and_redirects_to:
+        if resp.status_code == 302 and not and_redirects_to and not (
+                status_code in [200, 404]):
             # TODO
             sys.stderr.write(
                 '\n\033[1;31mDeprecationWarning:\033[1;m'

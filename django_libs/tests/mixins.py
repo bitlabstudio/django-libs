@@ -71,7 +71,7 @@ class ViewTestMixin(object):
         # usage validation
         if resp.status_code == 302 and not and_redirects_to and not (
                 status_code in [200, 404]):
-            # TODO
+            # TODO change the defaults and remove this warning
             sys.stderr.write(
                 '\n\033[1;31mDeprecationWarning:\033[1;m'
                 ' Your response status code'
@@ -116,7 +116,7 @@ class ViewTestMixin(object):
 
         """
         status_code = code
-        # TODO
+        # TODO change the parameter and remove this warning
         sys.stderr.write(
             '\n\033[1;31mDeprecationWarning:\033[1;m'
             ' The ``code`` parameter of ``is_(not_)callable()`` will be'
@@ -150,7 +150,7 @@ class ViewTestMixin(object):
 
         """
         status_code = code
-        # TODO
+        # TODO change the parameter and remove this warning
         sys.stderr.write(
             '\n\033[1;31mDeprecationWarning:\033[1;m'
             ' The ``code`` parameter of ``is_(not_)callable()`` will be'

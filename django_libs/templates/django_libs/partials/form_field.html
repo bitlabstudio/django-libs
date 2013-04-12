@@ -1,6 +1,6 @@
 <div class="control-group {% if field.errors %}error{% endif %}">
     <label class="control-label" for="{{ field.id_for_label }}">
-        {{ field.label }}
+        <span {% if field.required %}class="requiredLabel"{% endif %}>{{ field.label }}</span>
         {% if field.help_text %}
             <i class="icon-question-sign popOver" title="{{ field.label }}" data-content="{{ field.help_text }}"></i>
         {% endif %}

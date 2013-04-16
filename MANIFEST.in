@@ -5,3 +5,5 @@ include CHANGELOG.txt
 include README.md
 graft django_libs
 global-exclude *.orig *.pyc *.log
+prune django_libs/tests/coverage
+prune django_libs/.ropeproject

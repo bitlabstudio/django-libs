@@ -36,3 +36,14 @@ class NavactiveTestCase(TestCase):
         self.assertEqual(result, '', msg=(
             "When the given string is not equal to the current request's URL"
             " path it should return '' but returned %s" % result))
+
+        req = RequestFactory().get('/index/')
+        result = navactive(req, 'index')
+        self.assertEqual(result, 'active', msg=(
+            "When the given string is a url name, it should return"
+            " 'active', if it matches the path, but returned %s" % result))
+
+        result = navactive(req, 'home')
+        self.assertEqual(result, '', msg=(
+            "When the given string is a url name, it should return"
+            " '', if it matches the path, but returned %s" % result))

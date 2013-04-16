@@ -2,6 +2,7 @@
 import importlib
 
 from django import template
+from django.core.urlresolvers import resolve, Resolver404
 from django.db.models.fields import FieldDoesNotExist
 
 from django_libs import utils
@@ -95,11 +96,16 @@ def navactive(request, url, exact=0):
       ``request.path``.
 
     """
-    if exact:
-        if url == request.path:
+    try:
+        if url == resolve(request.path).view_name:
             return "active"
         return ""
+    except Resolver404:
+        if exact:
+            if url == request.path:
+                return "active"
+            return ""
 
-    if url in request.path:
-        return "active"
-    return ""
+        if url in request.path:
+            return "active"
+        return ""

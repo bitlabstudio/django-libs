@@ -1,5 +1,6 @@
 === (ongoing) ===
 
+- additionally allowing url names for navactive template tag.
 - added ``get_profile`` method
 - added ``ajax`` parameter to is_callable methods.
 - ``code`` parameter and assertions for redirects without ``and_redirects_to``

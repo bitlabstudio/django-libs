@@ -1,6 +1,10 @@
 === (ongoing) ===
 
 
+=== 1.4.1 ===
+
+- fixed navactive tag
+
 === 1.4 ===
 - additionally allowing url names for navactive template tag.
 - added ``get_profile`` method

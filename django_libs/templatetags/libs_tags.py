@@ -97,15 +97,20 @@ def navactive(request, url, exact=0):
 
     """
     try:
-        if url == resolve(request.path).view_name:
-            return "active"
-        return ""
+        if url == resolve(request.path).url_name:
+            # Checks the url pattern in case a view_name is posted
+            return 'active'
+        elif resolve(request.path).url_name in url and url == request.path:
+            # Workaround to catch URLs with more than one part, which don't
+            # raise a Resolver404 (e.g. '/index/info/')
+            match = request.path
+        else:
+            return ''
     except Resolver404:
-        if exact:
-            if url == request.path:
-                return "active"
-            return ""
-
-        if url in request.path:
-            return "active"
-        return ""
+        # Indicates, that a simple url string is used (e.g. '/index/')
+        match = request.path
+    if exact and url == match:
+        return 'active'
+    elif not exact and url in request.path:
+        return 'active'
+    return ''

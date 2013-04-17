@@ -8,6 +8,6 @@ admin.autodiscover()
 
 urlpatterns = patterns(
     '',
-    url(r'^index/', lambda x: HttpResponse('Success'), name='index'),
+    url(r'^index/test/$', lambda x: HttpResponse('Success'), name='index'),
     url(r'^admin-.+/', include(admin.site.urls)),
 )

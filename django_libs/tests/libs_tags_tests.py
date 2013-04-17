@@ -16,13 +16,15 @@ class LoadContextNodeTestCase(TestCase):
 
 class NavactiveTestCase(TestCase):
     """Tests for the ``navactive`` templatetag."""
+    longMessage = True
+
     def test_tag(self):
         req = RequestFactory().get('/home/')
-        result = navactive(req, 'home')
+        result = navactive(req, '/home/')
         self.assertEqual(result, 'active', msg=(
             "When the given string is part of the current request's URL path"
             " it should return ``active`` but returned %s" % result))
-        result = navactive(req, 'foo')
+        result = navactive(req, '/foo/')
         self.assertEqual(result, '', msg=(
             "When the given string is not part of the current request's URL"
             " path it should return '' but returned %s" % result))
@@ -32,15 +34,21 @@ class NavactiveTestCase(TestCase):
         self.assertEqual(result, 'active', msg=(
             "When the given string is equal to the current request's URL path"
             " it should return ``active`` but returned %s" % result))
-        result = navactive(req, '/foo', exact=True)
+        result = navactive(req, '/foo/', exact=True)
         self.assertEqual(result, '', msg=(
             "When the given string is not equal to the current request's URL"
             " path it should return '' but returned %s" % result))
 
-        req = RequestFactory().get('/index/')
+        req = RequestFactory().get('/index/test/')
         result = navactive(req, 'index')
         self.assertEqual(result, 'active', msg=(
             "When the given string is a url name, it should return"
+            " 'active', if it matches the path, but returned %s" % result))
+
+        req = RequestFactory().get('/index/test/')
+        result = navactive(req, '/index/test/')
+        self.assertEqual(result, 'active', msg=(
+            "When the given string is a long string, it should return"
             " 'active', if it matches the path, but returned %s" % result))
 
         result = navactive(req, 'home')

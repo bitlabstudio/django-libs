@@ -16,3 +16,5 @@ coverage
 django-coverage
 django-jasmine
 selenium
+ipdb
+flake8

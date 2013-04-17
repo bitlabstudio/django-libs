@@ -100,7 +100,7 @@ def navactive(request, url, exact=0):
         if url == resolve(request.path).url_name:
             # Checks the url pattern in case a view_name is posted
             return 'active'
-        elif resolve(request.path).url_name in url and url == request.path:
+        elif url == request.path:
             # Workaround to catch URLs with more than one part, which don't
             # raise a Resolver404 (e.g. '/index/info/')
             match = request.path

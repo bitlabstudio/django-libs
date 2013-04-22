@@ -1,6 +1,10 @@
 === (ongoing) ===
 
 
+=== 1.4.2 ===
+
+- only show deprecation warning for ``is_(not_)callable()`` if it's used
+
 === 1.4.1 ===
 
 - fixed navactive tag

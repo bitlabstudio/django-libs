@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+- using hashlib instead of md5 and using string conversion in username creation
+  because the md5 method does not accept integers.
 
 === 1.4.2 ===
 

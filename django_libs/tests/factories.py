@@ -9,7 +9,7 @@ For example each app will need to create a user, therefore this module shall
 provide facilities for user generation.
 
 """
-import md5
+from hashlib import md5
 
 from django.contrib.auth.models import User
 
@@ -76,7 +76,7 @@ class UserFactory(factory.Factory):
     """
     FACTORY_FOR = User
 
-    username = factory.Sequence(lambda n: md5.new(n).hexdigest()[0:30])
+    username = factory.Sequence(lambda n: md5(str(n)).hexdigest()[0:30])
     email = factory.Sequence(lambda n: 'user{0}@example.com'.format(n))
 
     @classmethod

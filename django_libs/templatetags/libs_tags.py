@@ -12,7 +12,7 @@ register = template.Library()
 
 
 @register.assignment_tag
-def call(method, *args, **kwargs):
+def call(obj, method, *args, **kwargs):
     """
     Allows to call any method of any object with parameters.
 
@@ -21,12 +21,14 @@ def call(method, *args, **kwargs):
 
     Usage::
 
-        {% call myobj.mymethod myvar foobar=myvar2 as result %}
+        {% call myobj 'mymethod' myvar foobar=myvar2 as result %}
 
-    :param method: Any callable
+    :param obj: The object which has the method that you would like to call
+    :param method: A string representing the attribute on the object that
+      should be called.
 
     """
-    return method(*args, **kwargs)
+    return getattr(obj, method)(*args, **kwargs)
 
 
 @register.filter

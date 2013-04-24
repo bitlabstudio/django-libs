@@ -1,5 +1,5 @@
-Libs Template Tags
-==================
+Template Tags
+=============
 
 
 call
@@ -12,7 +12,7 @@ able to do it in Django templates.
 Usage::
 
     {% load libs_tags %}
-    {% call myobj.mymethod arg1 arg2 kwarg1=kwarg1 as result %}
+    {% call myobj 'mymethod' arg1 arg2 kwarg1=kwarg1 as result %}
     {{ result }}
 
 

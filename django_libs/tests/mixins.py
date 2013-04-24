@@ -45,7 +45,7 @@ class ViewTestMixin(object):
             self.login(user)
         if anonymous:
             self.client.logout()
-        if and_redirects_to:
+        if not status_code and and_redirects_to:
             status_code = 302
         if not status_code and called_by == 'is_callable':
             status_code = 200
@@ -83,8 +83,9 @@ class ViewTestMixin(object):
 
         # assertions
         if and_redirects_to:
-            self.assertRedirects(resp, and_redirects_to, msg_prefix=(
-                'The view did not redirect as expected.'))
+            self.assertRedirects(
+                resp, and_redirects_to, status_code=status_code,
+                msg_prefix=('The view did not redirect as expected.'))
 
         else:
             self.assertIn(resp.status_code, [status_code, 302], msg=(
@@ -115,7 +116,8 @@ class ViewTestMixin(object):
         current test situation.
 
         """
-        status_code = code
+        if not status_code:
+            status_code = code
         # TODO change the parameter and remove this warning
         if code:
             sys.stderr.write(

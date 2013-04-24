@@ -1,5 +1,9 @@
 === (ongoing) ===
 
+=== 1.4.5 ===
+
+- Fixed status_code issues
+
 === 1.4.4 ===
 
 - Fixed bug in call templatetag

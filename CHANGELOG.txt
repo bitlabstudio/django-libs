@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+- Fixed bug that always show deprecation warning
+
 === 1.4.5 ===
 
 - Fixed status_code issues

@@ -1,5 +1,10 @@
 === (ongoing) ===
 
+
+=== 1.4.7 ===
+
+- Added format utils
+
 === 1.4.6 ===
 
 - Fixed bug that always show deprecation warning

@@ -1,5 +1,8 @@
 === (ongoing) ===
 
+
+=== 1.4.8 ===
+
 - fixed compatibility issue with Django versions prior to 1.5.1
 
 === 1.4.7 ===

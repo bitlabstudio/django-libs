@@ -9,7 +9,13 @@ https://github.com/django/django/blob/master/django/utils/formats.py
 
 """
 from django.conf import settings
-from django.utils.encoding import force_str
+# when working with django versions prior to 1.5, we need to use smart_str
+# instead of force_str
+try:
+    from django.utils.encoding import force_str as str_encode
+except ImportError:
+    from django.utils.encoding import smart_str as str_encode
+
 from django.utils.importlib import import_module
 from django.utils.translation import (
     check_for_language,
@@ -81,7 +87,7 @@ def get_format(format_type, lang=None, use_l10n=None):
     be localized (or not), overriding the value of settings.USE_L10N.
 
     """
-    format_type = force_str(format_type)
+    format_type = str_encode(format_type)
     if use_l10n or (use_l10n is None and settings.USE_L10N):
         if lang is None:
             lang = get_language()

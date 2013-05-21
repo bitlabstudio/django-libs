@@ -1,5 +1,8 @@
 === (ongoing) ===
 
+
+=== 1.5 ===
+
 - Added MultilingualPublishMixin
 
 === 1.4.8 ===

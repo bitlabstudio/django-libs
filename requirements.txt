@@ -7,10 +7,12 @@ Sphinx
 django-mailer
 factory_boy
 
+simple_translation
 
 # ==============================================================
 # Packages needed for running the tests. Needed by contributors.
 # ==============================================================
+mock
 django-nose
 coverage
 django-coverage

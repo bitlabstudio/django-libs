@@ -1,5 +1,8 @@
 === (ongoing) ===
 
+
+=== 1.6 ===
+
 - Added SimpleTranslationPublishedManager
 
 === 1.5 ===

@@ -1,6 +1,7 @@
 """Tests for the utils of ``django_libs``."""
 from django.conf import settings
 from django.test import TestCase
+from django.contrib.auth.models import SiteProfileNotAvailable
 
 from ..utils import get_profile
 from .factories import UserFactory
@@ -35,6 +36,11 @@ class GetProfileTestCase(TestCase):
         profile = get_profile(self.user)
         self.assertEqual(type(profile), DummyProfile, msg=(
             'The method should return a DummyProfile instance.'))
+
+        settings.AUTH_PROFILE_MODULE = 'user_profileUserProfile'
+        self.assertRaises(SiteProfileNotAvailable, get_profile, self.user)
+
+        settings.AUTH_PROFILE_MODULE = 'test_app.DummyProfile'
 
         settings.GET_PROFILE_METHOD = (
             'django_libs.tests.utils_tests.get_profile_method')

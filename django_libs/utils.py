@@ -27,13 +27,7 @@ def get_profile(user):
         method = load_member_from_setting('GET_PROFILE_METHOD')
         return method(user)
 
-    # code from the original get_profile method
-    try:
-        app_label, model_name = settings.AUTH_PROFILE_MODULE.split('.')
-    except ValueError:
-        raise models.SiteProfileNotAvailable(
-            'app_label and model_name should be separated by a dot in '
-            'the AUTH_PROFILE_MODULE setting')
+    app_label, model_name = settings.AUTH_PROFILE_MODULE.split('.')
 
     # the models.get_model method allows to read load the model from the app's
     # model cache to allow the setting to be written as 'app_name.ModelName'

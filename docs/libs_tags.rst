@@ -23,7 +23,7 @@ get_verbose
 object's specific field.
 
 This can be useful when you are creating a ``DetailView`` for an object where,
-for some reason you don't want to use a ModelForm. Instead of using the 
+for some reason you don't want to use a ModelForm. Instead of using the
 ``{% trans %}`` tag to create your labels and headlines that are related to
 the object's fields, you can now obey the DRY principle and re-use the
 translations that you have already done on the model's field's
@@ -100,3 +100,21 @@ css class::
             <a href="{% url "news_detail" pk=latest.pk %}">{% trans "Latest News Entry" %}</a>
         </li>
     </ul>
+
+
+render_analytics_code
+---------------------
+
+``render_analytics_code`` is a simple tag to render Google's analytics script
+code.
+
+Usage::
+
+    {% load libs_tags %}
+    {% render_analytics_code %}
+
+
+or (if you don't want to use the ``anonymizeIp`` setting)::
+
+    {% load libs_tags %}
+    {% render_analytics_code False %}

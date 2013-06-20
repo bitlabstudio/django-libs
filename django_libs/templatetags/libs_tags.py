@@ -2,6 +2,7 @@
 import importlib
 
 from django import template
+from django.conf import settings
 from django.core.urlresolvers import resolve, Resolver404
 from django.db.models.fields import FieldDoesNotExist
 
@@ -116,3 +117,18 @@ def navactive(request, url, exact=0):
     elif not exact and url in request.path:
         return 'active'
     return ''
+
+
+@register.inclusion_tag('django_libs/analytics.html')
+def render_analytics_code(anonymize_ip='anonymize'):
+    """
+    Renders the google analytics snippet.
+
+    :anonymize_ip: Use to add/refuse the anonymizeIp setting.
+
+    """
+    return {
+        'ANALYTICS_TRACKING_ID': getattr(
+            settings, 'ANALYTICS_TRACKING_ID', 'UA-XXXXXXX-XX'),
+        'anonymize_ip': anonymize_ip,
+    }

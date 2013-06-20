@@ -55,3 +55,16 @@ class NavactiveTestCase(TestCase):
         self.assertEqual(result, '', msg=(
             "When the given string is a url name, it should return"
             " '', if it matches the path, but returned %s" % result))
+
+
+class RenderAnalyticsCodeTestCase(TestCase):
+    """Tests for the ``render_analytics_code`` templatetag."""
+    longMessage = True
+
+    def test_tag(self):
+        result = render_analytics_code()
+        expected = {
+            'ANALYTICS_TRACKING_ID': 'UA-XXXXXXX-XX',
+            'anonymize_ip': 'anonymize'
+        }
+        self.assertEqual(result, expected, msg=('Should return a dict.'))

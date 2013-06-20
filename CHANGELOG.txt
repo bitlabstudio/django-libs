@@ -1,6 +1,10 @@
 === (ongoing) ===
 
 
+=== 1.7 ===
+
+- Added render_analytics_code tag
+
 === 1.6 ===
 
 - Added SimpleTranslationPublishedManager

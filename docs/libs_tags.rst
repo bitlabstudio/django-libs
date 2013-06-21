@@ -105,8 +105,8 @@ css class::
 render_analytics_code
 ---------------------
 
-``render_analytics_code`` is a simple tag to render Google's analytics script
-code.
+``render_analytics_code`` is an inclusion tag to render Google's analytics
+script code.
 
 Usage::
 
@@ -118,3 +118,6 @@ or (if you don't want to use the ``anonymizeIp`` setting)::
 
     {% load libs_tags %}
     {% render_analytics_code False %}
+
+If you would like to override the template used by the tag, please use
+``django_libs/analytics.html``.

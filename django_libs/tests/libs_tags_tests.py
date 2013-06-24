@@ -4,6 +4,16 @@ from django.test import RequestFactory, TestCase
 from django_libs.templatetags.libs_tags import *  # NOQA
 
 
+class GetRangeTestCase(TestCase):
+    """Tests for the ``get_range`` filter."""
+    longMessage = True
+
+    def test_filter(self):
+        result = get_range(5)
+        self.assertEqual(result, range(5), msg=(
+            "Filter should behave exactly like Python's range function"))
+
+
 class LoadContextNodeTestCase(TestCase):
     """Tests for the ``LoadContextNode`` template node."""
     def test_node(self):

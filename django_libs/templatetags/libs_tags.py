@@ -119,6 +119,22 @@ def navactive(request, url, exact=0):
     return ''
 
 
+@register.filter
+def get_range(value):
+    """
+    Returns the range over a given value.
+
+    Usage::
+
+        {% load libs_tags %}
+        {% for item in 5|get_range %}
+            {{ item }}
+        {% endfor %}
+
+    """
+    return range(value)
+
+
 @register.inclusion_tag('django_libs/analytics.html')
 def render_analytics_code(anonymize_ip='anonymize'):
     """

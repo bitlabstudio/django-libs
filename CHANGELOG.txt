@@ -1,5 +1,6 @@
 === (ongoing) ===
 
+- added get_range templatetag
 
 === 1.7 ===
 

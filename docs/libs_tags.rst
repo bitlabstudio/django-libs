@@ -16,6 +16,18 @@ Usage::
     {{ result }}
 
 
+get_range
+---------
+
+``get_range`` behaves just like Python's ``range`` function and allows you to
+iterate over ranges in your templates::
+
+    {% load libs_tags %}
+    {% for item in 5|get_range %}
+        Item number {{ item }}
+    {% endfor %}
+
+
 get_verbose
 -----------
 

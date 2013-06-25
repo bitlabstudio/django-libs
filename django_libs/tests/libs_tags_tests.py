@@ -1,4 +1,5 @@
 """Tests for the templatetags of the ``project-kairos`` project."""
+from django.template import Context, Template
 from django.test import RequestFactory, TestCase
 
 from django_libs.templatetags.libs_tags import *  # NOQA
@@ -78,3 +79,15 @@ class RenderAnalyticsCodeTestCase(TestCase):
             'anonymize_ip': 'anonymize'
         }
         self.assertEqual(result, expected, msg=('Should return a dict.'))
+
+
+class VerbatimTestCase(TestCase):
+    """Tests for the ``verbatim`` template tag."""
+    longMessage = True
+
+    def test_tag(self):
+        template = Template(
+            '{% load libs_tags %}{% verbatim %}{% if test1 %}{% test1 %}'
+            '{% endif %}{{ test2 }}{% endverbatim %}')
+        self.assertEqual(template.render(Context()),
+                         '{% if test1 %}{% test1 %}{% endif %}{{ test2 }}')

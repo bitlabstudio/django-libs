@@ -1,5 +1,9 @@
 === (ongoing) ===
 
+=== 1.9 ===
+
+- added verbatim templatetag
+
 === 1.8 ===
 
 - added get_range templatetag

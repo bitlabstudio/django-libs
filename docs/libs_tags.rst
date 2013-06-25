@@ -133,3 +133,28 @@ or (if you don't want to use the ``anonymizeIp`` setting)::
 
 If you would like to override the template used by the tag, please use
 ``django_libs/analytics.html``.
+
+
+verbatim
+--------
+
+``verbatim`` is a tag to render x-tmpl templates in Django templates without
+losing the code structure.
+
+Usage::
+
+    {% load libs_tags %}
+    {% verbatim %}
+    {% if test1 %}
+        {% test1 %}
+    {% endif %}
+    {{ test2 }}
+    {% endverbatim %}
+
+
+The output will be::
+
+    {% if test1 %}
+        {% test1 %}
+    {% endif %}
+    {{ test2 }}

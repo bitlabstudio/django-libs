@@ -1,5 +1,8 @@
 === (ongoing) ===
 
+
+=== 1.10 ===
+
 - added calculate_dimensions_template_tag
 
 === 1.9 ===

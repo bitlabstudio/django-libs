@@ -1,8 +1,38 @@
 """Tests for the templatetags of the ``project-kairos`` project."""
+import mock
+
 from django.template import Context, Template
 from django.test import RequestFactory, TestCase
 
 from django_libs.templatetags.libs_tags import *  # NOQA
+
+
+class CalculateDimensionsTestCase(TestCase):
+    """Tests for the ``calculate_dimensions`` templatetag."""
+    longMessage = True
+
+    def test_tag(self):
+        image = mock.Mock()
+        image.width = 1
+        image.height = 2
+        result = calculate_dimensions(image, 20, 10)
+        self.assertEqual(result, '10x20', msg=(
+            'If the width is smaller than the height, the thumbnail should'
+            ' also have a smaller width'))
+
+        image.width = 2
+        image.height = 1
+        result = calculate_dimensions(image, 20, 10)
+        self.assertEqual(result, '20x10', msg=(
+            'If the width is bigger than the height, the thumbnail should'
+            ' also have a bigger width'))
+
+        image.width = 1
+        image.height = 1
+        result = calculate_dimensions(image, 20, 10)
+        self.assertEqual(result, '20x10', msg=(
+            'If the width is equal to the height, the thumbnail should'
+            ' be in landscape format.'))
 
 
 class GetRangeTestCase(TestCase):

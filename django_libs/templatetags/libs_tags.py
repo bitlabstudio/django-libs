@@ -13,6 +13,14 @@ register = template.Library()
 
 
 @register.assignment_tag
+def calculate_dimensions(image, long_side, short_side):
+    """Returns the thumbnail dimensions depending on the images format."""
+    if image.width >= image.height:
+        return '{0}x{1}'.format(long_side, short_side)
+    return '{0}x{1}'.format(short_side, long_side)
+
+
+@register.assignment_tag
 def call(obj, method, *args, **kwargs):
     """
     Allows to call any method of any object with parameters.

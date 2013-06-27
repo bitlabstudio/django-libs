@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+- added calculate_dimensions_template_tag
+
 === 1.9 ===
 
 - added verbatim templatetag

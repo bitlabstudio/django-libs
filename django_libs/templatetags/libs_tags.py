@@ -59,6 +59,11 @@ def get_verbose(obj, field_name=""):
 
 @register.assignment_tag
 def get_profile_for(user):
+    """
+    Allows to call the get_profile utility function from django-libs in a
+    template.
+
+    """
     return utils.get_profile(user)
 
 
@@ -76,6 +81,7 @@ class LoadContextNode(template.Node):
 
 @register.tag
 def load_context(parser, token):
+    # TODO Docstring!
     try:
         # split_contents() knows not to split quoted strings.
         tag_name, fqn = token.split_contents()

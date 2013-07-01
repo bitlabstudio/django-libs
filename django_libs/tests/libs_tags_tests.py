@@ -1,10 +1,11 @@
 """Tests for the templatetags of the ``project-kairos`` project."""
-import mock
+from mock import Mock
 
 from django.template import Context, Template
 from django.test import RequestFactory, TestCase
 
 from django_libs.templatetags.libs_tags import *  # NOQA
+from .test_app.factories import DummyProfileFactory
 
 
 class CalculateDimensionsTestCase(TestCase):
@@ -12,7 +13,7 @@ class CalculateDimensionsTestCase(TestCase):
     longMessage = True
 
     def test_tag(self):
-        image = mock.Mock()
+        image = Mock()
         image.width = 1
         image.height = 2
         result = calculate_dimensions(image, 20, 10)
@@ -35,14 +36,44 @@ class CalculateDimensionsTestCase(TestCase):
             ' be in landscape format.'))
 
 
-class GetRangeTestCase(TestCase):
-    """Tests for the ``get_range`` filter."""
+class CallTestCase(TestCase):
+    """Tests for the ``call`` templatetag."""
     longMessage = True
 
-    def test_filter(self):
-        result = get_range(5)
-        self.assertEqual(result, range(5), msg=(
-            "Filter should behave exactly like Python's range function"))
+    def setUp(self):
+        self.func = lambda args: args
+        self.obj = Mock(func=self.func)
+
+    def test_tag(self):
+        self.assertEqual(call(self.obj, 'func', 'test_string'), 'test_string')
+
+
+class GetVerboseTestCase(TestCase):
+    """Tests for the ``get_verbose`` templatetag."""
+    longMessage = True
+
+    def setUp(self):
+        self.profile = DummyProfileFactory()
+
+    def test_tag(self):
+        self.assertEqual(
+            get_verbose(self.profile, 'dummy_field'), 'Dummy Field',
+            msg='Returned the wrong verbose name for the "dummy_field".')
+        self.assertEqual(
+            get_verbose(self.profile, 'non_existant_field'), '', msg=(
+                'Should return "" for a non-existant field.'))
+
+
+class GetProfileForTestCase(TestCase):
+    """Tests for the ``get_profile_for`` templatetag."""
+    longMessage = True
+
+    def setUp(self):
+        self.profile = DummyProfileFactory()
+        self.user = self.profile.user
+
+    def test_tag(self):
+        self.assertEqual(get_profile_for(self.user), self.profile)
 
 
 class LoadContextNodeTestCase(TestCase):
@@ -96,6 +127,16 @@ class NavactiveTestCase(TestCase):
         self.assertEqual(result, '', msg=(
             "When the given string is a url name, it should return"
             " '', if it matches the path, but returned %s" % result))
+
+
+class GetRangeTestCase(TestCase):
+    """Tests for the ``get_range`` filter."""
+    longMessage = True
+
+    def test_filter(self):
+        result = get_range(5)
+        self.assertEqual(result, range(5), msg=(
+            "Filter should behave exactly like Python's range function"))
 
 
 class RenderAnalyticsCodeTestCase(TestCase):

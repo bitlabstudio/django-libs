@@ -1,5 +1,6 @@
 """Models for the ``test_app`` app."""
 from django.db import models
+from django.utils.translation import ugettext_lazy as _
 
 from simple_translation.translation_pool import translation_pool
 
@@ -12,7 +13,10 @@ from ...models_mixins import (
 class DummyProfile(SimpleTranslationMixin, models.Model):
     """Just a dummy profile model for testing purposes."""
     user = models.ForeignKey('auth.User')
-    dummy_field = models.CharField(max_length=128)
+    dummy_field = models.CharField(
+        verbose_name=_('Dummy Field'),
+        max_length=128,
+    )
 
     objects = SimpleTranslationPublishedManager()
 

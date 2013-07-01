@@ -146,7 +146,7 @@ class RenderAnalyticsCodeTestCase(TestCase):
     def test_tag(self):
         result = render_analytics_code()
         expected = {
-            'ANALYTICS_TRACKING_ID': 'UA-XXXXXXX-XX',
+            'ANALYTICS_TRACKING_ID': 'UA-THISISNOREAL-ID',
             'anonymize_ip': 'anonymize'
         }
         self.assertEqual(result, expected, msg=('Should return a dict.'))

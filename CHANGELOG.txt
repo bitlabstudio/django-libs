@@ -1,5 +1,8 @@
 === (ongoing) ===
 
+
+=== 1.11 ===
+
 - auto-setting CUSTOM_FORMAT_MODULE_PATHS setting if not already set
 
 === 1.10 ===

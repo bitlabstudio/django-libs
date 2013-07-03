@@ -2,6 +2,25 @@ Template Tags
 =============
 
 
+calculate_dimensions
+--------------------
+
+``calculate_dimensions`` is a way to auto-correct thumbnail dimensions
+depending on the images format. The required args are am image instance, the
+length of the long image side and finally the length of the short image side.
+
+Usage Example with easy_thumbnails::
+
+    {% load libs_tags thumbnail %}
+    {% calculate_dimensions image 320 240 as dimensions%}
+    <img src="{% thumbnail image dimensions %}" />
+
+
+It then ouputs ``320x240`` if the image is landscape and ``240x320`` if the
+image is portait.
+
+
+
 call
 ----
 

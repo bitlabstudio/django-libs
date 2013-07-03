@@ -23,6 +23,9 @@ from django.utils.translation import (
     to_locale
 )
 
+CUSTOM_FORMAT_MODULE_PATHS = getattr(settings, 'CUSTOM_FORMAT_MODULE_PATHS',
+                                     ['localized_names.formats'])
+
 # format_cache is a mapping from (format_type, lang) to the format string.
 # By using the cache, it is possible to avoid running get_format_modules
 # repeatedly.
@@ -48,7 +51,7 @@ def iter_format_modules(lang):
     """
     if check_for_language(lang):
         format_locations = []
-        for path in settings.CUSTOM_FORMAT_MODULE_PATHS:
+        for path in CUSTOM_FORMAT_MODULE_PATHS:
             format_locations.append(path + '.%s')
         format_locations.append('django.conf.locale.%s')
         locale = to_locale(lang)

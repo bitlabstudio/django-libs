@@ -20,5 +20,5 @@ urlpatterns = patterns(
         anonymous_view=anonymous_view,
         anonymous_view_kwargs=anonymous_view_kwargs,
         ), name='dummy_hybrid'),
-    url(r'^proto/$', RapidPrototypingView.as_view(), name='prototype',)
+#     url(r'^proto/$', RapidPrototypingView.as_view(), name='prototype',)
 )

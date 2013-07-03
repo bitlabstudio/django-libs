@@ -43,12 +43,12 @@ class HybridViewTestCase(ViewTestMixin, TestCase):
         self.should_be_callable_when_authenticated(self.user)
 
 
-class RapidPrototypingViewTestCase(ViewTestMixin, TestCase):
-    """Tests for the ``RapidPrototypingView`` view class."""
-    longMessage = True
+# class RapidPrototypingViewTestCase(ViewTestMixin, TestCase):
+#     """Tests for the ``RapidPrototypingView`` view class."""
+#     longMessage = True
 
-    def get_view_name(self):
-        return 'prototype'
+#     def get_view_name(self):
+#         return 'prototype'
 
-    def test_view(self):
-        self.should_be_callable_when_anonymous()
+#     def test_view(self):
+#         self.should_be_callable_when_anonymous()

@@ -95,7 +95,7 @@ def load_context(parser, token):
 
 
 @register.simple_tag
-def navactive(request, url, exact=0):
+def navactive(request, url, exact=0, use_resolver=1):
     """
     Returns ``active`` if the given URL is in the url path, otherwise ''.
 
@@ -111,21 +111,25 @@ def navactive(request, url, exact=0):
     :param exact: If ``1`` then the parameter ``url`` must be equal to
       ``request.path``, otherwise the parameter ``url`` can just be a part of
       ``request.path``.
+    :use_resolver: If ``0`` we will not try to compare ``url`` with existing
+      view names but we will only compare it with ``request.path``.
 
     """
-    try:
-        if url == resolve(request.path).url_name:
-            # Checks the url pattern in case a view_name is posted
-            return 'active'
-        elif url == request.path:
-            # Workaround to catch URLs with more than one part, which don't
-            # raise a Resolver404 (e.g. '/index/info/')
+    if use_resolver:
+        try:
+            if url == resolve(request.path).url_name:
+                # Checks the url pattern in case a view_name is posted
+                return 'active'
+            elif url == request.path:
+                # Workaround to catch URLs with more than one part, which don't
+                # raise a Resolver404 (e.g. '/index/info/')
+                match = request.path
+            else:
+                return ''
+        except Resolver404:
+            # Indicates, that a simple url string is used (e.g. '/index/')
             match = request.path
-        else:
-            return ''
-    except Resolver404:
-        # Indicates, that a simple url string is used (e.g. '/index/')
-        match = request.path
+
     if exact and url == match:
         return 'active'
     elif not exact and url in request.path:

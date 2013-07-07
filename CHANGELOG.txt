@@ -1,5 +1,6 @@
 === (ongoing) ===
 
+- Added use_resolver parameter to navative templatetag
 
 === 1.11 ===
 

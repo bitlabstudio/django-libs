@@ -27,6 +27,7 @@ Contents:
    test_email_backend
    test_mixins
    testrunner
+   utils
    utils_email
    views
    views_mixins

@@ -1,15 +1,51 @@
 """Tests for the utils of ``django_libs``."""
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.test import TestCase
 from django.contrib.auth.models import SiteProfileNotAvailable
 
-from ..utils import get_profile
+from ..utils import conditional_decorator, get_profile
 from .factories import UserFactory
 from test_app.models import DummyProfile
 
 
+def dummy_decorator(func):
+    def wrapper():
+        return 0
+    return wrapper
+
+
+@conditional_decorator(dummy_decorator, False)
+def test_method():
+    """Used to test the ``conditional_decorator``."""
+    return 1
+
+
+@conditional_decorator(dummy_decorator, True)
+def test_method_true():
+    """Used to test the ``conditional_decorator``."""
+    return 1
+
+
 def get_profile_method(user):
     return DummyProfile.objects.get_or_create(user=user)[0]
+
+
+class ConditionalDecoratorTestCase(TestCase):
+    """Tests for the ``conditional_decorator``."""
+    longMessage = True
+
+    def test_decorator_with_condition_false(self):
+        result = test_method()
+        self.assertEqual(result, 1, msg=(
+            'The method should have been executed normally, without calling'
+            ' the decorator'))
+
+    def test_decorator_with_condition_true(self):
+        result = test_method_true()
+        self.assertEqual(result, 0, msg=(
+            'The method should have been executed with the decorator'))
 
 
 class GetProfileTestCase(TestCase):

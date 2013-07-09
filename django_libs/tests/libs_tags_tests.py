@@ -1,5 +1,5 @@
 """Tests for the templatetags of the ``project-kairos`` project."""
-from mock import Mock
+from mock import Mock, patch
 
 from django.template import Context, Template
 from django.test import RequestFactory, TestCase
@@ -127,6 +127,22 @@ class NavactiveTestCase(TestCase):
         self.assertEqual(result, '', msg=(
             "When the given string is a url name, it should return"
             " '', if it matches the path, but returned %s" % result))
+
+    @patch('django_libs.templatetags.libs_tags.resolve')
+    def test_use_resolver_true(self, mock_resolve):
+        req = RequestFactory().get('/index/test/')
+        result = navactive(req, '/index/test/')
+        self.assertTrue(mock_resolve.called, msg=(
+            'When calling the tag normally, we will try to resolve the given'
+            ' url.'))
+
+    @patch('django_libs.templatetags.libs_tags.resolve')
+    def test_use_resolver_false(self, mock_resolve):
+        req = RequestFactory().get('/index/test/')
+        result = navactive(req, '/index/test/', use_resolver=False)
+        self.assertFalse(mock_resolve.called, msg=(
+            'When calling the tag with use_resolve=False the resolver should'
+            ' not be called at all'))
 
 
 class GetRangeTestCase(TestCase):

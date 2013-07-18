@@ -46,6 +46,18 @@ iterate over ranges in your templates::
         Item number {{ item }}
     {% endfor %}
 
+You can also calculate the difference between your value and a max value.
+This is useful if you want to fill up empty space with items so that the
+total amount of items is always ``max_num``::
+
+    {% load libs_tags %}
+    {% for item in object_list.count|get_range %}
+        // render the actual items
+    {% endfor %}
+    {% for item in object_list.count|get_range:10 %}
+        // render the placeholder items to fill up the space
+    {% endfor %}
+
 
 get_verbose
 -----------

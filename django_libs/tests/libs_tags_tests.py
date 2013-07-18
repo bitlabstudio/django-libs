@@ -154,6 +154,11 @@ class GetRangeTestCase(TestCase):
         self.assertEqual(result, range(5), msg=(
             "Filter should behave exactly like Python's range function"))
 
+    def test_filter_with_max_num(self):
+        result = get_range(3, 5)
+        self.assertEqual(result, range(2), msg=(
+            'Filter should return the difference between value and max_num'))
+
 
 class RenderAnalyticsCodeTestCase(TestCase):
     """Tests for the ``render_analytics_code`` templatetag."""

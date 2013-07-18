@@ -138,18 +138,31 @@ def navactive(request, url, exact=0, use_resolver=1):
 
 
 @register.filter
-def get_range(value):
+def get_range(value, max_num=None):
     """
     Returns the range over a given value.
+
+    :param value: The number to pass to the range function
+    :param max_num: Optional. Use this if you want to get a range over the
+      difference between the actual number and a maximum amount. This can
+      be useful to display placeholder items in a situation where the
+      space must always be filled up with 5 items but your actual list
+      might only have 2 items.
 
     Usage::
 
         {% load libs_tags %}
-        {% for item in 5|get_range %}
-            {{ item }}
+
+        {% for item in object_list.count|get_range %}
+            {{ item }} // render real items here
+        {% endfor %}
+        {% for item in object_list.count|get_range:5 %}
+            // render placeholder items here
         {% endfor %}
 
     """
+    if max_num:
+        value = max_num - value
     return range(value)
 
 

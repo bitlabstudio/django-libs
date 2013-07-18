@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+- Extended get_range filter
+
 === 1.13 ===
 
 - Added conditional_decorator

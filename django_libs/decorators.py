@@ -12,6 +12,19 @@ def lockfile(lockfile_name, lock_wait_timeout=-1):
     """
     Only runs the method if the lockfile is not acquired.
 
+    You should create a setting ``LOCKFILE_PATH`` which points to
+    ``/home/username/tmp/``.
+
+    In your management command, use it like so::
+
+        LOCKFILE = os.path.join(
+            settings.LOCKFILE_FOLDER, 'command_name')
+
+        class Command(NoArgsCommand):
+            @lockfile(LOCKFILE)
+            def handle_noargs(self, **options):
+                # your command here
+
     :lockfile_name: A unique name for a lockfile that belongs to the wrapped
       method.
     :lock_wait_timeout: Seconds to wait if lockfile is acquired. If ``-1`` we

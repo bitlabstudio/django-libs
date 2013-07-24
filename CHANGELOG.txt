@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+- Improved docs for lockfile decorator
+
 === 0.14 ===
 
 - Extended get_range filter

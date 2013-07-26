@@ -1,8 +1,8 @@
 Middlewares
 ===========
 
-AjaxRequestMiddleware
----------------------
+AjaxRedirectMiddleware
+----------------------
 
 When calling a view from an AJAX call and when that view returns a redirect,
 jQuery changes the status code to 200. This means, in your success callback
@@ -13,6 +13,17 @@ jQuery will not change it.
 
 This middleware makes sure that, if there was a redirect and if it was an
 AJAX call, the return code will be set to ``278``.
+
+In order to use this middleware, add it to your ``MIDDLEWARE_CLASSES``
+setting::
+
+    MIDDLEWARE_CLASSES = [
+        'django.middleware.common.CommonMiddleware',
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        ...
+        'django_libs.middleware.AjaxRedirectMiddleware',
+    ]
+
 
 In your jQuery script you can now react to redirects::
 

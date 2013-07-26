@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+=== 0.15 ===
+
 - Improved docs for lockfile decorator
 - Added modals.js for easier Twitter Bootstrap modal handling
 

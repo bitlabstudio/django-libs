@@ -1,11 +1,11 @@
 === (ongoing) ===
 
-=== 0.15 ===
+=== 1.15 ===
 
 - Improved docs for lockfile decorator
 - Added modals.js for easier Twitter Bootstrap modal handling
 
-=== 0.14 ===
+=== 1.14 ===
 
 - Extended get_range filter
 

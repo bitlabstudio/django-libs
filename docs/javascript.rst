@@ -38,7 +38,7 @@ Twitter Bootstrap modal. In order to use this:
 
 Now you could place a button somewhere in your code and use the ``onclick``
 event to open the modal. You can pass in the URL that serves the modal's
-template and extra context that should be sent in the reuqest as GET data::
+template and extra context that should be sent in the request as GET data::
 
     <a href="#" onclick="getModal('/ajax-url/', {next: '/profile/'}); return false;">Open Modal</a>
 

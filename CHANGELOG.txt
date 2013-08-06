@@ -1,5 +1,8 @@
 === (ongoing) ===
 
+- Added `ajax_redirect_passthrough` parameter to AjaxRedirectMiddleware in
+  order to skip this middleware for some ajax calls, if needed.
+
 === 1.15 ===
 
 - Improved docs for lockfile decorator

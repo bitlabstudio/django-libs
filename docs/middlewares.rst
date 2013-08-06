@@ -34,3 +34,15 @@ In your jQuery script you can now react to redirects::
             $("#" + container).replaceWith(data);
         }
     });
+
+When you are using this middleware, it means that Redirects will no longer be
+executed on the server and your AJAX function has to call the redirect URL
+manually. If you really want to get the HTML that the last view in the redirect
+chain would return, you can disable this middleware for some requests by
+adding `ajax_redirect_passthrough` parameter to your data payload. When this
+parameter is given, the middleware will be skipped::
+
+    <form method="post" action=".">
+        <input type="hidden" name="ajax_redirect_passthrough" value="1" />
+        ...
+    </form>

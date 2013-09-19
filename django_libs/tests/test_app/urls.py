@@ -3,7 +3,7 @@ from django.conf.urls.defaults import patterns, url
 from django.http import HttpResponse
 from django.views.generic import View
 
-from django_libs.views import HybridView, RapidPrototypingView
+from django_libs.views import HybridView
 
 View.get = lambda req, *args, **kwargs: HttpResponse('SUCCESS!')
 authed_view = View.as_view()
@@ -20,5 +20,4 @@ urlpatterns = patterns(
         anonymous_view=anonymous_view,
         anonymous_view_kwargs=anonymous_view_kwargs,
         ), name='dummy_hybrid'),
-#     url(r'^proto/$', RapidPrototypingView.as_view(), name='prototype',)
 )

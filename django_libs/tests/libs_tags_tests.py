@@ -131,7 +131,7 @@ class NavactiveTestCase(TestCase):
     @patch('django_libs.templatetags.libs_tags.resolve')
     def test_use_resolver_true(self, mock_resolve):
         req = RequestFactory().get('/index/test/')
-        result = navactive(req, '/index/test/')
+        navactive(req, '/index/test/')
         self.assertTrue(mock_resolve.called, msg=(
             'When calling the tag normally, we will try to resolve the given'
             ' url.'))
@@ -139,7 +139,7 @@ class NavactiveTestCase(TestCase):
     @patch('django_libs.templatetags.libs_tags.resolve')
     def test_use_resolver_false(self, mock_resolve):
         req = RequestFactory().get('/index/test/')
-        result = navactive(req, '/index/test/', use_resolver=False)
+        navactive(req, '/index/test/', use_resolver=False)
         self.assertFalse(mock_resolve.called, msg=(
             'When calling the tag with use_resolve=False the resolver should'
             ' not be called at all'))

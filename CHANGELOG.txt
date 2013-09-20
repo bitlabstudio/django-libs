@@ -1,5 +1,8 @@
 === (ongoing) ===
 
+- Added AccessMixin to use login_required decorator for views based on a
+  setting.
+
 === 1.16 ===
 
 - Added `ajax_redirect_passthrough` parameter to AjaxRedirectMiddleware in

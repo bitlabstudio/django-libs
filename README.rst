@@ -25,6 +25,8 @@ and applications.
 * AjaxRedirectMiddleware for jQuery AJAX calls that return 301 redirects
 * AjaxResponseMixin for views that can return their normal template or a
   partial template when it is an ajax call
+* AccessMixin which allows to use views with the ``login_required`` decorator
+  based on a setting.
 * A context processor to add your analytics tracking code to your template
   context.
 * A decorator ``lockfile`` for wrapping ``handle`` methods of admin commands

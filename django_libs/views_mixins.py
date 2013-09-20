@@ -2,8 +2,27 @@
 import json
 import os
 
+from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic import DetailView
+
+
+class AccessMixin(object):
+    """Mixin to controls access to the view based on a setting."""
+    access_mixin_setting_name = None
+
+    def dispatch(self, request, *args, **kwargs):
+        # Check, if user needs to be logged in
+        if self.access_mixin_setting_name is None:
+            raise Exception(
+                'Please set `access_mixin_setting_name` on the view that'
+                ' inherits the AccessMixin')
+        if getattr(settings, self.access_mixin_setting_name, False):
+            return super(AccessMixin, self).dispatch(
+                request, *args, **kwargs)
+        return login_required(super(AccessMixin, self).dispatch)(
+            request, *args, **kwargs)
 
 
 class AjaxResponseMixin(object):

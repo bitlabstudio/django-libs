@@ -1,6 +1,24 @@
 Views Mixins
 ===========
 
+AccessMixin
+-----------
+
+Use this mixin if you want to allow users of your app to decide if the views
+of your app should be accessible to anonymous users or only to authenticated
+users::
+
+    form django_libs.views_mixins import AccessMixin
+
+    class YourView(AccessMixin, TemplateView):
+        access_mixin_setting_name = 'YOURAPP_ALLOW_ANONYMOUS'
+
+        # your view code here
+
+Given the above example, users of your app would have to set
+``YOURAPP_ALLOW_ANONYMOUS`` to ``True`` or ``False``.
+
+
 AjaxResponseMixin
 -----------------
 

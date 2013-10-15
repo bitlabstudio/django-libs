@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+=== 1.18 ===
+
 - Added $wrapper parameter to getModal and postModal calls. This allows
   to load the returned html into any wrapper element, not only the
   $('#ajax-modal') element

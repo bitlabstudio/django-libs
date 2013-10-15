@@ -17,12 +17,17 @@ function renderModal($modal, data, textStatus, jqXHR) {
 }
 
 
-function getModal(url, get_data) {
+function getModal(url, get_data, $wrapper) {
     // Calls the modal with a GET request.
     //
     // :param url: The url that should return the modal's template
     // :param get_data: Either {} or something like {next: '/'}
-    var $modal = $('#ajax-modal');
+    var $modal;
+    if ($wrapper) {
+        $modal = $wrapper;
+    } else {
+        $modal = $('#ajax-modal');
+    }
     $('body').modalmanager('loading');
     $.get(url, get_data, function(data, textStatus, jqXHR) {
         renderModal($modal, data, textStatus, jqXHR);
@@ -31,12 +36,17 @@ function getModal(url, get_data) {
 }
 
 
-function postModal(url, $form) {
+function postModal(url, $form, $wrapper) {
     // Calls the modal with a POST request.
     //
     // :param url: The url that should return the modal's template
     // :param $form: The form to be posted as a jQuery object
-    var $modal = $('#ajax-modal');
+    var $modal;
+    if ($wrapper) {
+        $modal = $wrapper;
+    } else {
+        $modal = $('#ajax-modal');
+    }
     $('body').modalmanager('loading');
     $.post(url, $form.serializeArray(), function(data, textStatus, jqXHR) {
         renderModal($modal, data, textStatus, jqXHR);

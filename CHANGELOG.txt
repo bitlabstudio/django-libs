@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+=== 1.19 ===
+
 - Added set_context templatetag. It allows to put any variable into the
   template context. See docs for further info.
 

@@ -1,5 +1,8 @@
 === (ongoing) ===
 
+- Added set_context templatetag. It allows to put any variable into the
+  template context. See docs for further info.
+
 === 1.18 ===
 
 - Added $wrapper parameter to getModal and postModal calls. This allows

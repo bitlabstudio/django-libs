@@ -189,6 +189,11 @@ class VerbatimNode(template.Node):
         return self.text
 
 
+@register.assignment_tag
+def set_context(value):
+    return value
+
+
 @register.tag
 def verbatim(parser, token):
     """Tag to render x-tmpl templates with Django template code."""

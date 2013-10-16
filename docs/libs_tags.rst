@@ -166,6 +166,21 @@ If you would like to override the template used by the tag, please use
 ``django_libs/analytics.html``.
 
 
+set_context
+-----------
+
+``set_context`` allows you to put any variable into the context. This can be
+useful when you are creating prototype templates where you don't have the full
+template context, yet but you already know that certain variables will be
+available later::
+
+    {% load libs_tags %}
+    {% set_context '/dummy-url/' as contact_url %}
+    {% blocktrans with contact_url=contact_url %}
+    Please don't hesitate to <a href="{{ contact_url }}">contact us</a>.
+    {% endblocktrans %}
+
+
 verbatim
 --------
 

@@ -11,6 +11,7 @@ class EmailBackend(SmtpEmailBackend):
 
     In order to use it, set this in your local_settings.py::
 
+        EMAIL_BACKEND = 'django_libs.test_email_backend.EmailBackend'
         TEST_EMAIL_BACKEND_RECIPIENTS = (
             ('Name', 'email@gmail.com'),
         )

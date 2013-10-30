@@ -1,8 +1,12 @@
 === (ongoing) ===
 
+=== 1.21.1 ===
+
+- Fixed PlaceholderForm for non-text inputs.
+
 === 1.21 ===
 
-- Added PlaceholderForm
+- Added PlaceholderForm.
 
 === 1.20 ===
 

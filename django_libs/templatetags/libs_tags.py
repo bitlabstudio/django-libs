@@ -5,11 +5,47 @@ from django import template
 from django.conf import settings
 from django.core.urlresolvers import resolve, Resolver404
 from django.db.models.fields import FieldDoesNotExist
+from django.template.defaultfilters import truncatewords_html
 
 from django_libs import utils
 
 
 register = template.Library()
+
+
+@register.tag('block_truncatewords_html')
+def block_truncatewords_html(parser, token):
+    """
+    Allows to truncate any block of content.
+
+    This is useful when rendering other tags that generate content,
+    such as django-cms' ``render_placeholder`` tag, which is not available
+    as an assignment tag::
+
+        {% load libs_tags %}
+        {% block_truncatewords_html 15 %}
+            {% render_placeholder object.placeholder %}
+        {% endblocktruncatewordshtml %}
+
+    """
+    bits = token.contents.split()
+    try:
+        word_count = bits[1]
+    except IndexError:
+        word_count = 15
+    nodelist = parser.parse(('endblocktruncatewordshtml',))
+    parser.delete_first_token()
+    return BlockTruncateWordsHtmlNode(nodelist, word_count)
+
+
+class BlockTruncateWordsHtmlNode(template.Node):
+    def __init__(self, nodelist, word_count):
+        self.nodelist = nodelist
+        self.word_count = word_count
+
+    def render(self, context):
+        output = self.nodelist.render(context)
+        return truncatewords_html(output, self.word_count)
 
 
 @register.assignment_tag

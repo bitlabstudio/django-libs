@@ -2,6 +2,23 @@ Template Tags
 =============
 
 
+block_truncatewords_html
+------------------------
+Allows to truncate any block of content. Calls Django's ``truncatewords_html``
+internally.
+
+This is useful when rendering other tags that generate content,
+such as django-cms' ``render_placeholder`` tag, which is not available
+as an assignment tag::
+
+    {% load libs_tags %}
+    {% block_truncatewords_html 15 %}
+        {% render_placeholder object.placeholder %}
+    {% endblocktruncatewordshtml %}
+
+The first parameter is the number of words you would like to truncate after.
+
+
 calculate_dimensions
 --------------------
 

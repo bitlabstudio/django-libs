@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+- Added block_truncatewords_html template tag (see docs).
+
 === 1.19 ===
 
 - Added set_context templatetag. It allows to put any variable into the

@@ -102,6 +102,25 @@ In order to use it, just import the tag library and set the tag::
     </ul>
 
 
+get_query_params
+----------------
+
+Allows to change (or add) one of the URL get parameter while keeping all the
+others.
+
+Usage::
+
+    {% load libs_tags %}
+    {% get_query_params request "page" page_obj.next_page_number as query %}
+    <a href="?{{ query }}">Next</a>
+
+You often need this when you have a paginated set of objects with filters.
+
+Your url would look something like ``/?region=1&gender=m``. Your paginator
+needs to create links with ``&page=2`` in them but you must keep the
+filter values when switching pages.
+
+
 load_context
 ------------
 

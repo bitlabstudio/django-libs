@@ -1,6 +1,7 @@
 === (ongoing) ===
 
 - Added block_truncatewords_html template tag (see docs).
+- Addded get_query_params templatetag (see docs).
 
 === 1.19 ===
 

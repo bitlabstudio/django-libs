@@ -103,6 +103,35 @@ def get_profile_for(user):
     return utils.get_profile(user)
 
 
+@register.assignment_tag
+def get_query_params(request, param_name, param_value):
+    """
+    Allows to change one of the URL get parameter while keeping all the others.
+
+    Usage::
+
+        {% load libs_tags %}
+        {% get_query_params request "page" page_obj.next_page_number as query %}
+        <a href="?{{ query }}">Next</a>
+
+    You often need this when you have a paginated set of objects with filters.
+
+    Your url would look something like ``/?region=1&gender=m``. Your paginator
+    needs to create links with ``&page=2`` in them but you must keep the
+    filter values when switching pages.
+
+    :param request: The request instance.
+    :param param_name: The name of the parameter that should be added or
+      updated.
+    :param param_value: The value of the parameter that should be added or
+      updated.
+
+    """
+    query = request.GET.copy()
+    query[param_name] = param_value
+    return query.urlencode()
+
+
 class LoadContextNode(template.Node):
     def __init__(self, fqn):
         self.fqn = fqn

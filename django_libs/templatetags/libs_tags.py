@@ -110,9 +110,9 @@ def get_query_params(request, param_name, param_value):
 
     Usage::
 
-        {% load libs_tags %}
-        {% get_query_params request "page" page_obj.next_page_number as query %}
-        <a href="?{{ query }}">Next</a>
+      {% load libs_tags %}
+      {% get_query_params request "page" page_obj.next_page_number as query %}
+      <a href="?{{ query }}">Next</a>
 
     You often need this when you have a paginated set of objects with filters.
 

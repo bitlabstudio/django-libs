@@ -7,7 +7,5 @@ class PlaceholderForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(PlaceholderForm, self).__init__(*args, **kwargs)
         for field_name in self.fields:
-            field = self.fields[field_name]
-            if type(field.widget) in (forms.TextInput, forms.DateInput):
-                field.widget = forms.TextInput(
-                    attrs={'placeholder': field.label})
+            self.fields[field_name].widget = forms.TextInput(
+                attrs={'placeholder': self.fields[field_name].label})

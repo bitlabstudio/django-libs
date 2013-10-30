@@ -19,7 +19,8 @@ Contents:
    context_processors
    decorators
    factories
-   javascript 
+   forms
+   javascript
    libs_tags
    loaders
    middlewares

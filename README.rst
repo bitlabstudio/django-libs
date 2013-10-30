@@ -39,6 +39,7 @@ and applications.
 * A ``SimpleTranslationMixin`` which makes it easier to write factories for
   models that are registered with ``simple-translation``.
 * Utilities for loading classes from a string like ``myproject.models.Foobar``.
+* Form, which add field labels as placeholder attributes.
 
 **Coming soon**:
 

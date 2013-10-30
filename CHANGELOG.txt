@@ -1,5 +1,9 @@
 === (ongoing) ===
 
+=== 1.21 ===
+
+- Added PlaceholderForm
+
 === 1.20 ===
 
 - Added block_truncatewords_html template tag (see docs).

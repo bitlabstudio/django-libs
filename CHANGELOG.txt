@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+- Added ``render_analytics2_code`` tag which uses the new analytics syntax
+
 === 1.21.1 ===
 
 - Fixed PlaceholderForm for non-text inputs.

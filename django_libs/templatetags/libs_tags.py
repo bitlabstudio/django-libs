@@ -246,6 +246,20 @@ def render_analytics_code(anonymize_ip='anonymize'):
     }
 
 
+@register.inclusion_tag('django_libs/analytics2.html')
+def render_analytics2_code():
+    """
+    Renders the new google analytics snippet.
+
+    """
+    return {
+        'ANALYTICS_TRACKING_ID': getattr(
+            settings, 'ANALYTICS_TRACKING_ID', 'UA-XXXXXXX-XX'),
+        'ANALYTICS_DOMAIN': getattr(
+            settings, 'ANALYTICS_DOMAIN', 'example.com')
+    }
+
+
 class VerbatimNode(template.Node):
     def __init__(self, text):
         self.text = text

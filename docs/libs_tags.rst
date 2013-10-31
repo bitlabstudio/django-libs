@@ -196,10 +196,30 @@ Usage::
 or (if you don't want to use the ``anonymizeIp`` setting)::
 
     {% load libs_tags %}
+    ...
+    <head>
+    ...
     {% render_analytics_code False %}
+    </head>
 
 If you would like to override the template used by the tag, please use
 ``django_libs/analytics.html``.
+
+
+render_analytics2_code
+----------------------
+
+The same as ``render_analytics_code`` but uses the new syntax and always uses
+anonymize IP.
+
+Usage::
+
+    {% load libs_tags %}
+    ...
+    <head>
+    ...
+    {% render_analytics2_code %}
+    </head>
 
 
 set_context

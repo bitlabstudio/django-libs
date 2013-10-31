@@ -16,7 +16,7 @@ class ViewTestMixin(object):
     def _check_callable(self, method='get', data=None, message=None,
                         kwargs=None, user=None, anonymous=False,
                         and_redirects_to=None, status_code=None,
-                        called_by='is_callable', ajax=False):
+                        called_by='is_callable', ajax=False, extra={}):
         """
         The method that does the actual assertions for ``is_callable`` and
         ``is_not_callable``.
@@ -33,6 +33,8 @@ class ViewTestMixin(object):
         :status_code: Overrides the expected status code. Default is 200.
             Can either be a list of status codes or a single integer.
         :called_by: A string that is either 'is_callable' or 'is_not_callable'.
+        :extra: Additional parameters to be passed to the client GET/POST. For
+            example, follow = True if you want the client to follow redirects.
 
 
         """
@@ -56,9 +58,7 @@ class ViewTestMixin(object):
             data or self.get_data_payload(),
         )
         if ajax:
-            extra = {'HTTP_X_REQUESTED_WITH': 'XMLHttpRequest'}
-        else:
-            extra = {}
+            extra.update({'HTTP_X_REQUESTED_WITH': 'XMLHttpRequest'})
 
         # making the request
         if method.lower() == 'get':
@@ -96,7 +96,7 @@ class ViewTestMixin(object):
 
     def is_callable(self, method='get', data=None, message=None, kwargs=None,
                     user=None, anonymous=False, and_redirects_to=None,
-                    status_code=None, code=None, ajax=False):
+                    status_code=None, code=None, ajax=False, extra={}):
         """
         A shortcut for an assertion on status code 200 or 302.
 
@@ -111,6 +111,8 @@ class ViewTestMixin(object):
             name.
         :status_code: Overrides the expected status code. Default is 200.
             Can either be a list of status codes or a single integer.
+        :extra: Additional parameters to be passed to the client GET/POST. For
+            example, follow = True if you want the client to follow redirects.
 
         If no arguments are given, it makes the assertion according to the
         current test situation.
@@ -128,7 +130,8 @@ class ViewTestMixin(object):
         return self._check_callable(
             method=method, data=data, message=message, kwargs=kwargs,
             user=user, anonymous=anonymous, and_redirects_to=and_redirects_to,
-            status_code=status_code, ajax=ajax, called_by='is_callable')
+            status_code=status_code, ajax=ajax, called_by='is_callable',
+            extra=extra)
 
     def is_not_callable(self, method='get', message=None, data=None,
                         kwargs=None, user=None, anonymous=False,
@@ -262,6 +265,14 @@ class ViewTestMixin(object):
         """
         self.client.login(username=user.username, password=password)
 
+    def get_login_url(self):
+        """
+        Returns the URL when testing the redirect for anonymous users to the login page.
+        Can be overwritten if you do not use the auth_login as default or configure your
+        urls.py file in a specific way.
+        """
+        return reverse('auth_login')
+
     def should_redirect_to_login_when_anonymous(self, url=None):
         """
         Tests if the view redirects to login when the user is anonymous.
@@ -274,7 +285,7 @@ class ViewTestMixin(object):
             url = self.get_url()
         resp = self.client.get(url)
         self.assertRedirects(resp,
-                             '{0}?next={1}'.format(reverse('auth_login'), url))
+                             '{0}?next={1}'.format(self.get_login_url(), url))
         return resp
 
     def should_be_callable_when_anonymous(self, url=None):

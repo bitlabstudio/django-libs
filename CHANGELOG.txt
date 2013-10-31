@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+=== 1.22 ===
+
 - Added ``render_analytics2_code`` tag which uses the new analytics syntax
 
 === 1.21.1 ===

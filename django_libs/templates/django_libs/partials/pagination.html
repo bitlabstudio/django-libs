@@ -1,0 +1,17 @@
+{% load i18n libs_tags %}
+<ul class="pagination">
+    {% if page_obj.has_previous %}
+        {% get_query_params request "page" page_obj.previous_page_number as query %}
+    {% endif %}
+    <li {% if not page_obj.has_previous %}class="disabled"{% endif %}>
+        <a href="?{{ query }}" title="{% trans "Previous" %}" {% if not page_obj.has_previous %}onclick="return false;"{% endif %}>&laquo;</a>
+    </li>
+    {% for page_number in page_obj.paginator.num_pages|get_range %}
+        {% get_query_params request "page" page_number|add:"1" as query %}
+        <li {% if page_number|add:"1" == page_obj.number %}class="active"{% endif %}><a href="?{{ query }}">{{ page_number|add:"1" }}</a></li>
+    {% endfor %}
+    {% if page_obj.has_next %}
+        {% get_query_params request "page" page_obj.next_page_number as query %}
+    {% endif %}
+    <li {% if not page_obj.has_next %}class="disabled"{% endif %}><a href="?{{ query }}" title="{% trans "Next" %}" {% if not page_obj.has_next %}onclick="return false;"{% endif %}>&raquo;</a></li>
+</ul>

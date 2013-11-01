@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+- added partials/pagination.html template
+
 === 1.22 ===
 
 - Added ``render_analytics2_code`` tag which uses the new analytics syntax

@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+=== 1.23 ===
+
 - added partials/pagination.html template
 
 === 1.22 ===

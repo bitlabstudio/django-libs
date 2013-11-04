@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+- Added HvadFactoryMixin
+
 === 1.23 ===
 
 - added partials/pagination.html template

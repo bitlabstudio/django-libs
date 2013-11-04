@@ -1,6 +1,28 @@
 Factories
 =========
 
+HvadFactoryMixin
+++++++++++++++++
+
+Writing factories for models under 
+`django-hvad <http://django-hvad.readthedocs.org/en/latest/index.html>`_
+is a bit hard because for each object you also have to create a translation
+object. This mixin takes care of this. Simply inherit from this mixin and
+write your factory as if it was a normal model, but make sure to add a
+``language_code`` field with the default language you would like to use::
+
+    import factory
+    from django_libs.tests.factories import HvadFactoryMixin
+
+    class NewsEntryFactory(HvadFactoryMixin, factory.DjangoModelFactory):
+        FACTORY_FOR = NewsEntry
+
+        language_code = 'en'  # This is important
+        title = factory.Sequence(lambda x: 'A title {0}'.format(x))
+        slug = factory.Sequence(lambda x: 'a-title-{0}'.format(x))
+        is_published = True
+
+
 SimpleTranslationMixin
 ++++++++++++++++++++++
 

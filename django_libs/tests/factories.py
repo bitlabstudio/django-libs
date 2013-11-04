@@ -16,6 +16,38 @@ from django.contrib.auth.models import User
 import factory
 
 
+class HvadFactoryMixin(object):
+    """
+    Overrides ``_create`` and takes care of creating a translation.
+
+    """
+    @classmethod
+    def _create(cls, target_class, *args, **kwargs):
+        obj = target_class(*args, **kwargs)
+
+        # Factory boy and hvad behave a bit weird. When getting the object,
+        # obj.some_translatable_field is actually set although no tranlsation
+        # object exists, yet. We have to cache the translatable values ...
+        cached_values = {}
+        for field in obj._translated_field_names:
+            if field in ['id', 'master', 'language_code']:
+                continue
+            cached_values[field] = getattr(obj, field)
+
+        # ... because when calling translate, the translatable values will be
+        # lost on the obj ...
+        obj.translate(obj.language_code)
+        for field in obj._translated_field_names:
+            if field in ['id', 'master', 'language_code']:
+                continue
+            # ... so here we will put them back on the object, this time they
+            # will be saved on the translatable object.
+            setattr(obj, field, cached_values[field])
+
+        obj.save()
+        return obj
+
+
 class SimpleTranslationMixin(object):
     """
     Adds a ``_prepare`` method that takes care of creating a translation.

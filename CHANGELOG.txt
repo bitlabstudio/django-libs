@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+=== 1.24 ===
+
 - Added HvadFactoryMixin
 
 === 1.23 ===

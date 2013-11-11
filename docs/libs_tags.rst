@@ -75,6 +75,29 @@ total amount of items is always ``max_num``::
         // render the placeholder items to fill up the space
     {% endfor %}
 
+get_range_around
+----------------
+Returns a range of numbers around the given number.
+
+This is useful for pagination, where you might want to show something
+like this::
+
+    << < ... 4 5 (6) 7 8 .. > >>
+
+In this example `6` would be the current page and we show 2 items left and
+right of that page.
+
+Usage::
+
+    {% load libs_tags %}
+    {% get_range_around page_obj.paginator.num_pages page_obj.number 2 as pages %}
+
+The parameters are:
+
+1. range_amount: Number of total items in your range (1 indexed)
+2. The item around which the result should be centered (1 indexed)
+3. Number of items to show left and right from the current item.
+
 
 get_verbose
 -----------

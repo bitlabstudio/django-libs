@@ -2,6 +2,7 @@
 
 - Removed anonymize IP from analytics2 code because it doesn't seem to work.
   Trying to figure out if this is the issue. Might add this back later.
+- Added get_range_around assignment tag
 
 === 1.24 ===
 

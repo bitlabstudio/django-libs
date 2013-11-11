@@ -207,13 +207,6 @@ def get_range(value, max_num=None):
     """
     Returns the range over a given value.
 
-    :param value: The number to pass to the range function
-    :param max_num: Optional. Use this if you want to get a range over the
-      difference between the actual number and a maximum amount. This can
-      be useful to display placeholder items in a situation where the
-      space must always be filled up with 5 items but your actual list
-      might only have 2 items.
-
     Usage::
 
         {% load libs_tags %}
@@ -225,10 +218,76 @@ def get_range(value, max_num=None):
             // render placeholder items here
         {% endfor %}
 
+    :param value: The number to pass to the range function
+    :param max_num: Optional. Use this if you want to get a range over the
+      difference between the actual number and a maximum amount. This can
+      be useful to display placeholder items in a situation where the
+      space must always be filled up with 5 items but your actual list
+      might only have 2 items.
+
     """
     if max_num:
         value = max_num - value
     return range(value)
+
+
+@register.assignment_tag
+def get_range_around(range_value, current_item, padding):
+    """
+    Returns a range of numbers around the given number.
+
+    This is useful for pagination, where you might want to show something
+    like this::
+
+        << < ... 4 5 (6) 7 8 .. > >>
+
+    In this example `6` would be the current page and we show 2 items around
+    that page (including the page itself).
+
+    Usage::
+
+        {% load libs_tags %}
+        {% get_range_around page_obj.paginator.num_pages page_obj.number 5 as pages %}
+
+    :param range_amount: Number of total items in your range (1 indexed)
+    :param current_item: The item around which the result should be centered
+      (1 indexed)
+    :param padding: Number of items to show left and right from the current
+      item.
+
+    """
+    total_items = 1 + padding * 2
+    left_bound = padding
+    right_bound = range_value - padding
+    if range_value <= total_items:
+        range_items = range(1, range_value+1)
+        return {
+            'range_items': range_items,
+            'left_padding': False,
+            'right_padding': False,
+        }
+    if current_item <= left_bound:
+        range_items = range(current_item, range_value+1)[:total_items]
+        return {
+            'range_items': range_items,
+            'left_padding': range_items[0] > 1,
+            'right_padding': range_items[-1] < range_value,
+        }
+
+    if current_item >= right_bound:
+        range_items = range(1, current_item+1)[-total_items:]
+        return {
+            'range_items': range_items,
+            'left_padding': range_items[0] > 1,
+            'right_padding': range_items[-1] < range_value,
+        }
+
+    range_items = range(current_item-padding, current_item+padding+1)
+    return {
+        'range_items': range_items,
+        'left_padding': True,
+        'right_padding': True,
+    }
 
 
 @register.inclusion_tag('django_libs/analytics.html')

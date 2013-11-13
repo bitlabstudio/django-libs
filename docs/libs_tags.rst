@@ -1,6 +1,24 @@
 Template Tags
 =============
 
+add_form_widget_attr
+--------------------
+Adds widget attributes to a bound form field.
+
+This is helpful if you would like to add a certain class to all your forms
+(i.e. `form-control` to all form fields when you are using Bootstrap)::
+
+    {% load libs_tags %}
+    {% for field in form.fields %}
+        {% add_form_widget_attr field 'class' 'form-control' as field_ %}
+        {{ field_ }}
+    {% endfor %}
+
+The tag will check if the attr already exists and only append your value.
+If you would like to replace existing attrs, set `replace=1`::
+
+    {% add_form_widget_attr field 'class' 'form-control' replace=1 as field_ %}
+
 
 block_truncatewords_html
 ------------------------

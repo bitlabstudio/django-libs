@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+- added add_form_widget_attr templatetag
+
 === 1.25 ===
 
 - Removed anonymize IP from analytics2 code because it doesn't seem to work.

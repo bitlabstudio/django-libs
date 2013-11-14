@@ -107,6 +107,34 @@ def call(obj, method, *args, **kwargs):
     return getattr(obj, method)(*args, **kwargs)
 
 
+@register.assignment_tag
+def get_form_field_type(field):
+    """
+    Returns the widget type of the given form field.
+
+    This can be helpful if you want to render form fields in your own way
+    (i.e. following Bootstrap standards).
+
+    Usage::
+
+        {% load libs_tags %}
+        {% for field in form %}
+            {% get_form_field_type field as field_type %}
+            {% if "CheckboxInput" in field_type %}
+                <div class="checkbox">
+                    <label>
+                        // render input here
+                    </label>
+                </div>
+            {% else %}
+                {{ field }}
+            {% endif %}
+        {% endfor %}
+
+    """
+    return field.field.widget.__str__()
+
+
 @register.filter
 def get_verbose(obj, field_name=""):
     """

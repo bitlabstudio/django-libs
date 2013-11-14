@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+=== 1.27 ===
+
 - added get_form_field_type templatetag
 
 === 1.26 ===

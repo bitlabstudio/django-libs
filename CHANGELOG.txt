@@ -1,5 +1,9 @@
 === (ongoing) ===
 
+=== 1.27.1 ==
+
+- Fixed PlaceholderForm
+
 === 1.27 ===
 
 - added get_form_field_type templatetag

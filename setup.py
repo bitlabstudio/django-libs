@@ -24,6 +24,6 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
-        'factory_boy<2.0.0',
+        'factory_boy>2.0.0',
     ]
 )

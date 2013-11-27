@@ -1,5 +1,9 @@
 === (ongoing) ===
 
+=== 1.28 ==
+
+- prepared factories for latest factory boy
+
 === 1.27.1 ==
 
 - Fixed PlaceholderForm

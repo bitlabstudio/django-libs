@@ -5,7 +5,7 @@
 # ===========================================================================
 Sphinx
 django-mailer
-factory_boy<2.0.0
+factory_boy>2.0.0
 
 simple_translation
 

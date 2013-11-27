@@ -5,7 +5,7 @@ from ..factories import UserFactory
 from models import DummyProfile, DummyProfileTranslation
 
 
-class DummyProfileFactory(factory.Factory):
+class DummyProfileFactory(factory.DjangoModelFactory):
     """Factory for the ``DummyProfile`` model."""
     FACTORY_FOR = DummyProfile
 
@@ -13,7 +13,7 @@ class DummyProfileFactory(factory.Factory):
     dummy_field = factory.Sequence(lambda n: 'dummyfield{}'.format(n))
 
 
-class DummyProfileTranslationFactory(factory.Factory):
+class DummyProfileTranslationFactory(factory.DjangoModelFactory):
     """Factory for the ``DummyProfileTranslation`` model."""
     FACTORY_FOR = DummyProfileTranslation
 

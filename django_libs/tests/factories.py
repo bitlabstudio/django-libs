@@ -92,7 +92,7 @@ class SimpleTranslationMixin(object):
         return obj
 
 
-class UserFactory(factory.Factory):
+class UserFactory(factory.DjangoModelFactory):
     """
     Creates a new ``User`` object.
 

@@ -104,7 +104,15 @@ def call(obj, method, *args, **kwargs):
       should be called.
 
     """
-    return getattr(obj, method)(*args, **kwargs)
+    function_or_dict_or_member = getattr(obj, method)
+    if callable(function_or_dict_or_member):
+        # If it is a function, let's call it
+        return function_or_dict_or_member(*args, **kwargs)
+    if not len(args):
+        # If it is a member, lets return it
+        return function_or_dict_or_member
+    # If it is a dict, let's access one of it's keys
+    return function_or_dict_or_member[args[0]]
 
 
 @register.assignment_tag

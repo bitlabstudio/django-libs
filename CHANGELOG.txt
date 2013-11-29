@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+- Extended call templatetag. Need to extend tests before making a release
+
 === 1.28 ==
 
 - prepared factories for latest factory boy

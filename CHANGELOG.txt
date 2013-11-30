@@ -1,6 +1,6 @@
 === (ongoing) ===
 
-- Extended call templatetag. Need to extend tests before making a release
+- Extended `call` templatetag. We can call dicts and attribtues now. 
 
 === 1.28 ==
 

@@ -60,13 +60,15 @@ call
 ----
 
 ``call`` is an assignemnt tag that allows you to call any method of any object
-with args and kwargs, just like you love to do it in Python and hate not to be
-able to do it in Django templates.
+with args and kwargs, because you do it in Python all the time and you hate not
+to be able to do it in Django templates.
 
 Usage::
 
     {% load libs_tags %}
-    {% call myobj 'mymethod' arg1 arg2 kwarg1=kwarg1 as result %}
+    {% call myobj 'mymethod' myvar foobar=myvar2 as result %}
+    {% call myobj 'mydict' 'mykey' as result %}
+    {% call myobj 'myattribute' as result %}
     {{ result }}
 
 

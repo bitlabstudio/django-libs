@@ -43,10 +43,24 @@ class CallTestCase(TestCase):
     def setUp(self):
         self.func = lambda args: args
         self.obj = Mock(func=self.func)
+        self.obj.member = 'foobar'
+        self.obj.dictionary = {'foo': 'bar', }
 
     def test_tag(self):
         self.assertEqual(tags.call(
-            self.obj, 'func', 'test_string'), 'test_string')
+            self.obj, 'func', 'test_string'), 'test_string', msg=(
+                "When using it against an object's function, that function"
+                " should be called and it's return value should be returned"))
+
+        self.assertEqual(tags.call(
+            self.obj, 'member'), 'foobar', msg=(
+                "When using it against an object's member, that member"
+                " should be returned"))
+
+        self.assertEqual(tags.call(
+            self.obj, 'dictionary', 'foo'), 'bar', msg=(
+                "When using it against an object's member and that member"
+                " is a dict it should return the value of the given key"))
 
 
 class GetVerboseTestCase(TestCase):

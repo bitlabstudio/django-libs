@@ -98,6 +98,8 @@ def call(obj, method, *args, **kwargs):
     Usage::
 
         {% call myobj 'mymethod' myvar foobar=myvar2 as result %}
+        {% call myobj 'mydict' 'mykey' as result %}
+        {% call myobj 'myattribute' as result %}
 
     :param obj: The object which has the method that you would like to call
     :param method: A string representing the attribute on the object that

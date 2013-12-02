@@ -72,6 +72,21 @@ Usage::
     {{ result }}
 
 
+
+exclude
+-------
+
+``exclude`` is a filter tag that allows you to exclude one queryset from
+another.
+
+Usage::
+
+    {% load libs_tags %}
+    {% for clean_obj in qs|exclude:dirty_qs %}
+        {{ clean_obj }}
+    {% endfor %}
+
+
 get_form_field_type
 -------------------
 Returns the widget type of the given form field.

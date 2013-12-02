@@ -1,8 +1,12 @@
 === (ongoing) ===
 
+=== 1.30 ===
+
+- Added `exclude` template tag.
+
 === 1.29 ===
 
-- Extended `call` templatetag. We can call dicts and attribtues now. 
+- Extended `call` templatetag. We can call dicts and attribtues now.
 
 === 1.28 ==
 

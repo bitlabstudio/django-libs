@@ -6,6 +6,7 @@ from django.test import RequestFactory, TestCase
 
 from django_libs.templatetags import libs_tags as tags
 from .test_app.factories import DummyProfileFactory
+from .test_app.models import DummyProfile
 
 
 class CalculateDimensionsTestCase(TestCase):
@@ -254,3 +255,23 @@ class VerbatimTestCase(TestCase):
             '{% endif %}{{ test2 }}{% endverbatim %}')
         self.assertEqual(template.render(Context()),
                          '{% if test1 %}{% test1 %}{% endif %}{{ test2 }}')
+
+
+class ExcludeTestCase(TestCase):
+    """Tests for the ``exclude`` templatetag."""
+    longMessage = True
+
+    def setUp(self):
+        self.dummy = DummyProfileFactory()
+        DummyProfileFactory()
+        DummyProfileFactory()
+        DummyProfileFactory()
+
+    def test_tag(self):
+        qs = DummyProfile.objects.all()
+        self.assertFalse(tags.exclude(qs, qs), msg=(
+            'Should return an empty queryset, if both provided querysets are'
+            ' identical.'))
+        self.assertEqual(
+            tags.exclude(qs, qs.exclude(pk=self.dummy.pk)).count(), 1,
+            msg=('Should return one profile.'))

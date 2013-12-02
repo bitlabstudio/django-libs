@@ -1,4 +1,6 @@
 """Forms of the ``django_libs`` app."""
+
+
 class PlaceholderForm(object):
     """Form to add the field's label as a placeholder attribute."""
     def __init__(self, *args, **kwargs):

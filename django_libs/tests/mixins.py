@@ -267,9 +267,10 @@ class ViewTestMixin(object):
 
     def get_login_url(self):
         """
-        Returns the URL when testing the redirect for anonymous users to the login page.
-        Can be overwritten if you do not use the auth_login as default or configure your
-        urls.py file in a specific way.
+        Returns the URL when testing the redirect for anonymous users to the
+        login page.
+        Can be overwritten if you do not use the auth_login as default or
+        configure your urls.py file in a specific way.
         """
         return reverse('auth_login')
 

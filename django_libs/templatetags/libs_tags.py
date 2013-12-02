@@ -30,7 +30,8 @@ def add_form_widget_attr(field, attr_name, attr_value, replace=0):
     The tag will check if the attr already exists and only append your value.
     If you would like to replace existing attrs, set `replace=1`::
 
-        {% add_form_widget_attr field 'class' 'form-control' replace=1 as field_ %}
+        {% add_form_widget_attr field 'class' 'form-control' replace=1 as
+          field_ %}
 
 
     """
@@ -316,7 +317,8 @@ def get_range_around(range_value, current_item, padding):
     Usage::
 
         {% load libs_tags %}
-        {% get_range_around page_obj.paginator.num_pages page_obj.number 5 as pages %}
+        {% get_range_around page_obj.paginator.num_pages page_obj.number 5
+          as pages %}
 
     :param range_amount: Number of total items in your range (1 indexed)
     :param current_item: The item around which the result should be centered

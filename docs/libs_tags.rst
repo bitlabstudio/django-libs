@@ -72,6 +72,19 @@ Usage::
     {{ result }}
 
 
+concatenate
+-----------
+
+Concatenates the given strings.
+
+Usage::
+
+    {% load libs_tags %}
+    {% concatenate "foo" "bar" as new_string %}
+    {% concatenate "foo" "bar" divider="_" as another_string %}
+
+The above would result in the strings "foobar" and "foo_bar".
+
 
 exclude
 -------

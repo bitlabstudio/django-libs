@@ -64,6 +64,23 @@ class CallTestCase(TestCase):
                 " is a dict it should return the value of the given key"))
 
 
+class ConcatenateTestCase(TestCase):
+    """Tests for the ``concatenate`` templatetag."""
+    longMessage = True
+
+    def test_tag(self):
+        result = tags.concatenate('foo', 'bar')
+        self.assertEqual(result, 'foobar', msg=(
+            'If no divider is specified, the given strings should just be'
+            ' concatenated'))
+        result = tags.concatenate('foo', 'bar', 'foobar')
+        self.assertEqual(result, 'foobarfoobar', msg=(
+            'We can concatenate any number of strings'))
+        result = tags.concatenate('foo', 'bar', divider='_')
+        self.assertEqual(result, 'foo_bar', msg=(
+            'If divider kwarg is given, the strings should be concatenated'
+            ' with the given divider.'))
+
 class GetVerboseTestCase(TestCase):
     """Tests for the ``get_verbose`` templatetag."""
     longMessage = True

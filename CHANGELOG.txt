@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+- Added concatenate templatetag
+
 === 1.30 ===
 
 - Added `exclude` template tag.

@@ -119,6 +119,30 @@ def call(obj, method, *args, **kwargs):
 
 
 @register.assignment_tag
+def concatenate(*args, **kwargs):
+    """
+    Concatenates the given strings.
+
+    Usage::
+
+        {% load libs_tags %}
+        {% concatenate "foo" "bar" as new_string %}
+        {% concatenate "foo" "bar" divider="_" as another_string %}
+
+    The above would result in the strings "foobar" and "foo_bar".
+
+    """
+    divider = kwargs.get('divider', '')
+    result = ''
+    for arg in args:
+        if result == '':
+            result += arg
+        else:
+            result += '{0}{1}'.format(divider, arg)
+    return result
+
+
+@register.assignment_tag
 def get_form_field_type(field):
     """
     Returns the widget type of the given form field.

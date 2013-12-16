@@ -362,7 +362,7 @@ def get_range_around(range_value, current_item, padding):
             'right_padding': False,
         }
     if current_item <= left_bound:
-        range_items = range(current_item, range_value+1)[:total_items]
+        range_items = range(1, range_value+1)[:total_items]
         return {
             'range_items': range_items,
             'left_padding': range_items[0] > 1,
@@ -370,7 +370,7 @@ def get_range_around(range_value, current_item, padding):
         }
 
     if current_item >= right_bound:
-        range_items = range(1, current_item+1)[-total_items:]
+        range_items = range(1, range_value+1)[-total_items:]
         return {
             'range_items': range_items,
             'left_padding': range_items[0] > 1,

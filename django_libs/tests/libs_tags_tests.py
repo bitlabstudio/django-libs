@@ -226,20 +226,20 @@ class GetRangeAround(TestCase):
         self.assertFalse(result['right_padding'])
 
         result = tags.get_range_around(8, 2, 2)
-        self.assertEqual(result['range_items'], [2, 3, 4, 5, 6], msg=(
+        self.assertEqual(result['range_items'], [1, 2, 3, 4, 5], msg=(
             'If center value is so close to the left bound that the distance'
             ' from left bound to center value is less or equal to the'
-            ' padding, return the range beginning from the center value'))
-        self.assertTrue(result['left_padding'])
+            ' padding, return the range beginning from the left bound'))
+        self.assertFalse(result['left_padding'])
         self.assertTrue(result['right_padding'])
 
         result = tags.get_range_around(8, 6, 2)
-        self.assertEqual(result['range_items'], [2, 3, 4, 5, 6], msg=(
+        self.assertEqual(result['range_items'], [4, 5, 6, 7, 8], msg=(
             'If center value is so close to the right bound that the distance'
             ' from right bound to center value is less or equal to the'
             ' padding, return the range so that it ends at the center value'))
         self.assertTrue(result['left_padding'])
-        self.assertTrue(result['right_padding'])
+        self.assertFalse(result['right_padding'])
 
         result = tags.get_range_around(10, 5, 2)
         self.assertEqual(result['range_items'], [3, 4, 5, 6, 7], msg=(

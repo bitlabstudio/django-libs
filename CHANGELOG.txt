@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+=== 1.32 ===
+
 - Fixed algorithm for pagination (get_range_around templatetag)
 
 === 1.31 ===

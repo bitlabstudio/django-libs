@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+- Added StripTagsFormMixin
+
 === 1.32 ===
 
 - Fixed algorithm for pagination (get_range_around templatetag)

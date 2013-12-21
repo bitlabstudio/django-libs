@@ -1,0 +1,25 @@
+{% load i18n thumbnail static %}
+<div class="libsImageWidget" style="display: none">
+    {% if src %}
+        <a data-label-for-id="{{ input_id }}" href="{{ src }}" target="_blank"><img src="{% thumbnail value 128x128 crop %}" alt="" /></a>
+    {% endif %}
+    <div class="libsImageWidgetControls">
+        <a class="libsImageWidgetButton {{ classes }}" data-id="{{ input_id }}" href="#">{% if src %}{% trans "Change file" %}{% else %}{% trans "Choose file" %}{% endif %}</a>
+        {% if src %}
+            <p>
+                {% trans "Current selection:" %}
+                <a data-label-for-id="{{ input_id }}" href="{{ src }}" target="_blank">{{ file_name }}</a>
+            </p>
+        {% endif %}
+        {% if clear_widget %}
+            <label class="libsImageWidgetLabel" for="{{ checkbox_id }}">
+                {{ checkbox_label }}
+                {{ clear_widget }}
+            </label>
+        {% endif %}
+        {% if not src %}
+            <span data-label-for-id="{{ input_id }}">{% trans "No file chosen" %}</span>
+        {% endif %}
+    </div>
+</div>
+<span class="libsImageWidgetHidden">{{ input }}</span>

@@ -198,7 +198,7 @@ def get_profile_for(user):
 
 
 @register.assignment_tag
-def get_query_params(request, param_name, param_value):
+def get_query_params(request, *args):
     """
     Allows to change one of the URL get parameter while keeping all the others.
 
@@ -208,6 +208,10 @@ def get_query_params(request, param_name, param_value):
       {% get_query_params request "page" page_obj.next_page_number as query %}
       <a href="?{{ query }}">Next</a>
 
+    You can also pass in several pairs of keys and values::
+
+      {% get_query_params request "page" 1 "foobar" 2 as query %}
+
     You often need this when you have a paginated set of objects with filters.
 
     Your url would look something like ``/?region=1&gender=m``. Your paginator
@@ -215,14 +219,18 @@ def get_query_params(request, param_name, param_value):
     filter values when switching pages.
 
     :param request: The request instance.
-    :param param_name: The name of the parameter that should be added or
-      updated.
-    :param param_value: The value of the parameter that should be added or
-      updated.
-
+    :param *args: Make sure to always pass in paris of args. One is the key,
+      one is the value.
     """
     query = request.GET.copy()
-    query[param_name] = param_value
+    index = 1
+    key = ''
+    for arg in args:
+        if index % 2 != 0:
+            key = arg
+        else:
+            query[key] = arg
+        index += 1
     return query.urlencode()
 
 

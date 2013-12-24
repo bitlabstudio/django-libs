@@ -209,6 +209,10 @@ Usage::
     {% get_query_params request "page" page_obj.next_page_number as query %}
     <a href="?{{ query }}">Next</a>
 
+You can also pass in several pairs of keys and values::
+
+    {% get_query_params request "page" 1 "foobar" 2 as query %}
+
 You often need this when you have a paginated set of objects with filters.
 
 Your url would look something like ``/?region=1&gender=m``. Your paginator

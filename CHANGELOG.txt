@@ -1,5 +1,8 @@
 === (ongoing) ===
 
+- Improved get_query_params tag: We can now add more than just one query
+  parameter. See docs for more info.
+
 === 1.33 ===
 
 - Added StripTagsFormMixin

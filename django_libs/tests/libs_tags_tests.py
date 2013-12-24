@@ -109,6 +109,26 @@ class GetProfileForTestCase(TestCase):
         self.assertEqual(tags.get_profile_for(self.user), self.profile)
 
 
+class GetQueryParamsTestCase(TestCase):
+    """Tests for the ``get_query_params`` templatetag."""
+    longMessage = True
+
+    def test_tag(self):
+        req = RequestFactory().get('/?foobar=1')
+
+        result = tags.get_query_params(req, 'foobar', 2)
+        self.assertEqual(result, 'foobar=2', msg=(
+            'Should change the existing query parameter'))
+
+        result = tags.get_query_params(req, 'page', 2)
+        self.assertEqual(result, 'foobar=1&page=2', msg=(
+            'Should add the new parameter to the query'))
+
+        result = tags.get_query_params(req, 'page', 2, 'barfoo', 42)
+        self.assertEqual(result, 'foobar=1&barfoo=42&page=2', msg=(
+            'Should add the new parameters to the query'))
+
+
 class LoadContextNodeTestCase(TestCase):
     """Tests for the ``LoadContextNode`` template node."""
     def test_node(self):

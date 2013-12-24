@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+=== 1.34 ===
+
 - Improved get_query_params tag: We can now add more than just one query
   parameter. See docs for more info.
 

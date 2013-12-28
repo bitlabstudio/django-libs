@@ -1,5 +1,8 @@
 === (ongoing) ===
 
+
+=== 1.35 ===
+
 - fixed mutable defaut value for extra in ViewTestMixin
 - removed deprecated code parameter in preference of status_code
 

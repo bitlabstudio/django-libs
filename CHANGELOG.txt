@@ -1,5 +1,8 @@
 === (ongoing) ===
 
+- fixed mutable defaut value for extra in ViewTestMixin
+- removed deprecated code parameter in preference of status_code
+
 === 1.34 ===
 
 - Improved get_query_params tag: We can now add more than just one query

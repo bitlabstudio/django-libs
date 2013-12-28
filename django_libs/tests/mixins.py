@@ -16,7 +16,7 @@ class ViewTestMixin(object):
     def _check_callable(self, method='get', data=None, message=None,
                         kwargs=None, user=None, anonymous=False,
                         and_redirects_to=None, status_code=None,
-                        called_by='is_callable', ajax=False, extra={}):
+                        called_by='is_callable', ajax=False, extra=None):
         """
         The method that does the actual assertions for ``is_callable`` and
         ``is_not_callable``.
@@ -39,6 +39,8 @@ class ViewTestMixin(object):
 
         """
         # Setting up defaults if not overwritten.
+        if extra is None:
+            extra = {}
         if called_by == 'is_not_callable':
             message_addin = ' not'
         elif called_by == 'is_callable':
@@ -96,7 +98,7 @@ class ViewTestMixin(object):
 
     def is_callable(self, method='get', data=None, message=None, kwargs=None,
                     user=None, anonymous=False, and_redirects_to=None,
-                    status_code=None, code=None, ajax=False, extra={}):
+                    status_code=None, ajax=False, extra=None):
         """
         A shortcut for an assertion on status code 200 or 302.
 
@@ -118,15 +120,6 @@ class ViewTestMixin(object):
         current test situation.
 
         """
-        if not status_code:
-            status_code = code
-        # TODO change the parameter and remove this warning
-        if code:
-            sys.stderr.write(
-                '\n\033[1;31mDeprecationWarning:\033[1;m'
-                ' The ``code`` parameter of ``is_(not_)callable()`` will be'
-                ' changed to ``status_code`` in future versions.\n'
-            )
         return self._check_callable(
             method=method, data=data, message=message, kwargs=kwargs,
             user=user, anonymous=anonymous, and_redirects_to=and_redirects_to,
@@ -135,8 +128,8 @@ class ViewTestMixin(object):
 
     def is_not_callable(self, method='get', message=None, data=None,
                         kwargs=None, user=None, anonymous=False,
-                        and_redirects_to=None, status_code=None, code=None,
-                        ajax=False):
+                        and_redirects_to=None, status_code=None, ajax=False,
+                        extra=None):
         """
         A shortcut for a common assertion on a 404 status code.
 
@@ -150,23 +143,18 @@ class ViewTestMixin(object):
         :anonymous: If True, it logs out the user first. Default is False
             :status_code: Overrides the expected status code. Default is 404.
             Can either be a list of status codes or a single integer.
+        :extra: Additional parameters to be passed to the client GET/POST. For
+            example, follow = True if you want the client to follow redirects.
 
         If no arguments are given, it makes the assertion according to the
         current test situation.
 
         """
-        status_code = code
-        # TODO change the parameter and remove this warning
-        if code:
-            sys.stderr.write(
-                '\n\033[1;31mDeprecationWarning:\033[1;m'
-                ' The ``code`` parameter of ``is_(not_)callable()`` will be'
-                ' changed to ``status_code`` in future versions.\n'
-            )
         return self._check_callable(
             method=method, data=data, message=message, kwargs=kwargs,
             user=user, anonymous=anonymous, and_redirects_to=and_redirects_to,
-            status_code=status_code, ajax=ajax, called_by='is_not_callable')
+            status_code=status_code, ajax=ajax, called_by='is_not_callable',
+            extra=extra)
 
     def get_data_payload(self):
         """

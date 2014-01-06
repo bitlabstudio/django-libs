@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+=== 1.35.1 ===
+
 - Added ViewRequestFactoryTestMixin (documentation to be done, soon)
 
 === 1.35 ===

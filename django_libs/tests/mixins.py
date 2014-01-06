@@ -4,7 +4,10 @@ Generally useful mixins for view tests (integration tests) of any project.
 """
 import sys
 
+from django.contrib.auth.models import AnonymousUser
 from django.core.urlresolvers import reverse
+from django.http import Http404
+from django.test import RequestFactory
 
 from django_libs.tests.factories import UserFactory
 
@@ -330,3 +333,57 @@ class ViewTestMixin(object):
         self.login(user)
         resp = self.client.get(url, data=self.get_data_payload())
         self.assertEqual(resp.status_code, 200)
+
+
+class ViewRequestFactoryTestMixin(object):
+    longMessage = True
+
+    def assertRedirects(self, resp, redirect_url):
+        """
+        Overrides the method that comes with Django's TestCase.
+
+        This is necessary because the original method relies on self.client
+        which we are not using here.
+
+        """
+        self.assertEqual(resp.status_code, 302, msg=('Should redirect'))
+        self.assertEqual(resp._headers['location'][1], redirect_url, msg=(
+            'Should redirect to correct `next_url`'))
+
+    def get_request(self, method=RequestFactory().get, ajax=False, data=None,
+                    user=AnonymousUser(), **kwargs):
+        if data is not None:
+            kwargs.update({'data': data})
+        req = method('/', **kwargs)
+        req.user = user
+        if ajax:
+            req.META['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest'
+        return req
+
+    def get_get_request(self, ajax=False, data=None, user=AnonymousUser(),
+                        **kwargs):
+        return self.get_request(ajax=ajax, data=data, user=user, **kwargs)
+
+    def get_post_request(self, ajax=False, data=None, user=AnonymousUser(),
+                         **kwargs):
+        method = RequestFactory().post
+        return self.get_request(
+            method=method, ajax=ajax, data=data, user=user, **kwargs)
+
+    def get_login_url(self):
+        """
+        Returns the URL when testing the redirect for anonymous users to the
+        login page.
+
+        Can be overwritten if you do not use the auth_login as default or
+        configure your urls.py file in a specific way.
+
+        """
+        return reverse('auth_login')
+
+    def should_redirect_to_login_when_anonymous(self):
+        req = self.get_get_request()
+        resp = self.view_class().dispatch(req)
+        next_url = '/'
+        redirect_url = '{0}?next={1}'.format(self.get_login_url(), next_url)
+        self.assertRedirects(resp, redirect_url)

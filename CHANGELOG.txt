@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+- Added ErrorMiddleware
+
 === 1.35.1 ===
 
 - Added ViewRequestFactoryTestMixin (documentation to be done, soon)

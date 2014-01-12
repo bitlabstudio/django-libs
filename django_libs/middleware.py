@@ -22,3 +22,14 @@ class AjaxRedirectMiddleware(object):
             if type(response) == HttpResponseRedirect:
                 response.status_code = 278
         return response
+
+
+class ErrorMiddleware(object):
+    """Alter HttpRequest objects on Error."""
+
+    def process_exception(self, request, exception):
+        """
+        Add user details.
+        """
+        if request.user and hasattr(request.user, 'email'):
+            request.META['USER'] = request.user.email

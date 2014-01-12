@@ -46,3 +46,22 @@ parameter is given, the middleware will be skipped::
         <input type="hidden" name="ajax_redirect_passthrough" value="1" />
         ...
     </form>
+
+
+ ErrorMiddleware
+ ---------------
+
+ Add this middleware if you would like to see the user's email address in the
+ traceback that is sent to you when a 500 error happens.
+
+In order to use this middleware, add it to your ``MIDDLEWARE_CLASSES``
+setting::
+
+    MIDDLEWARE_CLASSES = [
+        'django.middleware.common.CommonMiddleware',
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        ...
+        'django_libs.middleware.ErrorMiddleware',
+    ]
+
+

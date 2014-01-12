@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+=== 1.35.2 ===
+
 - Added ErrorMiddleware
 
 === 1.35.1 ===

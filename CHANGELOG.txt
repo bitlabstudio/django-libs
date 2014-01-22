@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+- Allow modals.js to be used even without modals, on any given div
+
 === 1.36.1 ===
 
 - Fix for save templatetag: Only manipulating the uppermost context

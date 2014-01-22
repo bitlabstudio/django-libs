@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+=== 1.36 ===
+
 - Added save templatetag and dynamic_hr partial template
 
 === 1.35.2 ===

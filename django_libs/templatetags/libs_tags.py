@@ -430,6 +430,21 @@ class VerbatimNode(template.Node):
         return self.text
 
 
+@register.simple_tag(takes_context=True)
+def save(context, key, value):
+    """
+    Saves any value to the template context.
+
+    Usage::
+
+        {% save "MYVAR" 42 %}
+        {{ MYVAR }}
+
+    """
+    context[key] = value
+    return ''
+
+
 @register.assignment_tag
 def set_context(value):
     return value

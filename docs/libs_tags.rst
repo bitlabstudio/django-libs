@@ -321,8 +321,46 @@ Usage::
     </head>
 
 
+save
+----
+
+``save`` allows you to save any variable to the context. This can be useful
+when you have a template where different sections are rendered
+depending on complex conditions. If you want to render `<hr />` tags between
+those sections, it can be quite difficult to figure out when to render the
+divider and when not.
+
+Usage::
+
+    {% load libs_tags %}
+    ...
+    {% if complex_condition1 %}
+        // Render block 1
+        {% save "NEEDS_HR" 1 %}
+    {% endif %}
+
+    {% if complex_condition2 %}
+        {% if NEEDS_HR %}
+            <hr />
+            {% save "NEEDS_HR" 0 %}
+        {% endif %}
+        // Render block 2
+        {% save "NEEDS_HR" 1 %}
+    {% endif %}
+
+When you have to render lots of divicers, the above example can become more
+elegant when you replace the `if NEEDS_HR` block with::
+
+    {% include "django_libs/partials/dynamic_hr.html" %}
+
+
 set_context
 -----------
+
+NOTE: It turns out that this implementation only saves to the current
+template's context. If you use this in a sub-template, it will not be available
+in the parent template. Use our ``save`` tag for manipulating the global
+RequestContext.
 
 ``set_context`` allows you to put any variable into the context. This can be
 useful when you are creating prototype templates where you don't have the full

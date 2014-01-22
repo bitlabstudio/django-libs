@@ -1,0 +1,6 @@
+{% load libs_tags %}
+{% comment %}Use this with the `save` templatetag (see docs).{% endcomment %}
+{% if NEEDS_HR %}
+    <hr />
+    {% save "NEEDS_HR" 0 %}
+{% endif %}

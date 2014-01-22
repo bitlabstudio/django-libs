@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+- Added save templatetag and dynamic_hr partial template
+
 === 1.35.2 ===
 
 - Added ErrorMiddleware

@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+=== 1.36.1 ===
+
 - Fix for save templatetag: Only manipulating the uppermost context
 
 === 1.36 ===

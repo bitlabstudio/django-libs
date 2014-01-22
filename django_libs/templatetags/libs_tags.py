@@ -441,7 +441,7 @@ def save(context, key, value):
         {{ MYVAR }}
 
     """
-    context[key] = value
+    context.dicts[0][key] = value
     return ''
 
 

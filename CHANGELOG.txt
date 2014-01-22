@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+- Fix for save templatetag: Only manipulating the uppermost context
+
 === 1.36 ===
 
 - Added save templatetag and dynamic_hr partial template

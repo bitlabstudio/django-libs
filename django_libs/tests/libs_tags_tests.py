@@ -1,6 +1,7 @@
 """Tests for the templatetags of the ``project-kairos`` project."""
 from mock import Mock, patch
 
+from django.contrib.contenttypes.models import ContentType
 from django.template import Context, Template
 from django.test import RequestFactory, TestCase
 
@@ -80,6 +81,23 @@ class ConcatenateTestCase(TestCase):
         self.assertEqual(result, 'foo_bar', msg=(
             'If divider kwarg is given, the strings should be concatenated'
             ' with the given divider.'))
+
+
+class GetContentTypeTestCase(TestCase):
+    """Tests for the ``get_content_type`` templatetag."""
+    longMessage = True
+
+    def setUp(self):
+        self.profile = DummyProfileFactory()
+
+    def test_tag(self):
+        self.assertIsInstance(
+            tags.get_content_type(self.profile), ContentType,
+            msg='Should return the profile\'s content type.')
+        self.assertEqual(
+            tags.get_content_type(self.profile, 'model'), 'dummyprofile',
+            msg='Should return the profile\'s content type field model.')
+
 
 class GetVerboseTestCase(TestCase):
     """Tests for the ``get_verbose`` templatetag."""

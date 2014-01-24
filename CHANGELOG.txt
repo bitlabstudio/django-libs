@@ -2,6 +2,10 @@
 
 === 1.37 ===
 
+- Added get_content_type template tag.
+
+=== 1.37 ===
+
 - Allow modals.js to be used even without modals, on any given div
 
 === 1.36.1 ===

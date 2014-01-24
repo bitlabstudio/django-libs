@@ -6,7 +6,6 @@ import sys
 
 from django.contrib.auth.models import AnonymousUser
 from django.core.urlresolvers import reverse
-from django.http import Http404
 from django.test import RequestFactory
 
 from django_libs.tests.factories import UserFactory

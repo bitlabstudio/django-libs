@@ -3,6 +3,7 @@ import importlib
 
 from django import template
 from django.conf import settings
+from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import resolve, Resolver404
 from django.db.models.fields import FieldDoesNotExist
 from django.template.defaultfilters import truncatewords_html
@@ -140,6 +141,21 @@ def concatenate(*args, **kwargs):
         else:
             result += '{0}{1}'.format(divider, arg)
     return result
+
+
+@register.filter
+def get_content_type(obj, field_name=False):
+    """
+    Returns the content type of an object.
+
+    :param obj: A model instance.
+    :param field_name: Field of the object to return.
+
+    """
+    content_type = ContentType.objects.get_for_model(obj)
+    if field_name:
+        return getattr(content_type, field_name, '')
+    return content_type
 
 
 @register.assignment_tag

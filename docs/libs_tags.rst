@@ -100,6 +100,24 @@ Usage::
     {% endfor %}
 
 
+get_content_type
+----------------
+
+``get_content_type`` is a simple template filter to return the content type of
+an object or to return one of the content type's fields.
+
+This might be very useful if you want to e.g. call a URL, which needs a content
+object as a keyword argument.
+
+In order to use it, just import the tag library and set the tag::
+
+    {% load libs_tags %}
+    <a href="{% url "review_content_object" content_type=user|get_content_type:'model' object_id=user.pk %}">Review this user!</a>
+
+As you can see, you can provide a field argument to return the relevant content
+type's field.
+
+
 get_form_field_type
 -------------------
 Returns the widget type of the given form field.

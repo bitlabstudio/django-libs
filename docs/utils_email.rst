@@ -32,7 +32,6 @@ In order to use it, include the following code::
         request={},
         extra_context={'Foo': bar},
         subject_template='email/notification_subject.html',
-        body_template_plain='email/notification_body_plain.html',
         body_template='email/notification_body.html',
         from_email=('Name', 'email@gmail.com'),
         recipients=[self.user.email, ]

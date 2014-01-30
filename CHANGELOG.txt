@@ -1,6 +1,7 @@
 === (ongoing) ===
 
-- Added "html to plain text" parser
+- Added "html to plain text" parser.
+- Use parser to generate the plain text template in send_mail function.
 
 === 1.37 ===
 

@@ -3,7 +3,7 @@ from django.conf import settings
 from django.test import TestCase
 from django.contrib.auth.models import SiteProfileNotAvailable
 
-from ..utils import conditional_decorator, get_profile
+from ..utils import conditional_decorator, get_profile, html_to_plain_text
 from .factories import UserFactory
 from test_app.models import DummyProfile
 
@@ -83,3 +83,31 @@ class GetProfileTestCase(TestCase):
         profile = get_profile(self.user)
         self.assertEqual(type(profile), DummyProfile, msg=(
             'The method should return a DummyProfile instance.'))
+
+
+class HTMLToPlainTextTestCase(TestCase):
+    """Tests for the ``html_to_plain_text`` function."""
+    longMessage = True
+
+    def test_html_to_plain_text(self):
+        html = (
+            """
+            <html>
+                    <head></head>
+                    <body>
+                        <ul>
+                            <li>List element</li>
+                            <li>List element</li>
+                            <li>List element</li>
+                        </ul>
+                    </body>
+                </html>
+            """
+        )
+        self.assertEqual(
+            html_to_plain_text(html),
+            '\n  * List element\n  * List element\n  * List element',
+            msg='Should return a formatted plain text.')
+        with open('test_app/templates/html_email.html', 'rb') as file:
+            self.assertIn('[1]: *|ARCHIVE|*\n', html_to_plain_text(file), msg=(
+                'Should return a formatted plain text.'))

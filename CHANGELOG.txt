@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+- Added "html to plain text" parser
+
 === 1.37 ===
 
 - Added get_content_type template tag.

@@ -40,6 +40,7 @@ and applications.
   models that are registered with ``simple-translation``.
 * Utilities for loading classes from a string like ``myproject.models.Foobar``.
 * Form, which add field labels as placeholder attributes.
+* Function to convert html code into formatted plain text.
 
 **Coming soon**:
 

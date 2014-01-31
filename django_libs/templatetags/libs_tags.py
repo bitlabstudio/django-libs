@@ -10,6 +10,8 @@ from django.template.defaultfilters import truncatewords_html
 
 from django_libs import utils
 
+from ..loaders import load_member
+
 
 register = template.Library()
 
@@ -46,9 +48,41 @@ def add_form_widget_attr(field, attr_name, attr_value, replace=0):
         return field
 
 
+@register.tag('block_anyfilter')
+def block_anyfilter(parser, token):
+    """
+    Turn any template filter into a blocktag.
+
+    Usage::
+
+        {% load libs_tags %}
+        {% block_anyfilter django.template.defaultfilters.truncatewords_html 15 %}
+            // Something complex that generates html output
+        {% endblockanyfilter %}
+
+    """
+    bits = token.contents.split()
+    nodelist = parser.parse(('endblockanyfilter',))
+    parser.delete_first_token()
+    return BlockAnyFilterNode(nodelist, bits[1], *bits[2:])
+
+
+class BlockAnyFilterNode(template.Node):
+    def __init__(self, nodelist, original_tag_fqn, *args):
+        self.nodelist = nodelist
+        self.original_tag = load_member(original_tag_fqn)
+        self.args = args
+
+    def render(self, context):
+        output = self.nodelist.render(context)
+        return self.original_tag(output, *self.args)
+
+
 @register.tag('block_truncatewords_html')
 def block_truncatewords_html(parser, token):
     """
+    DEPRECATED: Use block_anyfilter instead!
+
     Allows to truncate any block of content.
 
     This is useful when rendering other tags that generate content,

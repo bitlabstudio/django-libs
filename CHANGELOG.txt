@@ -2,6 +2,7 @@
 
 - Added "html to plain text" parser.
 - Use parser to generate the plain text template in send_mail function.
+- Added block_anyfilter templatetag
 
 === 1.37 ===
 

@@ -20,6 +20,32 @@ If you would like to replace existing attrs, set `replace=1`::
     {% add_form_widget_attr field 'class' 'form-control' replace=1 as field_ %}
 
 
+block_anyfilter
+---------------
+Turns any template filter into a blocktag.
+
+Usage::
+
+    {% load libs_tags %}
+    {% block_anyfilter django.template.defaultfilters.truncatewords_html 15 %}
+        // Something complex that generates html output
+    {% endblockanyfilter %}
+
+This is useful when you are working with django-cms' `render_placeholder` tag,
+for example. That tag is unfortunately not an assignment tag, therefore you
+can't really do anything with the output. Imagine you want to show a list of
+latest news and for each news a little excerpt based on the content
+placeholder. That placeholder could contain anything, like images and `h1` tags
+but you really just want to show the first ten words without images or any
+styles. Now you can do this:
+
+    {% block_anyfilter django.template.defaultfilters.truncatewords_html 15 %}
+        {% block_anyfilter django.template.defaultfilters.striptags %}
+            {% render_placeholder news_entry.content %}
+        {% endblockanyfilter %}
+    {% endblockanyfilter %}
+
+
 block_truncatewords_html
 ------------------------
 Allows to truncate any block of content. Calls Django's ``truncatewords_html``

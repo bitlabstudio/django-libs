@@ -1,5 +1,9 @@
 === (ongoing) ===
 
+=== 1.39 ===
+
+- Added bautifulsoup to setup.py
+
 === 1.38 ===
 
 - Added "html to plain text" parser.

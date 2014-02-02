@@ -48,8 +48,16 @@ parameter is given, the middleware will be skipped::
     </form>
 
 
- ErrorMiddleware
- ---------------
+CustomCommonMiddleware
+----------------------
+
+Use this instead of the default `CommonMiddleware` in order to see the current
+user in the email body. Use this with Django 1.5. Later versions use a
+different middleware for 404 emails.
+
+
+ErrorMiddleware
+---------------
 
  Add this middleware if you would like to see the user's email address in the
  traceback that is sent to you when a 500 error happens.

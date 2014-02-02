@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+=== 1.40 ===
+
 - Added CustomCommonMiddleware
 
 === 1.39 ===

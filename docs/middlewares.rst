@@ -48,12 +48,20 @@ parameter is given, the middleware will be skipped::
     </form>
 
 
+CustomBrokenLinkEmailsMiddleware
+--------------------------------
+
+Use this instead of the default `BrokenLinkEmailsMiddleware` in order to see
+the current user in the email body. Use this with Django 1.6. Earlier versions
+should use the `CustomCommonMiddleware` instead.
+
+
 CustomCommonMiddleware
 ----------------------
 
 Use this instead of the default `CommonMiddleware` in order to see the current
-user in the email body. Use this with Django 1.5. Later versions use a
-different middleware for 404 emails.
+user in the email body. Use this with Django 1.5. Later versions should use the
+`CustomBrokenLinkEmailsMiddleware` instead.
 
 
 ErrorMiddleware

@@ -1,4 +1,9 @@
 """Custom middleware for Django 1.6 projects."""
+import re
+
+from django.conf import settings
+from django.core.mail import mail_managers
+from django.utils.encoding import force_text
 
 
 class CustomBrokenLinkEmailsMiddleware(object):
@@ -10,7 +15,8 @@ class CustomBrokenLinkEmailsMiddleware(object):
         if response.status_code == 404 and not settings.DEBUG:
             domain = request.get_host()
             path = request.get_full_path()
-            referer = force_text(request.META.get('HTTP_REFERER', ''), errors='replace')
+            referer = force_text(
+                request.META.get('HTTP_REFERER', ''), errors='replace')
 
             if not self.is_ignorable_request(request, path, domain, referer):
                 ua = request.META.get('HTTP_USER_AGENT', '<none>')
@@ -26,10 +32,13 @@ class CustomBrokenLinkEmailsMiddleware(object):
                     "IP address: %s\n"
                     "User: %s\n"
                 ) % (referer, path, ua, ip, user)
-
+                if self.is_internal_request(domain, referer):
+                    internal = 'INTERNAL '
+                else:
+                    internal = ''
                 mail_managers(
                     "Broken %slink on %s" % (
-                        ('INTERNAL ' if self.is_internal_request(domain, referer) else ''),
+                        internal,
                         domain
                     ),
                     content,
@@ -38,7 +47,8 @@ class CustomBrokenLinkEmailsMiddleware(object):
 
     def is_internal_request(self, domain, referer):
         """
-        Returns True if the referring URL is the same domain as the current request.
+        Returns True if referring URL is the same domain as current request.
+
         """
         # Different subdomains are treated as different domains.
         return bool(re.match("^https?://%s/" % re.escape(domain), referer))
@@ -49,6 +59,8 @@ class CustomBrokenLinkEmailsMiddleware(object):
         """
         # '?' in referer is identified as search engine source
         if (not referer or
-                (not self.is_internal_request(domain, referer) and '?' in referer)):
+                (not self.is_internal_request(domain, referer)
+                    and '?' in referer)):
             return True
-        return any(pattern.search(uri) for pattern in settings.IGNORABLE_404_URLS)
+        return any(
+            pattern.search(uri) for pattern in settings.IGNORABLE_404_URLS)

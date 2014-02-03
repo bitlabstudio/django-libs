@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+- Bugfixes for CustomBrokenLinkEmailsMiddleware
+
 === 1.42 ===
 
 - Added days_until, hours_until, minutes_until templatetags

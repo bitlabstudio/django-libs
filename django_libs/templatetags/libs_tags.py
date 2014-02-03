@@ -1,4 +1,5 @@
 """Templatetags for the ``django_libs`` project."""
+import datetime
 import importlib
 
 from django import template
@@ -526,3 +527,40 @@ def verbatim(parser, token):
 def exclude(qs, qs_to_exclude):
     """Tag to exclude a qs from another."""
     return qs.exclude(pk__in=qs_to_exclude.values_list('pk'))
+
+
+@register.assignment_tag
+def time_until(date_or_datetime):
+    if isinstance(date_or_datetime, datetime.date):
+        datetime_ = datetime.datetime(
+            date_or_datetime.year,
+            date_or_datetime.month,
+            date_or_datetime.day,
+            0, 0)
+    else:
+        datetime_ = date_or_datetime
+    return datetime_ - datetime.datetime.now()
+
+
+@register.assignment_tag
+def days_until(date_or_datetime):
+    days = time_until(date_or_datetime).days
+    if days >= 0:
+        return days
+    return 0
+
+
+@register.assignment_tag
+def hours_until(date_or_datetime):
+    closes_in = time_until(date_or_datetime)
+    if closes_in.days < 0:
+        return 0
+    return closes_in.seconds / 3600
+
+
+@register.assignment_tag
+def minutes_until(date_or_datetime):
+    closes_in = time_until(date_or_datetime)
+    if closes_in.days < 0:
+        return 0
+    return closes_in.seconds / 60 - hours_until(date_or_datetime) * 60

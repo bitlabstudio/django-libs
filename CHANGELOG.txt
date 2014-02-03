@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+=== 1.42.1 ===
+
 - Bugfixes for CustomBrokenLinkEmailsMiddleware
 
 === 1.42 ===

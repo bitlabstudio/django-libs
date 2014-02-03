@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+=== 1.41 ===
+
 - Added CustomBrokenLinkEmailsMiddleware for Django 1.6
 
 === 1.40 ===

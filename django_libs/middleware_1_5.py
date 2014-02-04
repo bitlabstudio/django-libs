@@ -1,4 +1,5 @@
 """Custom middleware for Django 1.5 projects."""
+from django.conf import settings
 from django.middleware.common import (
     CommonMiddleware,
     _is_ignorable_404,

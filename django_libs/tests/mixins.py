@@ -4,8 +4,12 @@ Generally useful mixins for view tests (integration tests) of any project.
 """
 import sys
 
+from django.conf import settings
+
 from django.contrib.auth.models import AnonymousUser
+from django.contrib.messages.storage.fallback import FallbackStorage
 from django.core.urlresolvers import reverse
+from django.http import Http404
 from django.test import RequestFactory
 
 from django_libs.tests.factories import UserFactory
@@ -262,7 +266,7 @@ class ViewTestMixin(object):
         Can be overwritten if you do not use the auth_login as default or
         configure your urls.py file in a specific way.
         """
-        return reverse('auth_login')
+        return getattr(settings, 'LOGIN_URL', reverse('auth_login'))
 
     def should_redirect_to_login_when_anonymous(self, url=None):
         """
@@ -336,6 +340,8 @@ class ViewTestMixin(object):
 
 class ViewRequestFactoryTestMixin(object):
     longMessage = True
+    _logged_in_user = None
+    view_class = None
 
     def assertRedirects(self, resp, redirect_url):
         """
@@ -353,21 +359,38 @@ class ViewRequestFactoryTestMixin(object):
                     user=AnonymousUser(), **kwargs):
         if data is not None:
             kwargs.update({'data': data})
-        req = method('/', **kwargs)
+        req = method(self.get_url(), **kwargs)
         req.user = user
+        # the messages framework only works with the FallbackStorage in case of
+        # requestfactory tests
+        setattr(req, 'session', {})
+        messages = FallbackStorage(req)
+        setattr(req, '_messages', messages)
         if ajax:
             req.META['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest'
+        req = self.setUpRequest(req)
+        if req is None:
+            raise RuntimeError(
+                'The request has become None. You probably forgot to return'
+                ' the request again, when implementing `setUpRequest`.')
         return req
 
-    def get_get_request(self, ajax=False, data=None, user=AnonymousUser(),
-                        **kwargs):
+    def get_get_request(self, ajax=False, data=None, user=None, **kwargs):
+        if user is None:
+            user = self.get_user()
         return self.get_request(ajax=ajax, data=data, user=user, **kwargs)
 
-    def get_post_request(self, ajax=False, data=None, user=AnonymousUser(),
-                         **kwargs):
+    def get_post_request(self, ajax=False, data=None, user=None, **kwargs):
         method = RequestFactory().post
+        if user is None:
+            user = self.get_user()
         return self.get_request(
             method=method, ajax=ajax, data=data, user=user, **kwargs)
+
+    def get_user(self):
+        if self._logged_in_user is None:
+            return AnonymousUser()
+        return self._logged_in_user
 
     def get_login_url(self):
         """
@@ -378,11 +401,146 @@ class ViewRequestFactoryTestMixin(object):
         configure your urls.py file in a specific way.
 
         """
-        return reverse('auth_login')
+        login_url = getattr(settings, 'LOGIN_URL', None)
+        if login_url is None:
+            return reverse('auth_login')
+        return login_url
+
+    def get_view_name(self):
+        """
+        Returns a string representing the view name as set in the ``urls.py``.
+
+        You must implement this when inheriting this mixin. If your ``urls.py``
+        looks like this::
+
+            ...
+            url(r'^$', HomeView.as_view(), name='home_view'
+
+        Then you should simply return::
+
+            return 'home_view'
+
+        """
+        raise NotImplementedError
+
+    def get_view_args(self):
+        """
+        Returns a list representing the view's args, if necessary.
+
+        If the URL of this view is constructed via args, you can override this
+        method and return the proper args for the test.
+
+        """
+        return ()
+
+    def get_view_kwargs(self):
+        """
+        Returns a dictionary representing the view's kwargs, if necessary.
+
+        If the URL of this view is constructed via kwargs, you can override
+        this method and return the proper args for the test.
+
+        """
+        return {}
+
+    def get_url(self):
+        """
+        Returns the url to be used in the request factory.
+
+        Going the "old" way of implementing `get_view_name` is entirely
+        optional. If you just leave it out, the url will fall back to '/'.
+
+        """
+        try:
+            view_name = self.get_view_name()
+        except NotImplementedError:
+            # if the above is not implemented, we don't need the exact view, or
+            # just don't care and return '/', which in most cases is enough
+            return '/'
+        view_args = self.get_view_args()
+        view_kwargs = self.get_view_kwargs()
+        return reverse(view_name, args=view_args, kwargs=view_kwargs)
+
+    def get_view_class(self):
+        """Returns the view class."""
+        return self.view_class
+
+    def get_view(self):
+        """Returns the view ``.as_view()``"""
+        view_class = self.get_view_class()
+        if view_class is None:
+            raise NotImplementedError('You need to define a view class.')
+        return view_class.as_view()
+
+    def get(self, user=None, data=None, ajax=False):
+        """Creates a response from a GET request."""
+        req = self.get_get_request(user=user, data=data, ajax=ajax)
+        view = self.get_view()
+        resp = view(req)
+        return resp
+
+    def post(self, user=None, data=None, ajax=False):
+        """Creates a response from a POST request."""
+        req = self.get_post_request(user=user, data=data, ajax=ajax)
+        view = self.get_view()
+        resp = view(req)
+        return resp
+
+    def login(self, user):
+        """Sets the user as permanently logged in for all tests."""
+        self._logged_in_user = user
+
+    def logout(self):
+        """'Logs out' the currently set default user."""
+        self._logged_in_user = None
+
+    def is_callable(self, user=None, data=None, ajax=False):
+        """Checks if the view can be called view GET."""
+        resp = self.get(user=user, data=data, ajax=ajax)
+        user_msg = user or self.get_user()
+        if self.get_view_class() is not None:
+            # if it's a view class, we can append it to the message as class
+            # name
+            view_msg = self.get_view_class()
+        else:
+            # if no view class is set, we assume function based view
+            view_msg = self.get_view()
+        msg = (
+            'The `{0}` view should have been callable for user `{1}`.').format(
+            view_msg, user_msg)
+        self.assertEqual(resp.status_code, 200, msg=msg)
+        return resp
+
+    def is_not_callable(self, user=None, data=None, ajax=False):
+        """Checks if the view can not be called view GET."""
+        self.assertRaises(Http404, self.get, user=user, data=data, ajax=ajax)
+
+    def is_postable(self, user=None, data=None, to=None, next_url=''):
+        """Checks if the view handles POST correctly."""
+        resp = self.post(user=user, data=data)
+        if next_url:
+            next_url = '?next={0}'.format(next_url)
+        redirect_url = '{0}{1}'.format(to, next_url)
+        self.assertRedirects(resp, redirect_url)
+        return resp
+
+    def redirects(self, to, next_url='', user=None):
+        """Checks for redirects from a GET request."""
+        resp = self.get(user=user)
+        if next_url:
+            next_url = '?next={0}'.format(next_url)
+        redirect_url = '{0}{1}'.format(to, next_url)
+        self.assertRedirects(resp, redirect_url)
+        return resp
+
+    def setUpRequest(self, request):
+        """
+        The request is passed through this method on each run to allow
+        adding additional attributes to it or change certain values.
+
+        """
+        return request
 
     def should_redirect_to_login_when_anonymous(self):
-        req = self.get_get_request()
-        resp = self.view_class().dispatch(req)
-        next_url = '/'
-        redirect_url = '{0}?next={1}'.format(self.get_login_url(), next_url)
-        self.assertRedirects(resp, redirect_url)
+        resp = self.redirects(to=self.get_login_url(), next_url=self.get_url())
+        return resp

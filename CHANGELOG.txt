@@ -1,5 +1,8 @@
 === (ongoing) ===
 
+- Improved ViewRequestFactoryTestMixin
+- Fixed import error in middleware_1_5
+
 === 1.42.1 ===
 
 - Bugfixes for CustomBrokenLinkEmailsMiddleware

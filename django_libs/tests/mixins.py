@@ -472,18 +472,24 @@ class ViewRequestFactoryTestMixin(object):
             raise NotImplementedError('You need to define a view class.')
         return view_class.as_view()
 
-    def get(self, user=None, data=None, ajax=False):
+    def get(self, user=None, data=None, ajax=False, kwargs=None):
         """Creates a response from a GET request."""
         req = self.get_get_request(user=user, data=data, ajax=ajax)
         view = self.get_view()
-        resp = view(req)
+        if kwargs is None:
+            kwargs = {}
+            kwargs.update(self.get_view_kwargs())
+        resp = view(req, **kwargs)
         return resp
 
-    def post(self, user=None, data=None, ajax=False):
+    def post(self, user=None, data=None, ajax=False, kwargs=None):
         """Creates a response from a POST request."""
         req = self.get_post_request(user=user, data=data, ajax=ajax)
         view = self.get_view()
-        resp = view(req)
+        if kwargs is None:
+            kwargs = {}
+            kwargs.update(self.get_view_kwargs())
+        resp = view(req, **kwargs)
         return resp
 
     def login(self, user):

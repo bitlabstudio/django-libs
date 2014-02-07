@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+=== 2.42.2 ===
+
 - Improved ViewRequestFactoryTestMixin
 - Fixed import error in middleware_1_5
 

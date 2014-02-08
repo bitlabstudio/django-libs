@@ -111,3 +111,34 @@ class HTMLToPlainTextTestCase(TestCase):
         with open('test_app/templates/html_email.html', 'rb') as file:
             self.assertIn('[1]: *|ARCHIVE|*\n', html_to_plain_text(file), msg=(
                 'Should return a formatted plain text.'))
+
+    def test_replace_links(self):
+        html = (
+            """
+            <span>Text1<span> <a href="www.example.com">Some link</a> <span>Text2</span>
+            <br />
+            <span>Text3</span>
+            """
+        )
+        expected = (
+            "Text1 Some link[1] Text2\nText3\n\n[1]: www.example.com\n"
+        )
+        result = html_to_plain_text(html)
+        self.assertEqual(result, expected, msg=(
+            'Should replace links nicely'))
+
+    def test_replace_br(self):
+        html = (
+            """
+            <span>Text1</span>
+            <br />
+            <br />
+            <span>Text2</span>
+            """
+        )
+        expected = (
+            "Text1\n\nText2"
+        )
+        result = html_to_plain_text(html)
+        self.assertEqual(result, expected, msg=(
+            'Should replace links nicely'))

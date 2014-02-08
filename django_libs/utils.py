@@ -74,7 +74,7 @@ class HTML2PlainParser(HTMLParser):
         )
         self.newline_before_elements = getattr(
             settings, 'HTML2PLAINTEXT_NEWLINE_BEFORE_ELEMENTS',
-            ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div', 'p', 'li']
+            ['br', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div', 'p', 'li']
         )
         self.newline_after_elements = getattr(
             settings, 'HTML2PLAINTEXT_NEWLINE_AFTER_ELEMENTS',
@@ -93,13 +93,15 @@ class HTML2PlainParser(HTMLParser):
 
     def handle_starttag(self, tag, attrs):
         """Handles every start tag like e.g. <p>."""
-        # Put a stroke in front of every relevant element, if there is some
-        # content between it and its predecessor
+        if (tag in self.newline_before_elements):
+            self.text += '\n'
         if (tag in self.stroke_before_elements
                 and not self.text.endswith(self.stroke_text)):
+            # Put a stroke in front of every relevant element, if there is some
+            # content between it and its predecessor
             self.text += self.stroke_text
-        # If it's a link, append it to the link list
         if tag == 'a':
+            # If it's a link, append it to the link list
             for attr in attrs:
                 if attr[0] == 'href':
                     self.links.append((len(self.links) + 1, attr[1]))
@@ -112,17 +114,12 @@ class HTML2PlainParser(HTMLParser):
             text = data.replace('\n', '')
             # If there's some text left, proceed!
             if text:
-                # Put a linebreak in front of the content
-                if self.lasttag in self.newline_before_elements:
-                    self.text += '\n'
-                # Use a special prefix for list elements
                 if self.lasttag == 'li':
+                    # Use a special prefix for list elements
                     self.text += '  * '
-                # CONTENT. The split() and join() is used to get rid of the
-                # unnecessary spaces
-                self.text += ' '.join(text.split())
-                # Add a linebreak at the end of the content
+                self.text += text
                 if self.lasttag in self.newline_after_elements:
+                    # Add a linebreak at the end of the content
                     self.text += '\n'
 
     def handle_endtag(self, tag):

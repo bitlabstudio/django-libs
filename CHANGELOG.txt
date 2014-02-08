@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+- Fixes for plaintext email generation
+
 === 2.42.2 ===
 
 - Improved ViewRequestFactoryTestMixin

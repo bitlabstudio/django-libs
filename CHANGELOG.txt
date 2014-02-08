@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+=== 2.42.3 ===
+
 - Fixes for plaintext email generation
 
 === 2.42.2 ===

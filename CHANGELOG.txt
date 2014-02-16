@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+- Added possibility to create a session in views tests
+
 === 2.42.3 ===
 
 - Fixes for plaintext email generation

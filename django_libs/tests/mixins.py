@@ -8,6 +8,7 @@ from django.conf import settings
 
 from django.contrib.auth.models import AnonymousUser
 from django.contrib.messages.storage.fallback import FallbackStorage
+from django.contrib.sessions.middleware import SessionMiddleware
 from django.core.urlresolvers import reverse
 from django.http import Http404
 from django.test import RequestFactory
@@ -356,14 +357,19 @@ class ViewRequestFactoryTestMixin(object):
             'Should redirect to correct `next_url`'))
 
     def get_request(self, method=RequestFactory().get, ajax=False, data=None,
-                    user=AnonymousUser(), **kwargs):
+                    user=AnonymousUser(), add_session=False, **kwargs):
         if data is not None:
             kwargs.update({'data': data})
         req = method(self.get_url(), **kwargs)
         req.user = user
         # the messages framework only works with the FallbackStorage in case of
         # requestfactory tests
-        setattr(req, 'session', {})
+        if add_session:
+            middleware = SessionMiddleware()
+            middleware.process_request(req)
+            req.session.save()
+        else:
+            setattr(req, 'session', {})
         messages = FallbackStorage(req)
         setattr(req, '_messages', messages)
         if ajax:
@@ -375,17 +381,21 @@ class ViewRequestFactoryTestMixin(object):
                 ' the request again, when implementing `setUpRequest`.')
         return req
 
-    def get_get_request(self, ajax=False, data=None, user=None, **kwargs):
+    def get_get_request(self, ajax=False, data=None, user=None,
+                        add_session=False, **kwargs):
         if user is None:
             user = self.get_user()
-        return self.get_request(ajax=ajax, data=data, user=user, **kwargs)
+        return self.get_request(
+            ajax=ajax, data=data, user=user, add_session=add_session, **kwargs)
 
-    def get_post_request(self, ajax=False, data=None, user=None, **kwargs):
+    def get_post_request(self, ajax=False, data=None, user=None,
+                         add_session=False, **kwargs):
         method = RequestFactory().post
         if user is None:
             user = self.get_user()
         return self.get_request(
-            method=method, ajax=ajax, data=data, user=user, **kwargs)
+            method=method, ajax=ajax, data=data, user=user,
+            add_session=add_session, **kwargs)
 
     def get_user(self):
         if self._logged_in_user is None:
@@ -472,9 +482,11 @@ class ViewRequestFactoryTestMixin(object):
             raise NotImplementedError('You need to define a view class.')
         return view_class.as_view()
 
-    def get(self, user=None, data=None, ajax=False, kwargs=None):
+    def get(self, user=None, data=None, ajax=False, add_session=False,
+            kwargs=None):
         """Creates a response from a GET request."""
-        req = self.get_get_request(user=user, data=data, ajax=ajax)
+        req = self.get_get_request(
+            user=user, data=data, ajax=ajax, add_session=add_session)
         view = self.get_view()
         if kwargs is None:
             kwargs = {}
@@ -482,9 +494,11 @@ class ViewRequestFactoryTestMixin(object):
         resp = view(req, **kwargs)
         return resp
 
-    def post(self, user=None, data=None, ajax=False, kwargs=None):
+    def post(self, user=None, data=None, ajax=False, add_session=False,
+             kwargs=None):
         """Creates a response from a POST request."""
-        req = self.get_post_request(user=user, data=data, ajax=ajax)
+        req = self.get_post_request(
+            user=user, data=data, ajax=ajax, add_session=add_session)
         view = self.get_view()
         if kwargs is None:
             kwargs = {}
@@ -500,9 +514,10 @@ class ViewRequestFactoryTestMixin(object):
         """'Logs out' the currently set default user."""
         self._logged_in_user = None
 
-    def is_callable(self, user=None, data=None, ajax=False):
+    def is_callable(self, user=None, data=None, ajax=False, add_session=False):
         """Checks if the view can be called view GET."""
-        resp = self.get(user=user, data=data, ajax=ajax)
+        resp = self.get(
+            user=user, data=data, ajax=ajax, add_session=add_session)
         user_msg = user or self.get_user()
         if self.get_view_class() is not None:
             # if it's a view class, we can append it to the message as class
@@ -517,22 +532,28 @@ class ViewRequestFactoryTestMixin(object):
         self.assertEqual(resp.status_code, 200, msg=msg)
         return resp
 
-    def is_not_callable(self, user=None, data=None, ajax=False):
+    def is_not_callable(self, user=None, data=None, ajax=False,
+                        add_session=False, kwargs=None):
         """Checks if the view can not be called view GET."""
-        self.assertRaises(Http404, self.get, user=user, data=data, ajax=ajax)
+        self.assertRaises(
+            Http404, self.get, user=user, data=data, ajax=ajax,
+            add_session=add_session, kwargs=kwargs)
 
-    def is_postable(self, user=None, data=None, to=None, next_url=''):
+    def is_postable(self, user=None, data=None, to=None, next_url='',
+                    add_session=False, kwargs=None):
         """Checks if the view handles POST correctly."""
-        resp = self.post(user=user, data=data)
+        resp = self.post(
+            user=user, data=data, add_session=add_session, kwargs=kwargs)
         if next_url:
             next_url = '?next={0}'.format(next_url)
         redirect_url = '{0}{1}'.format(to, next_url)
         self.assertRedirects(resp, redirect_url)
         return resp
 
-    def redirects(self, to, next_url='', user=None):
+    def redirects(self, to, next_url='', user=None, add_session=False,
+                  kwargs=None):
         """Checks for redirects from a GET request."""
-        resp = self.get(user=user)
+        resp = self.get(user=user, add_session=add_session, kwargs=kwargs)
         if next_url:
             next_url = '?next={0}'.format(next_url)
         redirect_url = '{0}{1}'.format(to, next_url)
@@ -547,6 +568,8 @@ class ViewRequestFactoryTestMixin(object):
         """
         return request
 
-    def should_redirect_to_login_when_anonymous(self):
-        resp = self.redirects(to=self.get_login_url(), next_url=self.get_url())
+    def should_redirect_to_login_when_anonymous(self, add_session=False):
+        resp = self.redirects(
+            to=self.get_login_url(), next_url=self.get_url(),
+            add_session=add_session)
         return resp

@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+=== 2.43 ===
+
 - Added possibility to create a session in views tests
 
 === 2.42.3 ===

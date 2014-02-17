@@ -8,7 +8,7 @@ from .utils import html_to_plain_text
 
 
 def send_email(request, extra_context, subject_template, body_template,
-               from_email, recipients):
+               from_email, recipients, priority="medium"):
     """
     Sends an email based on templates for subject and body.
 
@@ -33,4 +33,4 @@ def send_email(request, extra_context, subject_template, body_template,
     message_html = render_to_string(body_template, context)
     message_plaintext = html_to_plain_text(message_html)
     send_html_mail(subject, message_plaintext, message_html, from_email,
-                   recipients)
+                   recipients, priority=priority)

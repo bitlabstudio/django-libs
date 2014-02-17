@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+- Added priority kwarg for send_email utility function
+
 === 2.43 ===
 
 - Added possibility to create a session in views tests

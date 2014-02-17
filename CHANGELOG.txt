@@ -1,18 +1,21 @@
 === (ongoing) ===
 
-=== 2.44 ===
+
+- Added HvadPublishedManager
+
+=== 1.44 ===
 
 - Added priority kwarg for send_email utility function
 
-=== 2.43 ===
+=== 1.43 ===
 
 - Added possibility to create a session in views tests
 
-=== 2.42.3 ===
+=== 1.42.3 ===
 
 - Fixes for plaintext email generation
 
-=== 2.42.2 ===
+=== 1.42.2 ===
 
 - Improved ViewRequestFactoryTestMixin
 - Fixed import error in middleware_1_5

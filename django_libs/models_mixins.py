@@ -2,7 +2,27 @@
 from django.db import models
 from django.utils.translation import get_language
 
+from hvad.models import TranslationManager
 from simple_translation.utils import get_preferred_translation_from_lang
+
+
+class HvadPublishedManager(TranslationManager):
+    """
+    Returns all objects, which are published and in the currently
+    active language if check_language is True (default).
+
+    :param request: A Request instance.
+    :param check_language: Option to disable language filtering.
+
+    """
+    def published(self, request, check_language=True):
+        kwargs = {'translations__is_published': True}
+        if check_language:
+            language = getattr(request, 'LANGUAGE_CODE', None)
+            if not language:
+                self.model.objects.none()
+            kwargs.update({'translations__language_code': language})
+        return self.get_query_set().filter(**kwargs)
 
 
 class SimpleTranslationMixin(object):

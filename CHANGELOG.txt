@@ -1,6 +1,8 @@
 === (ongoing) ===
 
 
+=== 1.45 ===
+
 - Added HvadPublishedManager
 
 === 1.44 ===

@@ -514,10 +514,8 @@ class ViewRequestFactoryTestMixin(object):
         """'Logs out' the currently set default user."""
         self._logged_in_user = None
 
-    def is_callable(self, user=None, data=None, ajax=False, add_session=False):
-        """Checks if the view can be called view GET."""
-        resp = self.get(
-            user=user, data=data, ajax=ajax, add_session=add_session)
+    def assert200(self, resp, user=None):
+        """Asserts if a response has returnd a status code of 200."""
         user_msg = user or self.get_user()
         if self.get_view_class() is not None:
             # if it's a view class, we can append it to the message as class
@@ -532,6 +530,13 @@ class ViewRequestFactoryTestMixin(object):
         self.assertEqual(resp.status_code, 200, msg=msg)
         return resp
 
+    def is_callable(self, user=None, data=None, ajax=False, add_session=False):
+        """Checks if the view can be called view GET."""
+        resp = self.get(
+            user=user, data=data, ajax=ajax, add_session=add_session)
+        self.assert200(resp, user)
+        return resp
+
     def is_not_callable(self, user=None, data=None, ajax=False,
                         add_session=False, kwargs=None):
         """Checks if the view can not be called view GET."""
@@ -539,15 +544,19 @@ class ViewRequestFactoryTestMixin(object):
             Http404, self.get, user=user, data=data, ajax=ajax,
             add_session=add_session, kwargs=kwargs)
 
-    def is_postable(self, user=None, data=None, to=None, next_url='',
-                    add_session=False, kwargs=None):
+    def is_postable(self, user=None, data=None, ajax=False, to=None,
+                    next_url='', add_session=False, kwargs=None):
         """Checks if the view handles POST correctly."""
         resp = self.post(
-            user=user, data=data, add_session=add_session, kwargs=kwargs)
-        if next_url:
-            next_url = '?next={0}'.format(next_url)
-        redirect_url = '{0}{1}'.format(to, next_url)
-        self.assertRedirects(resp, redirect_url)
+            user=user, data=data, add_session=add_session, kwargs=kwargs,
+            ajax=ajax)
+        if not ajax:
+            if next_url:
+                next_url = '?next={0}'.format(next_url)
+            redirect_url = '{0}{1}'.format(to, next_url)
+            self.assertRedirects(resp, redirect_url)
+        else:
+            self.assert200(resp, user)
         return resp
 
     def redirects(self, to, next_url='', user=None, add_session=False,

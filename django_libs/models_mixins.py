@@ -2,7 +2,11 @@
 from django.db import models
 from django.utils.translation import get_language
 
-from hvad.models import TranslationManager
+try:
+    from hvad.models import TranslationManager
+except ImportError:
+    class TranslationManager(object):
+        pass
 from simple_translation.utils import get_preferred_translation_from_lang
 
 

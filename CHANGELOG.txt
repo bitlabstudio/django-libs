@@ -1,5 +1,8 @@
 === (ongoing) ===
 
+
+=== 1.46 ===
+
 - fixed hvad import
 - Added ajax parameter to ViewRequestFactoryTestMixin.is_postable
 

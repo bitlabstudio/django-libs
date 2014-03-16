@@ -1,14 +1,12 @@
-<div class="control-group {% if field.errors %}error{% endif %}">
+<div class="form-group {% if field.errors %}error{% endif %}">
     <label class="control-label" for="{{ field.id_for_label }}">
         <span {% if field.field.required %}class="requiredLabel"{% endif %}>{{ field.label }}</span>
         {% if field.help_text %}
             <i class="icon-question-sign popOver" title="{{ field.label }}" data-content="{{ field.help_text }}"></i>
         {% endif %}
     </label>
-    <div class="controls">
-        {{ field }}
-        {% if field.errors %}
-            <span class="help-inline">{% for error in field.errors %}{{ error }}<br/> {% endfor %}</span>
-        {% endif %}
-    </div>
+    {{ field }}
+    {% if field.errors %}
+        <span class="help-inline">{% for error in field.errors %}{{ error }}<br/> {% endfor %}</span>
+    {% endif %}
 </div>

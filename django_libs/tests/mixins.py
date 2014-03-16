@@ -344,7 +344,7 @@ class ViewRequestFactoryTestMixin(object):
     _logged_in_user = None
     view_class = None
 
-    def assertRedirects(self, resp, redirect_url):
+    def assertRedirects(self, resp, redirect_url, msg=None):
         """
         Overrides the method that comes with Django's TestCase.
 
@@ -352,9 +352,9 @@ class ViewRequestFactoryTestMixin(object):
         which we are not using here.
 
         """
-        self.assertEqual(resp.status_code, 302, msg=('Should redirect'))
-        self.assertEqual(resp._headers['location'][1], redirect_url, msg=(
-            'Should redirect to correct `next_url`'))
+        self.assertEqual(resp.status_code, 302, msg=msg or ('Should redirect'))
+        self.assertEqual(resp._headers['location'][1], redirect_url,
+                         msg=msg or ('Should redirect to correct `next_url`'))
 
     def get_request(self, method=RequestFactory().get, ajax=False, data=None,
                     user=AnonymousUser(), add_session=False, **kwargs):
@@ -514,7 +514,7 @@ class ViewRequestFactoryTestMixin(object):
         """'Logs out' the currently set default user."""
         self._logged_in_user = None
 
-    def assert200(self, resp, user=None):
+    def assert200(self, resp, user=None, msg=False):
         """Asserts if a response has returnd a status code of 200."""
         user_msg = user or self.get_user()
         if self.get_view_class() is not None:
@@ -524,30 +524,30 @@ class ViewRequestFactoryTestMixin(object):
         else:
             # if no view class is set, we assume function based view
             view_msg = self.get_view()
-        msg = (
-            'The `{0}` view should have been callable for user `{1}`.').format(
-            view_msg, user_msg)
+        if not msg:
+            msg = ('The `{0}` view should have been callable for'
+                   ' user `{1}`.').format(view_msg, user_msg)
         self.assertEqual(resp.status_code, 200, msg=msg)
         return resp
 
     def is_callable(self, user=None, data=None, ajax=False, add_session=False,
-                    kwargs=None):
+                    kwargs=None, msg=False):
         """Checks if the view can be called view GET."""
         resp = self.get(
             user=user, data=data, ajax=ajax, add_session=add_session,
             kwargs=kwargs)
-        self.assert200(resp, user)
+        self.assert200(resp, user, msg=msg)
         return resp
 
     def is_not_callable(self, user=None, data=None, ajax=False,
-                        add_session=False, kwargs=None):
+                        add_session=False, kwargs=None, msg=None):
         """Checks if the view can not be called view GET."""
         self.assertRaises(
             Http404, self.get, user=user, data=data, ajax=ajax,
-            add_session=add_session, kwargs=kwargs)
+            add_session=add_session, kwargs=kwargs, msg=msg)
 
     def is_postable(self, user=None, data=None, ajax=False, to=None,
-                    next_url='', add_session=False, kwargs=None):
+                    next_url='', add_session=False, kwargs=None, msg=False):
         """Checks if the view handles POST correctly."""
         resp = self.post(
             user=user, data=data, add_session=add_session, kwargs=kwargs,
@@ -556,19 +556,19 @@ class ViewRequestFactoryTestMixin(object):
             if next_url:
                 next_url = '?next={0}'.format(next_url)
             redirect_url = '{0}{1}'.format(to, next_url)
-            self.assertRedirects(resp, redirect_url)
+            self.assertRedirects(resp, redirect_url, msg=msg)
         else:
-            self.assert200(resp, user)
+            self.assert200(resp, user, msg=msg)
         return resp
 
     def redirects(self, to, next_url='', user=None, add_session=False,
-                  kwargs=None):
+                  kwargs=None, msg=None):
         """Checks for redirects from a GET request."""
         resp = self.get(user=user, add_session=add_session, kwargs=kwargs)
         if next_url:
             next_url = '?next={0}'.format(next_url)
         redirect_url = '{0}{1}'.format(to, next_url)
-        self.assertRedirects(resp, redirect_url)
+        self.assertRedirects(resp, redirect_url, msg=msg)
         return resp
 
     def setUpRequest(self, request):

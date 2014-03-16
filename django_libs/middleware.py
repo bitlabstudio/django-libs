@@ -1,9 +1,4 @@
 """Custom middlewares for the project."""
-import hashlib
-
-from django import http
-from django.conf import settings
-from django.core.mail import mail_managers
 from django.http import HttpResponseRedirect
 
 try:
@@ -48,4 +43,4 @@ class ErrorMiddleware(object):
 if _is_ignorable_404:
     from .middleware_1_5 import *  # NOQA
 else:
-    from .middleware_1_6 import *
+    from .middleware_1_6 import *  # NOQA

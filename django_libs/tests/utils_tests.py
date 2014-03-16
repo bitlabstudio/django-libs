@@ -115,13 +115,13 @@ class HTMLToPlainTextTestCase(TestCase):
     def test_replace_links(self):
         html = (
             """
-            <span>Text1<span> <a href="www.example.com">Some link</a> <span>Text2</span>
+            <span>T1<span> <a href="www.example.com">link</a> <span>T2</span>
             <br />
-            <span>Text3</span>
+            <span>T3</span>
             """
         )
         expected = (
-            "Text1 Some link[1] Text2\nText3\n\n[1]: www.example.com\n"
+            "T1 link[1] T2\nT3\n\n[1]: www.example.com\n"
         )
         result = html_to_plain_text(html)
         self.assertEqual(result, expected, msg=(

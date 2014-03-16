@@ -56,10 +56,10 @@ def block_anyfilter(parser, token):
 
     Usage::
 
-        {% load libs_tags %}
-        {% block_anyfilter django.template.defaultfilters.truncatewords_html 15 %}
-            // Something complex that generates html output
-        {% endblockanyfilter %}
+    {% load libs_tags %}
+    {% block_anyfilter django.template.defaultfilters.truncatewords_html 15 %}
+        // Something complex that generates html output
+    {% endblockanyfilter %}
 
     """
     bits = token.contents.split()

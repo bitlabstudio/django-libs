@@ -1,5 +1,9 @@
 === (ongoing) ===
 
+=== 1.46.2 ===
+
+- Fixed is_callable function of view test mixin
+
 === 1.46.1 ===
 
 - Update for form_field template

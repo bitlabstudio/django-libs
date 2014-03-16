@@ -530,10 +530,12 @@ class ViewRequestFactoryTestMixin(object):
         self.assertEqual(resp.status_code, 200, msg=msg)
         return resp
 
-    def is_callable(self, user=None, data=None, ajax=False, add_session=False):
+    def is_callable(self, user=None, data=None, ajax=False, add_session=False,
+                    kwargs=None):
         """Checks if the view can be called view GET."""
         resp = self.get(
-            user=user, data=data, ajax=ajax, add_session=add_session)
+            user=user, data=data, ajax=ajax, add_session=add_session,
+            kwargs=kwargs)
         self.assert200(resp, user)
         return resp
 

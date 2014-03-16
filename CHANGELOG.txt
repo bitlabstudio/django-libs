@@ -1,5 +1,9 @@
 === (ongoing) ===
 
+=== 1.46.4 ===
+
+- Removed custom message from is_not_callable function
+
 === 1.46.3 ===
 
 - Added custom messages to view test mixin

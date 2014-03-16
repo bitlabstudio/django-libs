@@ -540,11 +540,11 @@ class ViewRequestFactoryTestMixin(object):
         return resp
 
     def is_not_callable(self, user=None, data=None, ajax=False,
-                        add_session=False, kwargs=None, msg=None):
+                        add_session=False, kwargs=None):
         """Checks if the view can not be called view GET."""
         self.assertRaises(
             Http404, self.get, user=user, data=data, ajax=ajax,
-            add_session=add_session, kwargs=kwargs, msg=msg)
+            add_session=add_session, kwargs=kwargs)
 
     def is_postable(self, user=None, data=None, ajax=False, to=None,
                     next_url='', add_session=False, kwargs=None, msg=False):

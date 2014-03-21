@@ -7,7 +7,7 @@ analytics
 Most projects have the Google Analytics tracking code in their base template.
 If you like to put that code into a partial template or even re-use your whole
 base template between projects, then it would be a good idea to set the
-analytics code in your ``lcoal_settings.py`` and add it to your template
+analytics code in your ``local_settings.py`` and add it to your template
 context using this context processor.
 
 Add the processor to your list of context processors::

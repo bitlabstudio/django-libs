@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+- Added post option to is_not_callable
+
 === 1.46.4 ===
 
 - Removed custom message from is_not_callable function

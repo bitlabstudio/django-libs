@@ -132,19 +132,29 @@ class GetQueryParamsTestCase(TestCase):
     longMessage = True
 
     def test_tag(self):
-        req = RequestFactory().get('/?foobar=1')
+        req = RequestFactory().get('/?foobar=1&barfoo=2')
 
         result = tags.get_query_params(req, 'foobar', 2)
-        self.assertEqual(result, 'foobar=2', msg=(
+        self.assertEqual(result, 'foobar=2&barfoo=2', msg=(
             'Should change the existing query parameter'))
 
         result = tags.get_query_params(req, 'page', 2)
-        self.assertEqual(result, 'foobar=1&page=2', msg=(
+        self.assertEqual(result, 'foobar=1&barfoo=2&page=2', msg=(
             'Should add the new parameter to the query'))
 
-        result = tags.get_query_params(req, 'page', 2, 'barfoo', 42)
-        self.assertEqual(result, 'foobar=1&barfoo=42&page=2', msg=(
+        result = tags.get_query_params(req, 'page', 2, 'new', 42)
+        self.assertEqual(result, 'foobar=1&barfoo=2&page=2&new=42', msg=(
             'Should add the new parameters to the query'))
+
+        result = tags.get_query_params(req, 'page', 2, 'barfoo', '!remove')
+        self.assertEqual(result, 'foobar=1&page=2', msg=(
+            'Should add new parameters and remove the ones marked for'
+            ' removal'))
+
+        result = tags.get_query_params(req, 'page', 2, 'ghost', '!remove')
+        self.assertEqual(result, 'foobar=1&barfoo=2&page=2', msg=(
+            'Should not crash if the parameter marked for removal does not'
+            ' exist'))
 
 
 class LoadContextNodeTestCase(TestCase):

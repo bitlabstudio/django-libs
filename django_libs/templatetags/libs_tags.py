@@ -271,7 +271,9 @@ def get_query_params(request, *args):
 
     :param request: The request instance.
     :param *args: Make sure to always pass in paris of args. One is the key,
-      one is the value.
+      one is the value. If you set the value of a key to "!remove" that
+      parameter will not be included in the returned query.
+
     """
     query = request.GET.copy()
     index = 1
@@ -280,7 +282,13 @@ def get_query_params(request, *args):
         if index % 2 != 0:
             key = arg
         else:
-            query[key] = arg
+            if arg == "!remove":
+                try:
+                    query.pop(key)
+                except KeyError:
+                    pass
+            else:
+                query[key] = arg
         index += 1
     return query.urlencode()
 

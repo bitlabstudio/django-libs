@@ -263,6 +263,10 @@ Your url would look something like ``/?region=1&gender=m``. Your paginator
 needs to create links with ``&page=2`` in them but you must keep the
 filter values when switching pages.
 
+If you want to remove a special parameter, you can do that by setting it's
+value to ``!remove``::
+
+    {% get_query_params request "page" 1 "foobar" "!remove" as query %}
 
 load_context
 ------------

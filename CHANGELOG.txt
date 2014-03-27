@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+=== 1.47 ===
+
 - Allowing to remove parameters from the query string with get_query_params
   templatetag
 

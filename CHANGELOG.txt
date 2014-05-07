@@ -1,5 +1,8 @@
 === (ongoing) ===
 
+
+=== 1.48 ===
+
 - Added WhitelistEmailBackend
 
 === 1.47.1 ===

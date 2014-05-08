@@ -1,5 +1,8 @@
 === (ongoing) ===
 
+=== 1.48.1 ===
+
+- Added option to check redirects after post request in views tests
 
 === 1.48 ===
 

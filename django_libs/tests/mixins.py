@@ -556,7 +556,7 @@ class ViewRequestFactoryTestMixin(object):
         resp = self.post(
             user=user, data=data, add_session=add_session, kwargs=kwargs,
             ajax=ajax)
-        if not ajax:
+        if not ajax or to:
             if next_url:
                 next_url = '?next={0}'.format(next_url)
             redirect_url = '{0}{1}'.format(to, next_url)

@@ -25,6 +25,7 @@ Contents:
    loaders
    middlewares
    models_mixins
+   storage_support
    test_email_backend
    test_mixins
    testrunner

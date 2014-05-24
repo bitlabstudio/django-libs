@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+- Circular import fix
+
 === 1.49 ===
 
 - Added support files for Amazon S3 storage & django-compressor

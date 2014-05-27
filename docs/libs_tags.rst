@@ -402,6 +402,19 @@ elegant when you replace the `if NEEDS_HR` block with::
     {% include "django_libs/partials/dynamic_hr.html" %}
 
 
+sum
+---
+Adds the given value to the total value currently held in `key`.
+
+Use the multiplier if you want to turn a positive value into a negative
+and actually substract from the current total sum.
+
+Usage::
+
+    {% sum "MY_TOTAL" 42 -1 %}
+    {{ MY_TOTAL }}
+
+
 set_context
 -----------
 

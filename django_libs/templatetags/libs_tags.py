@@ -504,6 +504,26 @@ def save(context, key, value):
     return ''
 
 
+@register.simple_tag(takes_context=True)
+def sum(context, key, value, multiplier=1):
+    """
+    Adds the given value to the total value currently held in ``key``.
+
+    Use the multiplier if you want to turn a positive value into a negative
+    and actually substract from the current total sum.
+
+    Usage::
+
+        {% sum "MY_TOTAL" 42 -1 %}
+        {{ MY_TOTAL }}
+
+    """
+    if key not in context.dicts[0]:
+        context.dicts[0][key] = 0
+    context.dicts[0][key] += value * multiplier
+    return ''
+
+
 @register.assignment_tag
 def set_context(value):
     return value

@@ -89,3 +89,39 @@ authenticated user. You can create the user using the ``UserFactory`` like so::
             self.client.login(username=self.user.email, password='test123')
             resp = self.client.get('/')
             self.assertEqual(resp.status_code, 200)
+
+
+UploadedImageFactory
+--------------------
+
+Are you also tired of having to deal with images in upload form tests?
+Well here's help!
+With the ``UploadedImageFactory`` you can create a ``SimpleUploadedFile`` with
+just one line of code.
+
+Example:
+
+..code-block:: python
+
+    # Say your form has an image field
+    from django import forms
+
+    MyImageForm(forms.Form):
+        avatar = forms.ImageField(...)
+        ...  # other fields
+
+    # Then you want to test this, so in your test case you do
+    from django.test import TestCase
+
+    from django_libs.tests.factories import UploadedImageFactory
+
+    from ..forms import MyForm
+
+    class MyImageFormTestCase(TestCase):
+        def test_form(self):
+            files = {'avatar': UploadedImageFactory()}
+            data = {
+                ...  # other data
+            }
+            form = MyForm(data=data, files=files)
+            self.assertTrue(form.is_valid())

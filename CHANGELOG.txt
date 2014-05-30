@@ -1,5 +1,8 @@
 === (ongoing) ===
 
+
+=== 1.52 ===
+
 - Added UploadedImageFactory
 
 === 1.51 ===

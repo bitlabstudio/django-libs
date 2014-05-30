@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+- Added 'to_url_name' parameter to is_postable function
+
 === 1.50 ===
 
 - Added sum templatetag

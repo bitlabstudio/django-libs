@@ -9,7 +9,7 @@ from django.conf import settings
 from django.contrib.auth.models import AnonymousUser
 from django.contrib.messages.storage.fallback import FallbackStorage
 from django.contrib.sessions.middleware import SessionMiddleware
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, resolve
 from django.http import Http404
 from django.test import RequestFactory
 
@@ -551,16 +551,21 @@ class ViewRequestFactoryTestMixin(object):
             add_session=add_session, kwargs=kwargs)
 
     def is_postable(self, user=None, data=None, ajax=False, to=None,
-                    next_url='', add_session=False, kwargs=None, msg=False):
+                    to_url_name=None, next_url='', add_session=False,
+                    kwargs=None, msg=False):
         """Checks if the view handles POST correctly."""
         resp = self.post(
             user=user, data=data, add_session=add_session, kwargs=kwargs,
             ajax=ajax)
-        if not ajax or to:
+        if not ajax or to or to_url_name:
             if next_url:
                 next_url = '?next={0}'.format(next_url)
-            redirect_url = '{0}{1}'.format(to, next_url)
-            self.assertRedirects(resp, redirect_url, msg=msg)
+            if to_url_name:
+                self.assertEqual(resolve(resp.url).url_name, to_url_name,
+                                 msg=msg)
+            else:
+                redirect_url = '{0}{1}'.format(to, next_url)
+                self.assertRedirects(resp, redirect_url, msg=msg)
         else:
             self.assert200(resp, user, msg=msg)
         return resp

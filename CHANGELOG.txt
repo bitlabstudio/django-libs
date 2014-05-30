@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+- Added UploadedImageFactory
+
 === 1.51 ===
 
 - Added 'to_url_name' parameter to is_postable function

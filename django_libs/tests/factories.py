@@ -9,10 +9,13 @@ For example each app will need to create a user, therefore this module shall
 provide facilities for user generation.
 
 """
-from hashlib import md5
+from io import BytesIO
 
 from django.contrib.auth.models import User
+from django.core.files.uploadedfile import SimpleUploadedFile
 
+from PIL import Image
+from hashlib import md5
 import factory
 
 
@@ -46,6 +49,20 @@ class HvadFactoryMixin(object):
 
         obj.save()
         return obj
+
+
+class UploadedImageFactory(object):
+    """Creates an uploaded image for testing."""
+    def __new__(cls, **kwargs):
+        return cls._create_image(**kwargs)
+
+    @classmethod
+    def _create_image(self, image_format='JPEG', filename='img.jpg'):
+        thumb = Image.new('RGB', (100, 100), 'blue')
+        thumb_io = BytesIO()
+        thumb.save(thumb_io, format=image_format)
+        self._image = SimpleUploadedFile(filename, thumb_io.getvalue())
+        return self._image
 
 
 class SimpleTranslationMixin(object):

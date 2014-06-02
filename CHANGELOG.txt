@@ -1,6 +1,8 @@
 === (ongoing) ===
 
 
+- added getModalB3 - a simple Bootstrap 3 version of the getModal js function
+
 === 1.52 ===
 
 - Added UploadedImageFactory

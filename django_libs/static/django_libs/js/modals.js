@@ -20,6 +20,17 @@ function renderModal($modal, data, textStatus, jqXHR, isNormalDiv) {
     }
 }
 
+function getModalB3(modal_url) {
+    // calls the modal for Bootstrap v3
+    var $modal = $('#ajax-modal');
+
+    $('body').modalmanager('loading');
+    $.get(modal_url, {}, function(data) {
+        $('body').modalmanager('loading');
+        $modal.find('.modal-body').html(data);
+        $modal.modal('show');
+    });
+}
 
 function getModal(url, get_data, $wrapper, isNormalDiv) {
     // Calls the modal with a GET request.

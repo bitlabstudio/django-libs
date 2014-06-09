@@ -19,6 +19,22 @@ setting is set::
             return super(MyView, self).dispatch(request, *args, **kwargs)
 
 
+create_random_string
+--------------------
+
+Returns a random string. By default it returns 7 unambiguous capital letters
+and numbers, without any repetitions.:
+
+    from django_libs.utils import create_random_string
+
+    result = create_random_string()
+
+Will return something like ``CH178AS``.
+You can set a length, characters to use and you can allow repetitions.:
+
+    result = create_random_string(length=3, chars='abc123', repetitions=True)
+
+
 html_to_plain_text
 ------------------
 

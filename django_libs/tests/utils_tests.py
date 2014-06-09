@@ -3,7 +3,12 @@ from django.conf import settings
 from django.test import TestCase
 from django.contrib.auth.models import SiteProfileNotAvailable
 
-from ..utils import conditional_decorator, get_profile, html_to_plain_text
+from ..utils import (
+    conditional_decorator,
+    create_random_string,
+    get_profile,
+    html_to_plain_text,
+)
 from .factories import UserFactory
 from test_app.models import DummyProfile
 
@@ -44,6 +49,18 @@ class ConditionalDecoratorTestCase(TestCase):
         result = test_method_true()
         self.assertEqual(result, 0, msg=(
             'The method should have been executed with the decorator'))
+
+
+class CreateRandomStringTestCase(TestCase):
+    """Tests for the ``create_random_string`` function."""
+    longMessage = True
+
+    def test_func(self):
+        self.assertEqual(len(create_random_string()), 7, msg=(
+            'Should return a random string with 7 characters.'))
+        self.assertEqual(
+            len(create_random_string(length=3, chars='ABC', repetitions=True)),
+            3, msg=('Should return a random string with 3 characters.'))
 
 
 class GetProfileTestCase(TestCase):

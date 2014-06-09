@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+=== 1.54 ===
+
 - Added create_random_string util
 
 === 1.53 ===

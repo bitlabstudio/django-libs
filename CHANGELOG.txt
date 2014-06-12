@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+- added maps.js for easier use of Google Maps
+
 === 1.54 ===
 
 - Added create_random_string util

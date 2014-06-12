@@ -1,5 +1,8 @@
 === (ongoing) ===
 
+
+=== 1.55 ===
+
 - added maps.js for easier use of Google Maps
 
 === 1.54 ===

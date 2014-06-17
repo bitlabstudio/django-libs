@@ -87,7 +87,7 @@ In order to use this view, hook it up in your ``urls.py``::
     from django_libs.views import UpdateSessionAJAXView
     urlpatterns += patterns(
         '',
-        url(r'^update-session/$', UpdateSessionAJAXView,
+        url(r'^update-session/$', UpdateSessionAJAXView.as_view(),
             name='update_session'),
         ...
     )

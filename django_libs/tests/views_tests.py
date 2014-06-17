@@ -2,9 +2,9 @@
 from django.test import TestCase
 from django.views.generic import TemplateView, View
 
-from ..views import HybridView
+from .. import views
 from .factories import UserFactory
-from .mixins import ViewTestMixin
+from .mixins import ViewTestMixin, ViewRequestFactoryTestMixin
 
 
 class HybridViewTestCase(ViewTestMixin, TestCase):
@@ -34,21 +34,44 @@ class HybridViewTestCase(ViewTestMixin, TestCase):
 
         bad_kwargs = self.view_kwargs.copy()
         bad_kwargs.update({'post': 'this should not be defined here'})
-        self.assertRaises(TypeError, HybridView.as_view, **bad_kwargs)
+        self.assertRaises(TypeError, views.HybridView.as_view, **bad_kwargs)
 
         bad_kwargs = self.view_kwargs.copy()
         bad_kwargs.update({'wrongattr': 'this is not defined on the view'})
-        self.assertRaises(TypeError, HybridView.as_view, **bad_kwargs)
+        self.assertRaises(TypeError, views.HybridView.as_view, **bad_kwargs)
 
         self.should_be_callable_when_authenticated(self.user)
 
 
-# class RapidPrototypingViewTestCase(ViewTestMixin, TestCase):
-#     """Tests for the ``RapidPrototypingView`` view class."""
-#     longMessage = True
+class RapidPrototypingViewTestCase(ViewRequestFactoryTestMixin, TestCase):
+    """Tests for the ``RapidPrototypingView`` view class."""
+    longMessage = True
 
-#     def get_view_name(self):
-#         return 'prototype'
+    def setUp(self):
+        self.view_class = views.RapidPrototypingView
 
-#     def test_view(self):
-#         self.should_be_callable_when_anonymous()
+    def get_view_name(self):
+        return 'prototype'
+
+    def get_view_kwargs(self):
+        return {'template_path': 'django_libs/analytics.html'}
+
+    def test_view(self):
+        self.is_callable()
+
+
+class UpdateSessionAJAXViewTestCase(ViewRequestFactoryTestMixin, TestCase):
+    """Tests for the ``UpdateSessionAJAXView`` view class."""
+    longMessage = True
+
+    def setUp(self):
+        self.view_class = views.UpdateSessionAJAXView
+
+    def get_view_name(self):
+        return 'update_session'
+
+    def test_view(self):
+        self.is_not_callable()
+        data = {'session_name': 'foo', 'session_value': 'bar'}
+        resp = self.is_postable(ajax=True, data=data)
+        self.assertEqual(resp.content, 'done')

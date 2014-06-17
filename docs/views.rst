@@ -42,7 +42,7 @@ This ``HybridView`` does the same thing. Here is how you use it in your
         ...
         url(r'^$',
             HybridView.as_view(
-                authed_view=authed_view, anonymous_view=anonymous_view, 
+                authed_view=authed_view, anonymous_view=anonymous_view,
                 anonymous_view_kwargs=anonymous_view_kwargs
             ),
         name='home',
@@ -75,3 +75,34 @@ Now you can call any template by adding it's path to the URL of the view::
 
 Check out the ``load_context`` templatetag which allos you to create fake
 context variables for your template.
+
+
+UpdateSessionAJAXView
+--------------------
+
+This view allows you to update any session variables in an AJAX post.
+
+In order to use this view, hook it up in your ``urls.py``::
+
+    from django_libs.views import UpdateSessionAJAXView
+    urlpatterns += patterns(
+        '',
+        url(r'^update-session/$', UpdateSessionAJAXView,
+            name='update_session'),
+        ...
+    )
+
+Now you can call it by using ``session_name`` and ``session_value``::
+
+    <script src="{% static "django_libs/js/getcookie.js" %}"></script>
+    <script>
+        var data = [
+            {name: 'csrfmiddlewaretoken', value: getCookie('csrftoken')}
+            ,{name: 'session_name', value: 'foo'}
+            ,{name: 'session_value', value: 'bar'}
+        ];
+        $.post(
+            '/update-session/'
+            ,data
+        );
+    </script>

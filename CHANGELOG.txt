@@ -1,5 +1,6 @@
 === (ongoing) ===
 
+- added UpdateSessionAJAXView
 
 === 1.55 ===
 

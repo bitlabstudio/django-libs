@@ -1,6 +1,7 @@
 """Views for testing 404 and 500 templates."""
 from functools import update_wrapper
 
+from django.http import Http404, HttpResponse
 from django.views.generic import TemplateView, View
 
 
@@ -96,3 +97,15 @@ class RapidPrototypingView(TemplateView):
         self.template_name = kwargs.get('template_path')
         return super(RapidPrototypingView, self).dispatch(request, *args,
                                                           **kwargs)
+
+
+class UpdateSessionAJAXView(View):
+    """View to update a session variable in an AJAX post."""
+    def dispatch(self, request, *args, **kwargs):
+        if not request.is_ajax()and not request.method == 'POST':
+            raise Http404
+        if (request.POST.get('session_name')
+                and request.POST.get('session_value')):
+            request.session[request.POST['session_name']] = request.POST[
+                'session_value']
+        return HttpResponse('done')

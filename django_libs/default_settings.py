@@ -24,3 +24,7 @@ EMAIL_BACKEND_REROUTE_BLACKLIST = getattr(settings,
 # format: (('This Name', 'name@example.com'), )       - like the ADMINS setting
 TEST_EMAIL_BACKEND_RECIPIENTS = getattr(
     settings, 'TEST_EMAIL_BACKEND_RECIPIENTS', [])
+
+
+# The default paginate by setting for all comment views
+COMMENTS_PAGINATE_BY = getattr(settings, 'COMMENTS_PAGINATE_BY', 10)

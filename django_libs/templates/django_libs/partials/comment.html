@@ -1,0 +1,9 @@
+{% load future i18n thumbnail libs_tags %}
+<div id="c{{ comment.pk }}">
+    <p class="comment_header">
+        <strong>{{ comment.user.get_full_name }}</strong> wrote {{ comment.submit_date|timesince }} {% trans "ago" %}
+    </p>
+    <div class="comment_content">
+        {{ comment.comment|linebreaks }}
+    </div>
+</div>

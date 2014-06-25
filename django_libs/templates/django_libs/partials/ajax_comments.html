@@ -1,0 +1,10 @@
+<div class="ajaxOverlay" data-class="ajaxloader"></div>
+{% if page_obj %}
+    {% for comment in page_obj %}
+        {# TODO  replace this with libs comment template?  #}
+        {% include "django_libs/partials/comment.html" %}
+    {% endfor %}
+    {% include "django_libs/partials/ajax_comments_pagination.html" %}
+{% else %}
+    <p>No comments so far</p>
+{% endif %}

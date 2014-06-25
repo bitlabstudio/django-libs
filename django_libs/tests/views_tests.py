@@ -1,4 +1,7 @@
 """Tests for the view classes of ``django-libs``."""
+from django.contrib.sites.models import Site
+from django.contrib.comments.models import Comment
+from django.contrib.contenttypes.models import ContentType
 from django.test import TestCase
 from django.views.generic import TemplateView, View
 
@@ -41,6 +44,24 @@ class HybridViewTestCase(ViewTestMixin, TestCase):
         self.assertRaises(TypeError, views.HybridView.as_view, **bad_kwargs)
 
         self.should_be_callable_when_authenticated(self.user)
+
+
+class PaginatedCommentAJAXViewTestCase(ViewRequestFactoryTestMixin, TestCase):
+    """Tests for the ``PaginatedCommentAJAXView`` view class."""
+    view_class = views.PaginatedCommentAJAXView
+
+    def setUp(self):
+        self.user = UserFactory()
+        self.comment = Comment.objects.create(
+            content_type=ContentType.objects.get(name='user'),
+            object_pk=self.user.pk,
+            comment='foobar',
+            site=Site.objects.create(),
+        )
+
+    def test_view(self):
+        self.is_not_callable()
+        self.is_callable(ajax=True)
 
 
 class RapidPrototypingViewTestCase(ViewRequestFactoryTestMixin, TestCase):

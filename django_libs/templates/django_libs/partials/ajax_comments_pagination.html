@@ -1,0 +1,16 @@
+{% load i18n libs_tags %}
+<div class="pagination">
+    <ul>
+        <li {% if not page_obj.has_previous %}class="disabled"{% endif %}>
+            <a data-class="comment-page-previous" href="" title="{% trans "Previous" %}">&laquo;</a>
+        </li>
+
+        {% for page_number in page_obj.paginator.num_pages|get_range %}
+            <li {% if page_number|add:"1" == page_obj.number %}class="active"{% endif %}><a data-class="comment-page-direct" data-page="{{ page_number|add:"1" }}" href="">{{ page_number|add:"1" }}</a></li>
+        {% endfor %}
+
+        <li {% if not page_obj.has_next %}class="disabled"{% endif %}>
+            <a data-class="comment-page-next" href="" title="{% trans "Next" %}">&raquo;</a>
+        </li>
+    </ul>
+</div>

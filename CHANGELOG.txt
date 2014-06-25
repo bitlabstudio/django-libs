@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+- Added PaginatedCommentAJAXView
+
 === 1.56 ===
 
 - added UpdateSessionAJAXView

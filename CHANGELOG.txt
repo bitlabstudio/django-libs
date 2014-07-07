@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+- Added data attribute to view tests redirect function
+
 === 1.57 ===
 
 - Added PaginatedCommentAJAXView

@@ -571,9 +571,10 @@ class ViewRequestFactoryTestMixin(object):
         return resp
 
     def redirects(self, to, next_url='', user=None, add_session=False,
-                  kwargs=None, msg=None):
+                  kwargs=None, msg=None, data=None):
         """Checks for redirects from a GET request."""
-        resp = self.get(user=user, add_session=add_session, kwargs=kwargs)
+        resp = self.get(user=user, add_session=add_session, kwargs=kwargs,
+                        data=data)
         if next_url:
             next_url = '?next={0}'.format(next_url)
         redirect_url = '{0}{1}'.format(to, next_url)

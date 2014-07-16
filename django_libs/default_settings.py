@@ -28,3 +28,13 @@ TEST_EMAIL_BACKEND_RECIPIENTS = getattr(
 
 # The default paginate by setting for all comment views
 COMMENTS_PAGINATE_BY = getattr(settings, 'COMMENTS_PAGINATE_BY', 10)
+
+
+# Default settings for the CustomRaven404CatchMiddleware
+RAVEN_IGNORABLE_USER_AGENTS = [
+    r'^.*EasouSpider.*$',
+    r'^.*Googlebot.*$',
+    r'^.*bingbot.*$',
+    r'^.*Twitterbot.*$',
+    r'^.*Yahoo! Slurp.*$',
+]

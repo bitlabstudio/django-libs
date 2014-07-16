@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+- Added default setting for RAVEN_IGNORABLE_USER_AGENTS
+
 === 1.58 ===
 
 - Added CustomSentry404CatchMiddleware

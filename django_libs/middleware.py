@@ -43,7 +43,7 @@ class CustomSentry404CatchMiddleware(object):
         Each item can be a regex.
 
         """
-        user_agent = request.META.get('HTTP_USER_AGENT')
+        user_agent = request.META.get('HTTP_USER_AGENT', '')
         ignorable_agents = getattr(settings, 'RAVEN_IGNORABLE_USER_AGENTS', [])
         for ignorable_agent in ignorable_agents:
             result = re.match(ignorable_agent, user_agent)

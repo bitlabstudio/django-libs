@@ -1,6 +1,6 @@
 === (ongoing) ===
 
-=== 1.58.1 ===
+=== 1.58.X ===
 
 - Added default setting for RAVEN_IGNORABLE_USER_AGENTS
 

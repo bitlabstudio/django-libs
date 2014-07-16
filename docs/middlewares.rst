@@ -64,6 +64,15 @@ user in the email body. Use this with Django 1.5. Later versions should use the
 `CustomBrokenLinkEmailsMiddleware` instead.
 
 
+CustomSentry404CatchMiddleware
+------------------------------
+
+Use this instead of the middleware provided by raven. It allows you to define
+a list of regex strings in the setting ``RAVEN_IGNORABLE_USER_AGENTS``. This
+way you can stop reporting for nasty spiders crawling your site and testing
+all kinds of weird non-existant URLs.
+
+
 ErrorMiddleware
 ---------------
 

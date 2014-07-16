@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+- Added CustomSentry404CatchMiddleware
+
 === 1.57.1 ===
 
 - Added data attribute to view tests redirect function

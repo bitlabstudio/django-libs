@@ -4,6 +4,7 @@ RAVEN_IGNORABLE_USER_AGENTS = [
     r'^.*EasouSpider.*$',
     r'^.*Feedfetcher-Google.*$',
     r'^.*Googlebot.*$',
+    r'^.*Test Certificate Info.*$',
     r'^.*Twitterbot.*$',
     r'^.*Yahoo! Slurp.*$',
     r'^.*YandexBot.*$',

@@ -1,14 +1,14 @@
 <div class="form-group {% if field.errors %}error{% endif %}">
     {% if not hide_label %}
-        <label class="control-label" for="{{ field.id_for_label }}">
-            <span {% if field.field.required %}class="requiredLabel"{% endif %}>{{ field.label }}</span>
+        <label for="{{ field.id_for_label }}">
+            <span {% if field.field.required %}class="required-label"{% endif %}>{{ field.label }}</span>
             {% if field.help_text %}
-                <span class="glyphicon glyphicon-question-sign popOver" title="{{ field.label }}" data-content="{{ field.help_text }}"></span>
+                <span data-class="popover" class="glyphicon glyphicon-question-sign" title="{{ field.label }}" data-content="{{ field.help_text }}"></span>
             {% endif %}
         </label>
     {% endif %}
     {{ field }}
     {% if field.errors %}
-        <span class="help-inline">{% for error in field.errors %}{{ error }}<br/> {% endfor %}</span>
+        <span class="help-block">{% for error in field.errors %}{{ error }}<br/> {% endfor %}</span>
     {% endif %}
 </div>

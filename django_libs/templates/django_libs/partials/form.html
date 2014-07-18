@@ -1,0 +1,4 @@
+{% csrf_token %}
+{% for field in form %}
+    {% include "django_libs/partials/form_field.html" with hide_label=hide_label %}
+{% endfor %}

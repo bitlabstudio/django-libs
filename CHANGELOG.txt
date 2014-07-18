@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+- Form template improvements
+
 === 1.58.X ===
 
 - Added default setting for RAVEN_IGNORABLE_USER_AGENTS

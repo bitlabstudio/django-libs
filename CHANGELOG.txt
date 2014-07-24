@@ -1,5 +1,7 @@
 === (ongoing) ===
 
+=== 1.59 ===
+
 - Form template improvements
 - Added SSLMiddleware
 

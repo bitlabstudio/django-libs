@@ -76,8 +76,8 @@ all kinds of weird non-existant URLs.
 ErrorMiddleware
 ---------------
 
- Add this middleware if you would like to see the user's email address in the
- traceback that is sent to you when a 500 error happens.
+Add this middleware if you would like to see the user's email address in the
+traceback that is sent to you when a 500 error happens.
 
 In order to use this middleware, add it to your ``MIDDLEWARE_CLASSES``
 setting::
@@ -90,3 +90,9 @@ setting::
     ]
 
 
+SSLMiddleware
+-------------
+
+Add this middleware as the first middleware in your stack to forward all
+requests to `http://yoursite.com` to `https://yoursite.com`. Define exceptions
+via the setting `NO_SSL_URLS` - these requests will be served without HTTPS.

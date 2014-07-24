@@ -1,6 +1,7 @@
 === (ongoing) ===
 
 - Form template improvements
+- Added SSLMiddleware
 
 === 1.58.X ===
 

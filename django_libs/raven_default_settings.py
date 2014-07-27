@@ -5,6 +5,7 @@ RAVEN_IGNORABLE_USER_AGENTS = [
     r'FacebookBot',
     r'Feedfetcher-Google',
     r'Googlebot',
+    r'Mail.RU_Bot',
     r'Test Certificate Info',
     r'Twitterbot',
     r'Yahoo! Slurp',

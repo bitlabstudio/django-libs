@@ -5,6 +5,7 @@
 - Form template improvements
 - Added SSLMiddleware
 - Changed regex for ignorable user agents
+- Added Mail.RU_Bot to ignorable user agents
 
 === 1.58.X ===
 

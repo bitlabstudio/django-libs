@@ -6,6 +6,7 @@
 - Added SSLMiddleware
 - Changed regex for ignorable user agents
 - Added Mail.RU_Bot to ignorable user agents
+- Fixed small bug in HvadPublishedManager
 
 === 1.58.X ===
 

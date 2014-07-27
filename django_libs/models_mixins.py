@@ -22,7 +22,7 @@ class HvadPublishedManager(TranslationManager):
     def published(self, request, check_language=True):
         kwargs = {'translations__is_published': True}
         if check_language:
-            language = getattr(request, 'LANGUAGE_CODE', None)
+            language = getattr(request, 'LANGUAGE_CODE', get_language())
             if not language:
                 self.model.objects.none()
             kwargs.update({'translations__language_code': language})

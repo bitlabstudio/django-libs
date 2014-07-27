@@ -1,9 +1,10 @@
 === (ongoing) ===
 
-=== 1.59 ===
+=== 1.59.X ===
 
 - Form template improvements
 - Added SSLMiddleware
+- Changed regex for ignorable user agents
 
 === 1.58.X ===
 

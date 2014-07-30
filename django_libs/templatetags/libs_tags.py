@@ -452,6 +452,22 @@ def get_range_around(range_value, current_item, padding):
     }
 
 
+@register.assignment_tag(takes_context=True)
+def is_context_variable(context, variable_name):
+    """
+    Returns true if the given variable name is in the template context.
+
+    Usage::
+
+        {% is_context_variable "variable_name" as variable_exists %}
+        {% if variable_exists %}
+            ...
+        {% endif %}
+
+    """
+    return context.has_key(variable_name)
+
+
 @register.inclusion_tag('django_libs/analytics.html')
 def render_analytics_code(anonymize_ip='anonymize'):
     """

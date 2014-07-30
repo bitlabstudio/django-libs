@@ -39,7 +39,7 @@ class CustomSentry404CatchMiddleware(object):
         """
         Returns ``True`` if the user agent is in the list of ignored agents.
 
-        Set the setting 404_IGNORABLE_USER_AGENTS = []
+        Set the setting RAVEN_404_IGNORABLE_USER_AGENTS = []
         Each item can be a regex.
 
         """

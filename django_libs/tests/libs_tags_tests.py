@@ -340,3 +340,18 @@ class ExcludeTestCase(TestCase):
         self.assertEqual(
             tags.exclude(qs, qs.exclude(pk=self.dummy.pk)).count(), 1,
             msg=('Should return one profile.'))
+
+
+class IsContextVariableTestCase(TestCase):
+    """Tests for the ``is_context_variable`` templatetag."""
+    longMessage = True
+
+    def test_tag(self):
+        result = tags.is_context_variable({}, 'variable_name')
+        self.assertEqual(result, False, msg=(
+            'Should return False if the variable is not in the context'))
+
+        context = {'variable_name': 1, }
+        result = tags.is_context_variable(context, 'variable_name')
+        self.assertEqual(result, True, msg=(
+            'Should return True if the variable is in the context'))

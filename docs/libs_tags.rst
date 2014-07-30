@@ -268,6 +268,30 @@ value to ``!remove``::
 
     {% get_query_params request "page" 1 "foobar" "!remove" as query %}
 
+is_context_variable
+-------------------
+Checks if a given variable name is already part of the template context.
+
+This is useful if you have an expensive templatetag which might or might not
+have been called in a parent template and you also need it in some child
+templates.
+
+You cannot just check for ``{% if variable_name %}`` because that would equal
+to ``False`` in all cases:
+
+* if the variable does not exist
+* if the variable exists but is ``None``
+* if the variable exists but is ``False``
+* if the variable exists but is 0
+
+This tag allows you to do something like this::
+
+    {% is_context_variable 'variable_name' as variable_exists %}
+    {% if not variable_exists %}
+        {% expensive_templatetag as variable_name %}
+    {% endif %}
+    {{ variable_name }}
+
 load_context
 ------------
 

@@ -8,6 +8,7 @@
 - Added Mail.RU_Bot to ignorable user agents
 - Fixed small bug in HvadPublishedManager
 - Added is_context_variable templatetag
+- Added RAVEN_IGNORE_SPIDERS feature to CustomSentry404CatchMiddleware
 
 === 1.58.X ===
 

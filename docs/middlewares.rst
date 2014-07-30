@@ -67,10 +67,17 @@ user in the email body. Use this with Django 1.5. Later versions should use the
 CustomSentry404CatchMiddleware
 ------------------------------
 
+Make sure to add `user-agents` to your ``requirements.txt``.
+
 Use this instead of the middleware provided by raven. It allows you to define
 a list of regex strings in the setting ``RAVEN_IGNORABLE_USER_AGENTS``. This
 way you can stop reporting for nasty spiders crawling your site and testing
 all kinds of weird non-existant URLs.
+
+This middleware also uses user-agents to parse the user agent string and
+determine the device. If the device family equals ``Spider``, the request
+will be ignored. If you don't want to block all spiders like this, set
+``RAVEN_IGNORE_SPIDERS = False``.
 
 
 ErrorMiddleware

@@ -29,7 +29,7 @@ class HvadFactoryMixin(object):
         obj = target_class(*args, **kwargs)
 
         # Factory boy and hvad behave a bit weird. When getting the object,
-        # obj.some_translatable_field is actually set although no tranlsation
+        # obj.some_translatable_field is actually set although no translation
         # object exists, yet. We have to cache the translatable values ...
         cached_values = {}
         for field in obj._translated_field_names:

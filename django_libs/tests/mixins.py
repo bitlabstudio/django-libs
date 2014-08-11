@@ -539,9 +539,29 @@ class ViewRequestFactoryTestMixin(object):
         self.assert200(resp, user, msg=msg)
         return resp
 
+    def is_forbidden(self, user=None, data=None, ajax=False,
+                     add_session=False, post=False, kwargs=None, msg=None):
+        """Checks if the view is not allowed to be called."""
+        resp = self.get(
+            user=user, data=data, ajax=ajax, add_session=add_session,
+            kwargs=kwargs)
+        user_msg = user or self.get_user()
+        if self.get_view_class() is not None:
+            # if it's a view class, we can append it to the message as class
+            # name
+            view_msg = self.get_view_class()
+        else:
+            # if no view class is set, we assume function based view
+            view_msg = self.get_view()
+        if not msg:
+            msg = ('The `{0}` view should have been forbidden for'
+                   ' user `{1}`.').format(view_msg, user_msg)
+        self.assertEqual(resp.status_code, 403, msg=msg)
+        return resp
+
     def is_not_callable(self, user=None, data=None, ajax=False,
                         add_session=False, post=False, kwargs=None):
-        """Checks if the view can not be called view GET."""
+        """Checks if the view can not be called."""
         if post:
             call_obj = self.post
         else:

@@ -7,7 +7,7 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.contrib.comments.models import Comment
 # from django.contrib.contenttypes.models import ContentType
 # from django.core.exceptions import ObjectDoesNotExist
-from django.http import Http404, HttpResponse
+from django.http import Http404, HttpResponse, HttpResponseForbidden
 from django.template import loader, Context
 from django.views.generic import TemplateView, View
 
@@ -185,8 +185,8 @@ class RapidPrototypingView(TemplateView):
 class UpdateSessionAJAXView(View):
     """View to update a session variable in an AJAX post."""
     def dispatch(self, request, *args, **kwargs):
-        if not request.is_ajax()and not request.method == 'POST':
-            raise Http404
+        if not (request.is_ajax() and request.method == 'POST'):
+            return HttpResponseForbidden()
         if (request.POST.get('session_name')
                 and request.POST.get('session_value')):
             request.session[request.POST['session_name']] = request.POST[

@@ -1,5 +1,9 @@
 === (ongoing) ===
 
+- added is_forbidden to ViewRequestFactoryTestMixin that checks for
+  HttpResponseForbidden
+- fixed UpdateSessionAJAXView
+
 === 1.59.X ===
 
 - Form template improvements

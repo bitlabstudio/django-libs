@@ -92,7 +92,7 @@ class UpdateSessionAJAXViewTestCase(ViewRequestFactoryTestMixin, TestCase):
         return 'update_session'
 
     def test_view(self):
-        self.is_not_callable()
+        self.is_forbidden()
         data = {'session_name': 'foo', 'session_value': 'bar'}
         resp = self.is_postable(ajax=True, data=data)
         self.assertEqual(resp.content, 'done')

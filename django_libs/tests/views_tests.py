@@ -96,3 +96,20 @@ class UpdateSessionAJAXViewTestCase(ViewRequestFactoryTestMixin, TestCase):
         data = {'session_name': 'foo', 'session_value': 'bar'}
         resp = self.is_postable(ajax=True, data=data)
         self.assertEqual(resp.content, 'done')
+
+
+class UpdateCookieAJAXViewTestCase(ViewRequestFactoryTestMixin, TestCase):
+    """Tests for the ``UpdateCookieAJAXView`` view class."""
+    longMessage = True
+
+    def setUp(self):
+        self.view_class = views.UpdateCookieAJAXView
+
+    def get_view_name(self):
+        return 'update_cookie'
+
+    def test_view(self):
+        self.is_forbidden()
+        data = {'cookie_key': 'foo', 'cookie_value': 'bar'}
+        resp = self.is_postable(ajax=True, data=data)
+        self.assertEqual(resp.content, 'done')

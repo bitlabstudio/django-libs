@@ -465,7 +465,7 @@ def is_context_variable(context, variable_name):
         {% endif %}
 
     """
-    return context.has_key(variable_name)
+    return variable_name in context
 
 
 @register.inclusion_tag('django_libs/analytics.html')

@@ -1,12 +1,12 @@
 """Views for testing 404 and 500 templates."""
 import json
+import datetime
 import math
 from functools import update_wrapper
 
+from django.conf import settings
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.contrib.comments.models import Comment
-# from django.contrib.contenttypes.models import ContentType
-# from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404, HttpResponse, HttpResponseForbidden
 from django.template import loader, Context
 from django.views.generic import TemplateView, View
@@ -192,3 +192,23 @@ class UpdateSessionAJAXView(View):
             request.session[request.POST['session_name']] = request.POST[
                 'session_value']
         return HttpResponse('done')
+
+
+class UpdateCookieAJAXView(View):
+    """View to update a cookie in an AJAX post."""
+    def dispatch(self, request, *args, **kwargs):
+        if not (request.is_ajax() and request.method == 'POST'):
+            return HttpResponseForbidden()
+        response = HttpResponse('done')
+        days = request.POST.get('cookie_days', 100)
+        date = datetime.datetime.utcnow() + datetime.timedelta(days=days)
+        expires = datetime.datetime.strftime(date, "%a, %d-%b-%Y %H:%M:%S GMT")
+        response.set_cookie(
+            request.POST['cookie_key'],
+            request.POST['cookie_value'],
+            max_age=(days * 24 * 60 * 60),
+            expires=expires,
+            domain=settings.SESSION_COOKIE_DOMAIN,
+            secure=settings.SESSION_COOKIE_SECURE or None,
+        )
+        return response

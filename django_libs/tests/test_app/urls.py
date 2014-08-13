@@ -22,6 +22,8 @@ urlpatterns = patterns(
         ), name='dummy_hybrid'),
     url(r'^update-session/$', views.UpdateSessionAJAXView,
         name='update_session'),
+    url(r'^update-cookie/$', views.UpdateCookieAJAXView,
+        name='update_cookie'),
     url(r'^prototype/(?P<template_path>.*)$',
         views.RapidPrototypingView.as_view(),
         name='prototype')

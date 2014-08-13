@@ -1,12 +1,11 @@
 === (ongoing) ===
 
+=== 1.59.X ===
+
 - Added UpdateCookieAJAXView
 - added is_forbidden to ViewRequestFactoryTestMixin that checks for
   HttpResponseForbidden
 - fixed UpdateSessionAJAXView
-
-=== 1.59.X ===
-
 - Form template improvements
 - Added SSLMiddleware
 - Changed regex for ignorable user agents

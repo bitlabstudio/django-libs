@@ -267,7 +267,10 @@ class ViewTestMixin(object):
         Can be overwritten if you do not use the auth_login as default or
         configure your urls.py file in a specific way.
         """
-        return getattr(settings, 'LOGIN_URL', reverse('auth_login'))
+        login_url = getattr(settings, 'LOGIN_URL')
+        if login_url is None:
+            return reverse('auth_login')
+        return login_url
 
     def should_redirect_to_login_when_anonymous(self, url=None):
         """

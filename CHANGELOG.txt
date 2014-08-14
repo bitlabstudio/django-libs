@@ -1,4 +1,6 @@
-=== (ongoing) ===
+=== 1.60.X ===
+
+- Fixed get_login_url() in ViewTestMixin
 
 === 1.59.X ===
 

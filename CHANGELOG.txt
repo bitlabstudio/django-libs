@@ -1,3 +1,6 @@
+
+- extended GetModalB3 to be able to define a headline
+
 === 1.60.X ===
 
 - Fixed get_login_url() in ViewTestMixin

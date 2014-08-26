@@ -20,13 +20,21 @@ function renderModal($modal, data, textStatus, jqXHR, isNormalDiv) {
     }
 }
 
-function getModalB3(modal_url) {
+function getModalB3(modal_url, headline_text) {
     // calls the modal for Bootstrap v3
-    var $modal = $('#ajax-modal');
+    var $modal = $('#ajax-modal')
+        ,$header;
+
+    if (headline_text) {
+        $header = $('<h4>' + headline_text + '</h4>');
+    } else {
+        $header = $('<span>&nbsp;</span>')
+    }
 
     $('body').modalmanager('loading');
     $.get(modal_url, {}, function(data) {
         $('body').modalmanager('loading');
+        $modal.find('.modal-header').prepend($header);
         $modal.find('.modal-body').html(data);
         $modal.modal('show');
     });

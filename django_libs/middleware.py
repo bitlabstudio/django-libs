@@ -10,6 +10,8 @@ try:
 except ImportError:
     _is_ignorable_404 = None
 
+from . import default_settings
+
 
 class AjaxRedirectMiddleware(object):
     """
@@ -47,11 +49,11 @@ class CustomSentry404CatchMiddleware(object):
         user_agent = request.META.get('HTTP_USER_AGENT', '')
         ua = parse(user_agent)
 
-        ignore_spiders = getattr(settings, 'RAVEN_IGNORE_SPIDERS', True)
+        ignore_spiders = default_settings.RAVEN_IGNORE_SPIDERS
         if ignore_spiders and ua.device.family == 'Spider':
             return True
 
-        ignorable_agents = getattr(settings, 'RAVEN_IGNORABLE_USER_AGENTS', [])
+        ignorable_agents = RAVEN_IGNORABLE_USER_AGENTS
         for ignorable_agent in ignorable_agents:
             result = re.match(ignorable_agent, user_agent)
             if result:
@@ -88,7 +90,7 @@ class SSLRedirect:
 
     """
     def process_request(self, request):
-        no_ssl_urls = getattr(settings, 'NO_SSL_URLS', [])
+        no_ssl_urls = default_settings.NO_SSL_URLS
         urls = tuple([re.compile(url) for url in no_ssl_urls])
 
         secure = False

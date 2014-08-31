@@ -1,27 +1,7 @@
-"""Custom filters for the ``compressor`` app."""
-from django.conf import settings
+"""Kept for backwards compatibility. Please add everything to the path below."""
+import warnings
 
-from compressor.filters.css_default import CssAbsoluteFilter
-from compressor.utils import staticfiles
+from .utils.compress_filters import *  # NOQA
 
-
-class S3CssAbsoluteFilter(CssAbsoluteFilter):
-    """
-    This CSS filter was built to use django-compressor in combination with a
-    Amazon S3 storage. It will make sure to provide the right URLs, whether
-    you're in DEBUG mode or not.
-
-    Make sure to add the ``FULL_DOMAIN`` setting. This is your base url, e.g.
-    'https://www.example.com'.
-
-    """
-    def __init__(self, *args, **kwargs):
-        super(S3CssAbsoluteFilter, self).__init__(*args, **kwargs)
-        self.url = '%s%s' % (settings.FULL_DOMAIN, settings.STATIC_URL)
-        self.url_path = self.url
-
-    def find(self, basename):
-        # The line below is the original line.  I removed settings.DEBUG.
-        # if settings.DEBUG and basename and staticfiles.finders:
-        if basename and staticfiles.finders:
-            return staticfiles.finders.find(basename)
+warnings.warn('Please import from django_libs.utils.compress_filters instead.',
+              DeprecationWarning)

@@ -1,4 +1,6 @@
 """Tests for the utils of ``django_libs``."""
+import os
+
 from django.conf import settings
 from django.test import TestCase
 from django.contrib.auth.models import SiteProfileNotAvailable
@@ -125,7 +127,9 @@ class HTMLToPlainTextTestCase(TestCase):
             html_to_plain_text(html),
             '\n  * List element\n  * List element\n  * List element',
             msg='Should return a formatted plain text.')
-        with open('test_app/templates/html_email.html', 'rb') as file:
+        with open(os.path.join(
+                os.path.dirname(__file__),
+                'test_app/templates/html_email.html'), 'rb') as file:
             self.assertIn('[1]: *|ARCHIVE|*\n', html_to_plain_text(file), msg=(
                 'Should return a formatted plain text.'))
 

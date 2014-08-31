@@ -4,7 +4,7 @@ from django.test import TestCase
 from mailer.models import Message
 from mock import Mock
 
-from ..utils_email import send_email
+from ..utils.email import send_email
 
 
 class SendEmailTestCase(TestCase):

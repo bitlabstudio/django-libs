@@ -1,7 +1,7 @@
 """Tests for the utility functions in ``loaders.py``."""
 from django.test import TestCase
 
-from ..loaders import load_member, load_member_from_setting, split_fqn
+from ..utils.loaders import load_member, load_member_from_setting, split_fqn
 
 
 def callable_that_returns_fqn_string():

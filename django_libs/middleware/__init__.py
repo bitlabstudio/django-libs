@@ -10,7 +10,7 @@ try:
 except ImportError:
     _is_ignorable_404 = None
 
-from . import default_settings
+from .. import default_settings
 
 
 class AjaxRedirectMiddleware(object):
@@ -28,7 +28,7 @@ class AjaxRedirectMiddleware(object):
     def process_response(self, request, response):
         if request.is_ajax():
             if (request.GET.get('ajax_redirect_passthrough')
-                    or request.POST.get('ajax_redirect_passthrough')):
+                or request.POST.get('ajax_redirect_passthrough')):
                 return response
             if type(response) == HttpResponseRedirect:
                 response.status_code = 278

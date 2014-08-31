@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup
 from HTMLParser import HTMLParser
 
 from .. import default_settings
-from ..loaders import load_member_from_setting
+from .loaders import load_member_from_setting
 
 
 class conditional_decorator(object):

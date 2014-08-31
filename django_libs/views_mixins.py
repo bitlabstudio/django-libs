@@ -1,4 +1,7 @@
 """Kept for backwards compatibility. Please add everything to the path below."""
+import warnings
+
 from .views.mixins import *  # NOQA
 
-raise DeprecationWarning('Please import from django_libs.views.mixins instead.')
+warnings.warn('Please import from django_libs.views.mixins instead.',
+              DeprecationWarning)

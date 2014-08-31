@@ -1,9 +1,12 @@
 """Default settings for the CustomRaven404CatchMiddleware"""
+import warnings
+
 from . import default_settings
 
-raise DeprecationWarning(
+warnings.warn(
     'This setting is deprecated.'
-    ' Please import from django_libs.default_settings instead.')
+    ' Please import from django_libs.default_settings instead.',
+    DeprecationWarning)
 
 # NOTE: kept for backwards compatibility. Default setting should always be
 # defined in ``default_settings.py``

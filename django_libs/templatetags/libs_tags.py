@@ -11,7 +11,7 @@ from django.template.defaultfilters import truncatewords_html
 
 from django_libs import utils
 
-from ..loaders import load_member
+from ..utils.loaders import load_member
 
 
 register = template.Library()

@@ -8,7 +8,7 @@ Use this mixin if you want to allow users of your app to decide if the views
 of your app should be accessible to anonymous users or only to authenticated
 users::
 
-    form django_libs.views_mixins import AccessMixin
+    form django_libs.views.mixins import AccessMixin
 
     class YourView(AccessMixin, TemplateView):
         access_mixin_setting_name = 'YOURAPP_ALLOW_ANONYMOUS'
@@ -30,7 +30,7 @@ therefore the view needs to return that partial template only.
 
 You can use this by inheriting the class::
 
-    from django_libs.views_mixins import AjaxResponseMixin
+    from django_libs.views.mixins import AjaxResponseMixin
 
     class MyView(AjaxResponseMixin, CreateView):
         ajax_template_prefix = 'partials/ajax_'
@@ -65,7 +65,7 @@ Basic usage in a html template::
 
 Usage in a views.py::
 
-    from django_libs.views_mixins import DetailViewWithPostAction
+    from django_libs.views.mixins import DetailViewWithPostAction
 
     class NewsDetailBase(DetailViewWithPostAction):
         def post_verify(self):
@@ -106,7 +106,7 @@ In order to use it, just import it like all the other generic class based views
 and view mixins::
 
     from django.views.generic import View
-    from django_libs.views_mixins import JSONResponseMixin
+    from django_libs.views.mixins import JSONResponseMixin
 
     class MyAPIView(JSONResponseMixin, View):
         pass

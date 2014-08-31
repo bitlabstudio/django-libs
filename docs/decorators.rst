@@ -24,7 +24,7 @@ You should create a setting ``LOCKFILE_PATH`` which points to
 
 Usage::
 
-    from django_libs.decorators import lockfile
+    from django_libs.utils.decorators import lockfile
     ...
 
     LOCKFILE = os.path.join(

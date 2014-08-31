@@ -23,12 +23,12 @@ Then install ``django-storages`` (http://django-storages.readthedocs.org/) and
     S3_URL = 'https://%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
     if USE_S3:
-        DEFAULT_FILE_STORAGE = 'django_libs.s3.MediaRootS3BotoStorage'
+        DEFAULT_FILE_STORAGE = 'django_libs.utils.s3.MediaRootS3BotoStorage'
         THUMBNAIL_DEFAULT_STORAGE = DEFAULT_FILE_STORAGE
         MEDIA_URL = S3_URL + '/media/'
 
         # Add this line, if you're using ``django-compressor``
-        COMPRESS_STORAGE = 'django_libs.s3.CompressorS3BotoStorage'
+        COMPRESS_STORAGE = 'django_libs.utils.s3.CompressorS3BotoStorage'
 
     MEDIA_ROOT = os.path.join(PROJECT_ROOT, '../..',  'media')
     STATIC_ROOT = os.path.join(PROJECT_ROOT, '../..', 'static')
@@ -44,7 +44,7 @@ If you're using ``django-compressor`` add the following settings::
 
     COMPRESS_PARSER = 'compressor.parser.HtmlParser'
     COMPRESS_CSS_FILTERS = [
-        'django_libs.compress_filters.S3CssAbsoluteFilter',
+        'django_libs.utils.compress_filters.S3CssAbsoluteFilter',
     ]
     COMPRESS_ENABLED = True
 

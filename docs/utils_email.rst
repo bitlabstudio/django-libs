@@ -4,8 +4,8 @@ Utils Email
 send_email
 ----------
 
-``send_email`` sends html emails via django-mailer based on templates for
-subject and body.
+``django_libs.utils.email.send_email`` sends html emails via django-mailer based
+on templates for subject and body.
 
 +----------------------+----------------------------------------------------+
 | Argument             | Definition                                         |

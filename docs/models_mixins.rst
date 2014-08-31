@@ -12,7 +12,7 @@ by models under
 You can use this by inheriting the class::
 
     from django.db import models
-    from django_libs.models_mixins import SimpleTranslationMixin
+    from django_libs.models.mixins import SimpleTranslationMixin
 
     class MyModel(SimpleTranslationMixin, models.Model):
         pass
@@ -46,7 +46,7 @@ published versions of ``MyModel``.
 
 To set it up simply add the manager to your model::
 
-    from django_libs.models_mixins import SimpleTranslationPublishedManager
+    from django_libs.models.mixins import SimpleTranslationPublishedManager
 
     class MyModel(models.Model):
 
@@ -66,7 +66,7 @@ If you want to alter the required fields, because your models differ from our
 assumed structure or you want to build it into your own custom manager, you can
 inherit the ``SimpleTranslationPublishedManager`` like so::
 
-    from django_libs.models_mixins import SimpleTranslationPublishedManager
+    from django_libs.models.mixins import SimpleTranslationPublishedManager
 
     class MyModelManager(SimpleTranslationPublishedManager)
         # set these values, if your translation model or the fields differ from

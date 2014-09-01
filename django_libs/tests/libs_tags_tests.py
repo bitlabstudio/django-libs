@@ -355,3 +355,27 @@ class IsContextVariableTestCase(TestCase):
         result = tags.is_context_variable(context, 'variable_name')
         self.assertEqual(result, True, msg=(
             'Should return True if the variable is in the context'))
+
+
+class SumTestCase(TestCase):
+    """Tests for the ``sum`` templatetag."""
+    longMessage = True
+
+    def test_tag(self):
+        context = Mock()
+        context.dicts = ({}, )
+        key = 'foobar'
+        tags.sum(context, key, 10)
+        self.assertEqual(context.dicts[0][key], 10, msg=(
+            'If the key does not exist, it will be added with the value 0, '
+            ' then the given value will be added to that'))
+
+        tags.sum(context, key, 15)
+        self.assertEqual(context.dicts[0][key], 25, msg=(
+            'If the key exist, the given value will be added to the existing, '
+            ' value'))
+
+        tags.sum(context, key, 15, -1)
+        self.assertEqual(context.dicts[0][key], 10, msg=(
+            'If a multiplier is given, the given value should be multiplied'
+            ' before being added to the existing context value'))

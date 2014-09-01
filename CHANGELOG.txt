@@ -2,6 +2,7 @@
 === 1.61.X ===
 
 - extended GetModalB3 to be able to define a headline
+- Improved test suite
 
 === 1.60.X ===
 

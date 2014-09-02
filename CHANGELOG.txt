@@ -1,6 +1,7 @@
 
 === 1.61.X ===
 
+- added session_dict to request factories
 - extended GetModalB3 to be able to define a headline
 - Improved test suite
 

@@ -360,7 +360,8 @@ class ViewRequestFactoryTestMixin(object):
                          msg=msg or ('Should redirect to correct `next_url`'))
 
     def get_request(self, method=RequestFactory().get, ajax=False, data=None,
-                    user=AnonymousUser(), add_session=False, **kwargs):
+                    user=AnonymousUser(), add_session=False, session_dict={},
+                    **kwargs):
         if data is not None:
             kwargs.update({'data': data})
         req = method(self.get_url(), **kwargs)
@@ -373,6 +374,9 @@ class ViewRequestFactoryTestMixin(object):
             req.session.save()
         else:
             setattr(req, 'session', {})
+        if session_dict:
+            for var in session_dict:
+                req.session[var] = session_dict[var]
         messages = FallbackStorage(req)
         setattr(req, '_messages', messages)
         if ajax:
@@ -385,20 +389,21 @@ class ViewRequestFactoryTestMixin(object):
         return req
 
     def get_get_request(self, ajax=False, data=None, user=None,
-                        add_session=False, **kwargs):
+                        add_session=False, session_dict={}, **kwargs):
         if user is None:
             user = self.get_user()
         return self.get_request(
-            ajax=ajax, data=data, user=user, add_session=add_session, **kwargs)
+            ajax=ajax, data=data, user=user, add_session=add_session,
+            session_dict=session_dict, **kwargs)
 
     def get_post_request(self, ajax=False, data=None, user=None,
-                         add_session=False, **kwargs):
+                         add_session=False, session_dict={}, **kwargs):
         method = RequestFactory().post
         if user is None:
             user = self.get_user()
         return self.get_request(
             method=method, ajax=ajax, data=data, user=user,
-            add_session=add_session, **kwargs)
+            add_session=add_session, session_dict=session_dict, **kwargs)
 
     def get_user(self):
         if self._logged_in_user is None:
@@ -486,10 +491,11 @@ class ViewRequestFactoryTestMixin(object):
         return view_class.as_view()
 
     def get(self, user=None, data=None, ajax=False, add_session=False,
-            kwargs=None):
+            session_dict={}, kwargs=None):
         """Creates a response from a GET request."""
         req = self.get_get_request(
-            user=user, data=data, ajax=ajax, add_session=add_session)
+            user=user, data=data, ajax=ajax, add_session=add_session,
+            session_dict=session_dict)
         view = self.get_view()
         if kwargs is None:
             kwargs = {}
@@ -498,10 +504,11 @@ class ViewRequestFactoryTestMixin(object):
         return resp
 
     def post(self, user=None, data=None, ajax=False, add_session=False,
-             kwargs=None):
+             session_dict={}, kwargs=None):
         """Creates a response from a POST request."""
         req = self.get_post_request(
-            user=user, data=data, ajax=ajax, add_session=add_session)
+            user=user, data=data, ajax=ajax, session_dict=session_dict,
+            add_session=add_session)
         view = self.get_view()
         if kwargs is None:
             kwargs = {}
@@ -534,11 +541,11 @@ class ViewRequestFactoryTestMixin(object):
         return resp
 
     def is_callable(self, user=None, data=None, ajax=False, add_session=False,
-                    kwargs=None, msg=False):
+                    session_dict={}, kwargs=None, msg=False):
         """Checks if the view can be called view GET."""
         resp = self.get(
             user=user, data=data, ajax=ajax, add_session=add_session,
-            kwargs=kwargs)
+            session_dict=session_dict, kwargs=kwargs)
         self.assert200(resp, user, msg=msg)
         return resp
 
@@ -563,7 +570,8 @@ class ViewRequestFactoryTestMixin(object):
         return resp
 
     def is_not_callable(self, user=None, data=None, ajax=False,
-                        add_session=False, post=False, kwargs=None):
+                        add_session=False, session_dict={}, post=False,
+                        kwargs=None):
         """Checks if the view can not be called."""
         if post:
             call_obj = self.post
@@ -571,15 +579,15 @@ class ViewRequestFactoryTestMixin(object):
             call_obj = self.get
         self.assertRaises(
             Http404, call_obj, user=user, data=data, ajax=ajax,
-            add_session=add_session, kwargs=kwargs)
+            add_session=add_session, session_dict=session_dict, kwargs=kwargs)
 
     def is_postable(self, user=None, data=None, ajax=False, to=None,
                     to_url_name=None, next_url='', add_session=False,
-                    kwargs=None, msg=False):
+                    session_dict={}, kwargs=None, msg=False):
         """Checks if the view handles POST correctly."""
         resp = self.post(
-            user=user, data=data, add_session=add_session, kwargs=kwargs,
-            ajax=ajax)
+            user=user, data=data, add_session=add_session,
+            session_dict=session_dict, kwargs=kwargs, ajax=ajax)
         if not ajax or to or to_url_name:
             if next_url:
                 next_url = '?next={0}'.format(next_url)

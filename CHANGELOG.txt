@@ -4,6 +4,7 @@
 - added session_dict to request factories
 - extended GetModalB3 to be able to define a headline
 - Improved test suite
+- added django_settings.py with INGORABLE_404_URLS
 
 === 1.60.X ===
 

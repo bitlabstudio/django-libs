@@ -3,7 +3,7 @@ import re
 
 
 IGNORABLE_404_URLS = [
-    re.compile(r'\.*$'),
+    re.compile(r'\..*$'),
     re.compile(r'^/media/'),
     re.compile(r'^/static/'),
 ]

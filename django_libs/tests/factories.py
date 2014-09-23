@@ -13,7 +13,9 @@ from io import BytesIO
 
 from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.utils.timezone import now
 
+from mailer.models import MessageLog
 from PIL import Image
 from hashlib import md5
 import factory
@@ -138,3 +140,20 @@ class UserFactory(factory.DjangoModelFactory):
         if create:
             user.save()
         return user
+
+
+class MessageLogFactory(factory.DjangoModelFactory):
+    """
+    Creates a new ``MessageLog`` object.
+
+    We only use this factory for testing purposes (management command:
+    "cleanup_mailer_messagelog").
+
+    """
+    FACTORY_FOR = MessageLog
+
+    message_data = 'foo'
+    when_added = factory.Sequence(lambda n: now())
+    priority = '3'
+    result = '1'
+    log_message = 'foo'

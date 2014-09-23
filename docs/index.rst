@@ -23,6 +23,7 @@ Contents:
    javascript
    libs_tags
    loaders
+   management_commands
    middlewares
    models_mixins
    storage_support

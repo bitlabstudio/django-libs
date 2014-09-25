@@ -1,9 +1,18 @@
 """Logging related utilities."""
 import logging
-import re
 
 from django.conf import settings
-from django.utils.encoding import force_text
+
+
+class AddCurrentUser(logging.Filter):
+    """
+    Adds the current user to the log record.
+
+    """
+    def filter(self, record):
+        if hasattr(record.request.user, 'email'):
+            record.request.META['CURRENT_USER'] = record.request.user.email
+        return True
 
 
 class FilterIgnorable404URLs(logging.Filter):

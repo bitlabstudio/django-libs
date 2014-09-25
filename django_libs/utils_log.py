@@ -42,7 +42,7 @@ class FilterIgnorable404URLs(logging.Filter):
             request.META.get('HTTP_REFERER', ''), errors='replace')
         if not referer:
             # Probably a user manipulating URL, do not log this
-            return True
+            return False
 
         path = request.get_full_path()
         is_ignorable = any(

@@ -13,14 +13,14 @@ function renderModal($modal, data, textStatus, jqXHR, isNormalDiv) {
         $('body').modalmanager('loading');
         $modal.html(data);
         if (isNormalDiv) {
-           // do nothing 
+           // do nothing
         } else {
             $modal.modal();
         }
     }
 }
 
-function getModalB3(modal_url, headline_text) {
+function getModalB3(modal_url, headline_text, callback) {
     // calls the modal for Bootstrap v3
     var $modal = $('#ajax-modal')
         ,$header;
@@ -37,6 +37,9 @@ function getModalB3(modal_url, headline_text) {
         $modal.find('.modal-header').prepend($header);
         $modal.find('.modal-body').html(data);
         $modal.modal('show');
+        if (callback) {
+            callback();
+        }
     });
 }
 

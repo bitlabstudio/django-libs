@@ -1,3 +1,7 @@
+
+- added callback argument to getModalB3 function, that fires once the modal is
+  loaded
+
 === 1.62.X ===
 
 - added FilterIgnorable404URLs logging filter

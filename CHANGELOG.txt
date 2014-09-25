@@ -1,3 +1,6 @@
+=== 1.62.X ===
+
+- added FilterIgnorable404URLs logging filter
 
 === 1.61.X ===
 

@@ -38,12 +38,6 @@ class FilterIgnorable404URLs(logging.Filter):
             # No 404? No business for this filter.
             return True
 
-        referer = force_text(
-            request.META.get('HTTP_REFERER', ''), errors='replace')
-        if not referer:
-            # Probably a user manipulating URL, do not log this
-            return False
-
         path = request.get_full_path()
         is_ignorable = any(
             pattern.search(path) for pattern in settings.IGNORABLE_404_URLS)

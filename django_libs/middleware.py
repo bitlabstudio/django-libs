@@ -33,40 +33,6 @@ class AjaxRedirectMiddleware(object):
         return response
 
 
-class CustomSentry404CatchMiddleware(object):
-    """Same as original middleware but can ignore given user agents."""
-    def is_ignorable_user_agent(self, request):
-        """
-        Returns ``True`` if the user agent is in the list of ignored agents.
-
-        Set the setting RAVEN_404_IGNORABLE_USER_AGENTS = []
-        Each item can be a regex.
-
-        """
-        from user_agents import parse
-        user_agent = request.META.get('HTTP_USER_AGENT', '')
-        ua = parse(user_agent)
-
-        ignore_spiders = getattr(settings, 'RAVEN_IGNORE_SPIDERS', True)
-        if ignore_spiders and ua.device.family == 'Spider':
-            return True
-
-        ignorable_agents = getattr(settings, 'RAVEN_IGNORABLE_USER_AGENTS', [])
-        for ignorable_agent in ignorable_agents:
-            result = re.match(ignorable_agent, user_agent)
-            if result:
-                return True
-        return False
-
-    def process_response(self, request, response):
-        if self.is_ignorable_user_agent(request):
-            return response
-
-        from raven.contrib.django.middleware import Sentry404CatchMiddleware
-        sentry_middleware = Sentry404CatchMiddleware()
-        return sentry_middleware.process_response(request, response)
-
-
 class ErrorMiddleware(object):
     """Alter HttpRequest objects on Error."""
 

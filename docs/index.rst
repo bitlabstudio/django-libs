@@ -32,6 +32,7 @@ Contents:
    testrunner
    utils
    utils_email
+   utils_log
    views
    views_mixins
 

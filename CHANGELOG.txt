@@ -1,3 +1,9 @@
+=== 1.64.X ===
+
+- added IGNORABLE_404_USER_AGENTS setting to be used with
+  FilterIgnorable404URLs logging filter
+- removed all raven related stuff. We don't use sentry any more and we don't
+  want to maintain unused cruft in this repo.
 
 === 1.63.X ===
 

@@ -16,6 +16,7 @@ IGNORABLE_404_USER_AGENTS = [
     re.compile(r'Feedfetcher-Google', re.I),
     re.compile(r'Googlebot', re.I),
     re.compile(r'Mail.RU_Bot', re.I),
+    re.compile(r'MJ12bot', re.I),
     re.compile(r'Test Certificate Info', re.I),
     re.compile(r'Twitterbot', re.I),
     re.compile(r'Yahoo! Slurp', re.I),

@@ -22,4 +22,5 @@ IGNORABLE_404_USER_AGENTS = [
     re.compile(r'Yahoo! Slurp', re.I),
     re.compile(r'YandexBot', re.I),
     re.compile(r'bingbot', re.I),
+    re.compile(r'coccoc', re.I),
 ]

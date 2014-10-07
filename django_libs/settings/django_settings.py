@@ -25,4 +25,5 @@ IGNORABLE_404_USER_AGENTS = [
     re.compile(r'coccoc', re.I),
     re.compile(r'crawl@publiclibraryarchive.org', re.I),
     re.compile(r'Baiduspider', re.I),
+    re.compile(r'msnbot', re.I),
 ]

@@ -493,7 +493,7 @@ def render_analytics2_code():
         'ANALYTICS_TRACKING_ID': getattr(
             settings, 'ANALYTICS_TRACKING_ID', 'UA-XXXXXXX-XX'),
         'ANALYTICS_DOMAIN': getattr(
-            settings, 'ANALYTICS_DOMAIN', 'example.com')
+            settings, 'ANALYTICS_DOMAIN', 'auto')
     }
 
 

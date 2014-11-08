@@ -8,6 +8,8 @@
                 <span data-class="popover" class="glyphicon glyphicon-question-sign" title="{{ field.label }}" data-content="{{ field.help_text }}"></span>
             {% endif %}
         </label>
+    {% elif horizontal and "CheckboxInput" in field_type %}
+	<label class="control-label col-sm-4"></label>
     {% endif %}
     {% if horizontal %}<div class="col-sm-8">{% endif %}
     {% if "CheckboxInput" in field_type %}

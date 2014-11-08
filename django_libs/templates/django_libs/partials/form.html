@@ -1,5 +1,9 @@
+{% load i18n %}
 {% csrf_token %}
 {% include "django_libs/partials/form_non_field_errors.html" %}
+{% if form.errors %}
+    <p class="alert alert-danger">{% trans "Please correct the errors below." %}</p>
+{% endif %}
 {% for field in form %}
     {% include "django_libs/partials/form_field.html" with hide_label=hide_label %}
 {% endfor %}

@@ -5,6 +5,7 @@
 - removed all raven related stuff. We don't use sentry any more and we don't
   want to maintain unused cruft in this repo.
 - improved form templates
+- added session_dict to redirect view test functions
 
 === 1.63.X ===
 

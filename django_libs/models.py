@@ -2,7 +2,12 @@
 from django.core.validators import RegexValidator
 from django.db.models import CharField
 
+from south.modelsinspector import add_introspection_rules
+
 from .widgets import ColorPickerWidget
+
+
+add_introspection_rules([], ["^django_libs\.models\.ColorField"])
 
 
 class ColorField(CharField):

@@ -50,6 +50,7 @@ EXTERNAL_APPS = [
     'django.contrib.sites',
     'django_nose',
     'mailer',
+    'south',
 ]
 
 INTERNAL_APPS = [

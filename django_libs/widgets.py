@@ -1,5 +1,6 @@
 """Custom form widgets."""
-from django.forms import widgets
+from django.conf import settings
+from django.forms import widgets, TextInput
 from django.forms.util import flatatt
 from django.template import Context
 from django.template.loader import get_template
@@ -59,3 +60,41 @@ class LibsImageWidget(widgets.ClearableFileInput):
         t = get_template(self.template_path)
         c = Context(context)
         return t.render(c)
+
+
+class ColorPickerWidget(TextInput):
+    class Media:
+        css = {
+            'all': (
+                settings.STATIC_URL + 'django_libs/css/colorpicker.css',
+            )
+        }
+        js = (
+            settings.STATIC_URL + 'django_libs/js/jquery-1.11.1.min.js',
+            settings.STATIC_URL + 'django_libs/js/colorpicker.js',
+            settings.STATIC_URL + 'django_libs/js/colorpicker_list.js',
+            settings.STATIC_URL + 'django_libs/js/eye.js',
+            settings.STATIC_URL + 'django_libs/js/layout.js',
+            settings.STATIC_URL + 'django_libs/js/utils.js',
+        )
+
+    def __init__(self, language=None, attrs=None):
+        self.language = language or settings.LANGUAGE_CODE[:2]
+        super(ColorPickerWidget, self).__init__(attrs=attrs)
+
+    def render(self, name, value, attrs=None):
+        rendered = super(ColorPickerWidget, self).render(name, value, attrs)
+        return rendered + mark_safe(
+            u'''<script type="text/javascript">
+                $('#id_%s').ColorPicker({
+                onSubmit: function(hsb, hex, rgb, el) {
+                    $(el).val(hex);
+                    $(el).ColorPickerHide();
+                },
+                onBeforeShow: function () {
+                    $(this).ColorPickerSetColor(this.value);
+                }
+             }).bind('keyup', function(){
+                 $(this).ColorPickerSetColor(this.value);
+             });
+            </script>''' % name)

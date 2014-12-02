@@ -1,5 +1,6 @@
 === 1.64.X ===
 
+- Fixed add_form_widget_attr template tag
 - Added color picker field
 - added IGNORABLE_404_USER_AGENTS setting to be used with
   FilterIgnorable404URLs logging filter

@@ -8,6 +8,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import resolve, Resolver404
 from django.db.models.fields import FieldDoesNotExist
 from django.template.defaultfilters import truncatewords_html
+from django.utils.text import force_unicode
 
 from django_libs import utils
 
@@ -41,7 +42,7 @@ def add_form_widget_attr(field, attr_name, attr_value, replace=0):
     """
     if not replace:
         attr = field.field.widget.attrs.get(attr_name, '')
-        attr += attr_value
+        attr += force_unicode(attr_value)
         field.field.widget.attrs[attr_name] = attr
         return field
     else:

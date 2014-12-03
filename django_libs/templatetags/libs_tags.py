@@ -7,7 +7,7 @@ from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import resolve, Resolver404
 from django.db.models.fields import FieldDoesNotExist
-from django.template.defaultfilters import truncatewords_html
+from django.template.defaultfilters import truncatewords_html, stringfilter
 from django.utils.text import force_unicode
 
 from django_libs import utils
@@ -609,3 +609,18 @@ def minutes_until(date_or_datetime):
     if closes_in.days < 0:
         return 0
     return closes_in.seconds / 60 - hours_until(date_or_datetime) * 60
+
+@register.filter(is_safe=False)
+@stringfilter
+def append_s(value):
+    """
+    Adds the possessive s after a string.
+
+    value = 'Hans' becomes Hans'
+    and value = 'Susi' becomes Susi's
+
+    """
+    if value.endswith('s'):
+        return u"{0}'".format(value)
+    else:
+        return u"{0}'s".format(value)

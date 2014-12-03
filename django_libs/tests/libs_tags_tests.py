@@ -379,3 +379,19 @@ class SumTestCase(TestCase):
         self.assertEqual(context.dicts[0][key], 10, msg=(
             'If a multiplier is given, the given value should be multiplied'
             ' before being added to the existing context value'))
+
+
+
+class AppendSTestCase(TestCase):
+    """Tests for the ``append_s`` template tag."""
+    longMessage = True
+
+    def test_tag(self):
+        self.assertEqual(tags.append_s('Hans'), "Hans'", msg=(
+            'If the input value ends with an "s", it should only append an'
+            ' apostrohpe.'
+        ))
+        self.assertEqual(tags.append_s('Susi'), "Susi's", msg=(
+            'If the input value does not end with an "s", it should append an'
+            ' apostrohpe and an "s".'
+        ))

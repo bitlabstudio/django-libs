@@ -1,5 +1,7 @@
 === 1.65.X ===
 
+- added msg param to ViewRequestFactoryMixin.is_postable
+- added to_url_name param to ViewRequestFactoryMixin.redirects
 
 === 1.64.X ===
 

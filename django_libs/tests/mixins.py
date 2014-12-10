@@ -538,11 +538,13 @@ class ViewRequestFactoryTestMixin(object):
         if msg is None:
             msg = ('The `{0}` view should have been callable for'
                    ' user `{1}`.').format(view_msg, user_msg)
+            if resp.status_code in [301, 302]:
+                msg = msg + ' The view redirected to "{0}".'.format(resp.url)
         self.assertEqual(resp.status_code, 200, msg=msg)
         return resp
 
     def is_callable(self, user=None, data=None, ajax=False, add_session=False,
-                    session_dict={}, kwargs=None, msg=False):
+                    session_dict={}, kwargs=None, msg=None):
         """Checks if the view can be called view GET."""
         resp = self.get(
             user=user, data=data, ajax=ajax, add_session=add_session,
@@ -572,7 +574,7 @@ class ViewRequestFactoryTestMixin(object):
 
     def is_not_callable(self, user=None, data=None, ajax=False,
                         add_session=False, session_dict={}, post=False,
-                        kwargs=None, msg=False):
+                        kwargs=None, msg=None):
         """Checks if the view can not be called."""
         if post:
             call_obj = self.post

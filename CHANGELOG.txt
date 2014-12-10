@@ -1,5 +1,7 @@
 === 1.65.X ===
 
+- added url to message if ViewRequestFactoryMixin.assert200 fails due to a
+  redirect
 - added msg param to ViewRequestFactoryMixin.is_postable
 - added to_url_name param to ViewRequestFactoryMixin.redirects
 

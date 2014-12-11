@@ -1,5 +1,6 @@
 === 1.65.X ===
 
+- added exabot to ignorable user agents
 - added url to message if ViewRequestFactoryMixin.assert200 fails due to a
   redirect
 - added msg param to ViewRequestFactoryMixin.is_postable

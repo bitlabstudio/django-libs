@@ -1,5 +1,6 @@
 """Utility functions for sending emails."""
 from django.conf import settings
+from django.contrib.sites.models import Site
 from django.core.mail import EmailMessage, EmailMultiAlternatives
 from django.template import RequestContext
 from django.template.loader import render_to_string
@@ -31,6 +32,11 @@ def send_email(request, extra_context, subject_template, body_template,
         context = RequestContext(request, extra_context)
     else:
         context = extra_context
+    if request and request.get_host():
+        context.update({'domain': '{}://{}'.format(
+            'https' if request.is_secure() else 'http', request.get_host())})
+    else:
+        context.update({'domain': Site.objects.get_current().domain})
     subject = render_to_string(subject_template, context)
     subject = ''.join(subject.splitlines())
     message_html = render_to_string(body_template, context)

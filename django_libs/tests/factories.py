@@ -12,6 +12,7 @@ provide facilities for user generation.
 from io import BytesIO
 
 from django.contrib.auth.models import User
+from django.contrib.sites.models import Site
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.utils.timezone import now
 
@@ -157,3 +158,14 @@ class MessageLogFactory(factory.DjangoModelFactory):
     priority = '3'
     result = '1'
     log_message = 'foo'
+
+
+class SiteFactory(factory.DjangoModelFactory):
+    """
+    Creates a new ``Site`` object.
+
+    """
+    FACTORY_FOR = Site
+
+    name = factory.Sequence(lambda n: 'Example {}'.format(n))
+    domain = factory.Sequence(lambda n: 'example{}.com'.format(n))

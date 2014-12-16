@@ -4,8 +4,8 @@ Utils Email
 send_email
 ----------
 
-``send_email`` sends html emails via django-mailer based on templates for
-subject and body.
+``send_email`` sends html emails based on templates for subject and body.
+Please note that a ``domain`` variable has already been placed in the context.
 
 +----------------------+----------------------------------------------------+
 | Argument             | Definition                                         |

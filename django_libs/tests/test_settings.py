@@ -6,6 +6,9 @@ import logging
 logging.getLogger("factory").setLevel(logging.WARN)
 
 
+SITE_ID = 1
+
+
 PROJECT_ROOT = os.path.dirname(__file__)
 
 

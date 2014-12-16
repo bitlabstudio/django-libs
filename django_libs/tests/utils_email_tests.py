@@ -1,10 +1,12 @@
 """Tests for the email utils of ``django_libs``."""
+from django.contrib.sites.models import Site
 from django.core import mail
 from django.test import TestCase
 
 from mailer.models import Message
 from mock import Mock
 
+from .factories import SiteFactory
 from ..utils_email import send_email
 
 
@@ -13,7 +15,11 @@ class SendEmailTestCase(TestCase):
     longMessage = True
 
     def test_send_email(self):
-        send_email(Mock(), {}, 'subject.html', 'html_email.html',
+        SiteFactory()
+        request = Mock()
+        request.is_secure = Mock(return_value=True)
+        request.get_host = Mock(return_value='example.com')
+        send_email(request, {}, 'subject.html', 'html_email.html',
                    'info@example.com', ['recipient@example.com'])
         self.assertEqual(len(mail.outbox), 1, msg=(
             'An email should\'ve been sent'))

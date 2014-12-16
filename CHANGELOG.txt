@@ -1,5 +1,7 @@
 === 1.65.X ===
 
+- added domain variable to email context
+- enhanced send_email method to make use of other mail backends
 - added exabot to ignorable user agents
 - added url to message if ViewRequestFactoryMixin.assert200 fails due to a
   redirect

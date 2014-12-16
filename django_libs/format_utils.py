@@ -23,25 +23,13 @@ from django.utils.translation import (
     to_locale
 )
 
-CUSTOM_FORMAT_MODULE_PATHS = getattr(settings, 'CUSTOM_FORMAT_MODULE_PATHS',
-                                     ['localized_names.formats'])
+from . import constants, default_settings
 
 # format_cache is a mapping from (format_type, lang) to the format string.
 # By using the cache, it is possible to avoid running get_format_modules
 # repeatedly.
 _format_cache = {}
 _format_modules_cache = {}
-
-ISO_INPUT_FORMATS = {
-    'DATE_INPUT_FORMATS': ('%Y-%m-%d',),
-    'TIME_INPUT_FORMATS': ('%H:%M:%S', '%H:%M:%S.%f', '%H:%M'),
-    'DATETIME_INPUT_FORMATS': (
-        '%Y-%m-%d %H:%M:%S',
-        '%Y-%m-%d %H:%M:%S.%f',
-        '%Y-%m-%d %H:%M',
-        '%Y-%m-%d'
-    ),
-}
 
 
 def iter_format_modules(lang):
@@ -51,7 +39,7 @@ def iter_format_modules(lang):
     """
     if check_for_language(lang):
         format_locations = []
-        for path in CUSTOM_FORMAT_MODULE_PATHS:
+        for path in default_settings.CUSTOM_FORMAT_MODULE_PATHS:
             format_locations.append(path + '.%s')
         format_locations.append('django.conf.locale.%s')
         locale = to_locale(lang)
@@ -106,7 +94,8 @@ def get_format(format_type, lang=None, use_l10n=None):
             for module in get_format_modules(lang):
                 try:
                     val = getattr(module, format_type)
-                    for iso_input in ISO_INPUT_FORMATS.get(format_type, ()):
+                    for iso_input in constants.ISO_INPUT_FORMATS.get(
+                            format_type, ()):
                         if iso_input not in val:
                             if isinstance(val, tuple):
                                 val = list(val)

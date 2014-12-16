@@ -10,6 +10,8 @@ try:
 except ImportError:
     _is_ignorable_404 = None
 
+from . import default_settings
+
 
 class AjaxRedirectMiddleware(object):
     """
@@ -54,7 +56,7 @@ class SSLRedirect:
 
     """
     def process_request(self, request):
-        no_ssl_urls = getattr(settings, 'NO_SSL_URLS', [])
+        no_ssl_urls = default_settings.NO_SSL_URLS
         urls = tuple([re.compile(url) for url in no_ssl_urls])
 
         secure = False

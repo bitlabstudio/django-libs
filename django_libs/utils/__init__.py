@@ -8,8 +8,8 @@ from django.db import models
 from bs4 import BeautifulSoup
 from HTMLParser import HTMLParser
 
-from . import default_settings
-from .loaders import load_member_from_setting
+from .. import default_settings
+from ..loaders import load_member_from_setting
 
 
 class conditional_decorator(object):
@@ -101,7 +101,7 @@ class HTML2PlainParser(HTMLParser):
         if (tag in self.newline_before_elements):
             self.text += '\n'
         if (tag in self.stroke_before_elements
-                and not self.text.endswith(self.stroke_text)):
+            and not self.text.endswith(self.stroke_text)):
             # Put a stroke in front of every relevant element, if there is some
             # content between it and its predecessor
             self.text += self.stroke_text

@@ -610,6 +610,7 @@ def minutes_until(date_or_datetime):
         return 0
     return closes_in.seconds / 60 - hours_until(date_or_datetime) * 60
 
+
 @register.filter(is_safe=False)
 @stringfilter
 def append_s(value):

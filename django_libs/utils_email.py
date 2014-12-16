@@ -1,6 +1,9 @@
 """Utility functions for sending emails."""
+from django.conf import settings
+from django.core.mail import EmailMessage, EmailMultiAlternatives
 from django.template import RequestContext
 from django.template.loader import render_to_string
+from django.utils.encoding import force_text
 
 import mailer
 
@@ -32,5 +35,24 @@ def send_email(request, extra_context, subject_template, body_template,
     subject = ''.join(subject.splitlines())
     message_html = render_to_string(body_template, context)
     message_plaintext = html_to_plain_text(message_html)
-    mailer.send_html_mail(subject, message_plaintext, message_html, from_email,
-                          recipients, priority=priority)
+    if settings.EMAIL_BACKEND == 'mailer.backend.DbBackend':
+        mailer.send_html_mail(subject, message_plaintext, message_html,
+                              from_email, recipients, priority=priority)
+    else:
+        subject = force_text(subject)
+        message = force_text(message_plaintext)
+
+        email = EmailMessage(
+            subject=subject,
+            body=message,
+            from_email=from_email,
+            to=recipients,
+            bcc=None,
+            attachments=None,
+            headers=None,
+        )
+        email = EmailMultiAlternatives(
+            email.subject, email.body, email.from_email, email.to,
+            headers=None)
+        email.attach_alternative(message_html, "text/html")
+        email.send()

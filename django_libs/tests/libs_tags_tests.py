@@ -381,7 +381,6 @@ class SumTestCase(TestCase):
             ' before being added to the existing context value'))
 
 
-
 class AppendSTestCase(TestCase):
     """Tests for the ``append_s`` template tag."""
     longMessage = True

@@ -8,29 +8,8 @@ from django.db import models
 from bs4 import BeautifulSoup
 from HTMLParser import HTMLParser
 
+from .. import default_settings
 from .loaders import load_member_from_setting
-
-
-class conditional_decorator(object):
-    """
-    Allows you to use decorators based on a condition.
-
-    Useful to require login only if a setting is set::
-
-        @conditional_decorator(method_decorator(login_required), settings.FOO)
-        def dispatch(self, request, *args, **kwargs):
-            return super(...).dispatch(...)
-
-    """
-    def __init__(self, dec, condition):
-        self.decorator = dec
-        self.condition = condition
-
-    def __call__(self, func):
-        if not self.condition:
-            # Return the function unchanged, not decorated.
-            return func
-        return self.decorator(func)
 
 
 def create_random_string(length=7, chars='ABCDEFGHJKMNPQRSTUVWXYZ23456789',
@@ -84,35 +63,23 @@ class HTML2PlainParser(HTMLParser):
         self.links = []  # List of aggregated links
 
         # Settings
-        self.ignored_elements = getattr(
-            settings, 'HTML2PLAINTEXT_IGNORED_ELEMENTS',
-            ['html', 'head', 'style', 'meta', 'title', 'img']
-        )
-        self.newline_before_elements = getattr(
-            settings, 'HTML2PLAINTEXT_NEWLINE_BEFORE_ELEMENTS',
-            ['br', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div', 'p', 'li']
-        )
-        self.newline_after_elements = getattr(
-            settings, 'HTML2PLAINTEXT_NEWLINE_AFTER_ELEMENTS',
-            ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div', 'p', 'td']
-        )
-        self.stroke_before_elements = getattr(
-            settings, 'HTML2PLAINTEXT_STROKE_BEFORE_ELEMENTS',
-            ['tr']
-        )
-        self.stroke_after_elements = getattr(
-            settings, 'HTML2PLAINTEXT_STROKE_AFTER_ELEMENTS',
-            ['tr']
-        )
-        self.stroke_text = getattr(settings, 'HTML2PLAINTEXT_STROKE_TEXT',
-                                   '------------------------------\n')
+        self.ignored_elements = default_settings.HTML2PLAINTEXT_IGNORED_ELEMENTS
+        self.newline_before_elements = \
+            default_settings.HTML2PLAINTEXT_NEWLINE_BEFORE_ELEMENTS
+        self.newline_after_elements = \
+            default_settings.HTML2PLAINTEXT_NEWLINE_AFTER_ELEMENTS
+        self.stroke_before_elements = \
+            default_settings.HTML2PLAINTEXT_STROKE_BEFORE_ELEMENTS
+        self.stroke_after_elements = \
+            default_settings.HTML2PLAINTEXT_STROKE_AFTER_ELEMENTS
+        self.stroke_text = default_settings.HTML2PLAINTEXT_STROKE_TEXT
 
     def handle_starttag(self, tag, attrs):
         """Handles every start tag like e.g. <p>."""
         if (tag in self.newline_before_elements):
             self.text += '\n'
         if (tag in self.stroke_before_elements
-                and not self.text.endswith(self.stroke_text)):
+            and not self.text.endswith(self.stroke_text)):
             # Put a stroke in front of every relevant element, if there is some
             # content between it and its predecessor
             self.text += self.stroke_text

@@ -1,5 +1,4 @@
 """Tests for the email utils of ``django_libs``."""
-from django.contrib.sites.models import Site
 from django.core import mail
 from django.test import TestCase
 
@@ -7,7 +6,7 @@ from mailer.models import Message
 from mock import Mock
 
 from .factories import SiteFactory
-from ..utils_email import send_email
+from ..utils.email import send_email
 
 
 class SendEmailTestCase(TestCase):

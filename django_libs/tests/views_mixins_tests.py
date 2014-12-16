@@ -3,7 +3,7 @@ from django.test import TestCase
 from django.test.client import RequestFactory
 from django.views.generic import TemplateView
 
-from django_libs.views_mixins import AjaxResponseMixin
+from ..views.mixins import AjaxResponseMixin
 
 
 class DummyView(AjaxResponseMixin, TemplateView):

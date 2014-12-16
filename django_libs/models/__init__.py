@@ -1,7 +1,6 @@
 """Kept for backwards compatibility. Please add everything to the path below."""
 import warnings
+from .fields import *  # NOQA
 
-from .utils.format import *  # NOQA
-
-warnings.warn('Please import from django_libs.utils.format instead.',
+warnings.warn('Please import from django_libs.models.fields instead.',
               DeprecationWarning)

@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from simple_translation.translation_pool import translation_pool
 
-from ...models_mixins import (
+from ...models.mixins import (
     SimpleTranslationMixin,
     SimpleTranslationPublishedManager,
 )

@@ -12,7 +12,7 @@ from django.utils.text import force_unicode
 
 from django_libs import utils
 
-from ..loaders import load_member
+from ..utils.loaders import load_member
 
 
 register = template.Library()

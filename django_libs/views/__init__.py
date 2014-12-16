@@ -11,7 +11,7 @@ from django.http import Http404, HttpResponse, HttpResponseForbidden
 from django.template import loader, Context
 from django.views.generic import TemplateView, View
 
-from . import default_settings
+from .. import default_settings
 
 
 class Http404TestView(TemplateView):
@@ -114,7 +114,7 @@ class PaginatedCommentAJAXView(TemplateView):
             'data': content, 'page': self.page,
             'has_prev': self.page_obj.has_previous(),
             'has_next': self.page_obj.has_next()}),
-            content_type="application/json")
+                            content_type="application/json")
 
     def get_context_data(self):
         ctx = super(PaginatedCommentAJAXView, self).get_context_data()
@@ -163,7 +163,7 @@ class PaginatedCommentAJAXView(TemplateView):
             'comments': self.comments,
             'paginator': self.paginator,
             'page_obj': self.page_obj,
-        })
+            })
         return ctx
 
 
@@ -188,7 +188,7 @@ class UpdateSessionAJAXView(View):
         if not (request.is_ajax() and request.method == 'POST'):
             return HttpResponseForbidden()
         if (request.POST.get('session_name')
-                and request.POST.get('session_value')):
+            and request.POST.get('session_value')):
             request.session[request.POST['session_name']] = request.POST[
                 'session_value']
         return HttpResponse('done')
@@ -210,5 +210,5 @@ class UpdateCookieAJAXView(View):
             expires=expires,
             domain=settings.SESSION_COOKIE_DOMAIN,
             secure=settings.SESSION_COOKIE_SECURE or None,
-        )
+            )
         return response

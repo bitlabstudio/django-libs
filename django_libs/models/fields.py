@@ -1,10 +1,10 @@
-"""Models of the ``django_libs`` projects."""
+"""Fields of the ``django_libs`` projects."""
 from django.core.validators import RegexValidator
 from django.db.models import CharField
 
 from south.modelsinspector import add_introspection_rules
 
-from .widgets import ColorPickerWidget
+from ..forms.widgets import ColorPickerWidget
 
 
 add_introspection_rules([], ["^django_libs\.models\.ColorField"])

@@ -10,6 +10,8 @@ try:
 except ImportError:
     _is_ignorable_404 = None
 
+from .. import default_settings
+
 
 class AjaxRedirectMiddleware(object):
     """
@@ -26,7 +28,7 @@ class AjaxRedirectMiddleware(object):
     def process_response(self, request, response):
         if request.is_ajax():
             if (request.GET.get('ajax_redirect_passthrough')
-                    or request.POST.get('ajax_redirect_passthrough')):
+                or request.POST.get('ajax_redirect_passthrough')):
                 return response
             if type(response) == HttpResponseRedirect:
                 response.status_code = 278
@@ -54,7 +56,7 @@ class SSLRedirect:
 
     """
     def process_request(self, request):
-        no_ssl_urls = getattr(settings, 'NO_SSL_URLS', [])
+        no_ssl_urls = default_settings.NO_SSL_URLS
         urls = tuple([re.compile(url) for url in no_ssl_urls])
 
         secure = False

@@ -14,7 +14,7 @@ Use this function to load a member from a setting::
     FOOBAR_CLASS = 'myproject.models.FooBar'
 
     # anywhere in your code:
-    from django_libs.loaders import load_member_from_setting
+    from django_libs.utils.loaders import load_member_from_setting
     cls = load_member_form_setting('FOOBAR_CLASS')
 
 If you are using the reusable app settings pattern, you can hand in an optional
@@ -28,7 +28,7 @@ app's setting's default values::
 
     # anywhere in your code:
     from appname import app_settings
-    from django_libs.loaders import load_member_from_setting
+    from django_libs.utils.loaders import load_member_from_setting
 
     cls = load_member_from_setting('FOOBAR_CLASS', app_settings)
 
@@ -40,7 +40,7 @@ This function is used by ``load_member_from_setting`` internally. Use this
 if you already have the FQN string of the member you would like to load::
 
     # anywhere in your code:
-    from django_libs.loaders import load_member
+    from django_libs.utils.loaders import load_member
 
     cls = load_member('myproject.models.FooBar')
 
@@ -52,7 +52,7 @@ This function is used by ``load_member`` internally. Use this if you want
 to get the left and right side of a fully qualified name::
 
     # anywhere in your code:
-    from django_libs.loaders import split_fqn
+    from django_libs.utils.loaders import split_fqn
 
     modulename, classname = split_fqn('myproject.models.FooBar')
 
@@ -63,7 +63,7 @@ If you need it more dynamically, you can also pass in a function that returns
 a fqn string::
 
     # anywhere in your code
-    from django_libs.loaders import split_fqn
+    from django_libs.utils.loaders import split_fqn
 
     def function_that_returns_fqn_string():
         return 'myproject.models.FooBar'

@@ -1,4 +1,7 @@
 """Kept for backwards compatibility. Please add everything to the path below."""
+import warnings
+
 from .utils.format import *  # NOQA
 
-raise DeprecationWarning('Please import from django_libs.utils.format instead.')
+warnings.warn('Please import from django_libs.utils.format instead.',
+              DeprecationWarning)

@@ -1,5 +1,8 @@
 {% load libs_tags %}
 {% get_form_field_type field as field_type %}
+{% if placeholder %}
+    {% add_form_widget_attr field 'placeholder' placeholder replace=1 as field %}
+{% endif %}
 <div class="form-group {% if field.errors %}has-error{% endif %}">
     {% if not hide_label and "CheckboxInput" not in field_type %}
         <label class="control-label {% if horizontal %}col-sm-4{% endif %}" for="{{ field.id_for_label }}">
@@ -23,8 +26,8 @@
             </label>
         </div>
     {% else %}
-        {% add_form_widget_attr field 'class' 'form-control' as field_ %}
-        {{ field_ }}
+        {% add_form_widget_attr field 'class' 'form-control' as field %}
+        {{ field }}
     {% endif %}
     {% if field.errors %}
         <span class="help-block">{% for error in field.errors %}{{ error }}<br/> {% endfor %}</span>

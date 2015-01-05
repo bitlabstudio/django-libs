@@ -5,7 +5,8 @@ from django.contrib.contenttypes.models import ContentType
 from django.template import Context, Template
 from django.test import RequestFactory, TestCase
 
-from django_libs.templatetags import libs_tags as tags
+from .factories import SiteFactory
+from ..templatetags import libs_tags as tags
 from .test_app.factories import DummyProfileFactory
 from .test_app.models import DummyProfile
 
@@ -394,3 +395,14 @@ class AppendSTestCase(TestCase):
             'If the input value does not end with an "s", it should append an'
             ' apostrohpe and an "s".'
         ))
+
+
+class GetSiteTestCase(TestCase):
+    """Tests for the ``get_site`` templatetag."""
+    longMessage = True
+
+    def setUp(self):
+        self.site = SiteFactory()
+
+    def test_tag(self):
+        self.assertEqual(tags.get_site().domain, 'example.com')

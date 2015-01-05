@@ -268,6 +268,18 @@ value to ``!remove``::
 
     {% get_query_params request "page" 1 "foobar" "!remove" as query %}
 
+
+get_site
+--------
+
+``get_site`` returns the current site.
+
+In order to use it, just import the tag library and set the tag::
+
+    {% load libs_tags %}
+    {% get_site as site %}
+
+
 is_context_variable
 -------------------
 Checks if a given variable name is already part of the template context.

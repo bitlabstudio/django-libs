@@ -5,6 +5,7 @@ import importlib
 from django import template
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.sites.models import Site
 from django.core.urlresolvers import resolve, Resolver404
 from django.db.models.fields import FieldDoesNotExist
 from django.template.defaultfilters import truncatewords_html, stringfilter
@@ -625,3 +626,8 @@ def append_s(value):
         return u"{0}'".format(value)
     else:
         return u"{0}'s".format(value)
+
+
+@register.assignment_tag
+def get_site():
+    return Site.objects.get_current()

@@ -36,7 +36,7 @@ class HvadFactoryMixin(object):
         # object exists, yet. We have to cache the translatable values ...
         cached_values = {}
         for field in obj._translated_field_names:
-            if field in ['id', 'master', 'language_code']:
+            if field in ['id', 'master', 'master_id', 'language_code']:
                 continue
             cached_values[field] = getattr(obj, field)
 
@@ -44,7 +44,7 @@ class HvadFactoryMixin(object):
         # lost on the obj ...
         obj.translate(obj.language_code)
         for field in obj._translated_field_names:
-            if field in ['id', 'master', 'language_code']:
+            if field in ['id', 'master', 'master_id', 'language_code']:
                 continue
             # ... so here we will put them back on the object, this time they
             # will be saved on the translatable object.

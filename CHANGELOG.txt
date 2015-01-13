@@ -1,5 +1,6 @@
 === 1.65.X ===
 
+- updated hvad factory mixin
 - added get_site template tag
 - added domain variable to email context
 - enhanced send_email method to make use of other mail backends

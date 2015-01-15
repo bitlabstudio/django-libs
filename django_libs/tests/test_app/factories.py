@@ -1,8 +1,15 @@
 """Just some factories for the test app."""
 import factory
 
-from ..factories import UserFactory
-from models import DummyProfile, DummyProfileTranslation
+from ..factories import HvadFactoryMixin, UserFactory
+from models import DummyProfile, DummyProfileTranslation, HvadDummy
+
+
+class HvadDummyFactory(HvadFactoryMixin, factory.DjangoModelFactory):
+    """Factory for the ``HvadDummy`` model."""
+    FACTORY_FOR = HvadDummy
+
+    title = factory.Sequence(lambda n: 'title{}'.format(n))
 
 
 class DummyProfileFactory(factory.DjangoModelFactory):

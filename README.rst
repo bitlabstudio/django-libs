@@ -43,6 +43,7 @@ and applications.
 * Function to convert html code into formatted plain text.
 * Amazon S3 storage + django-compressor support files.
 * An AJAX View to display paginated comments for every possible object.
+* Tools to improve django-hvad
 
 **Coming soon**:
 

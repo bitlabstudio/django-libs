@@ -28,5 +28,6 @@ setup(
         'beautifulsoup4>4.0.0',
         'Pillow',
         'South',
+        'django-hvad',
     ]
 )

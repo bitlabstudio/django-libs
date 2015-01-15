@@ -9,6 +9,7 @@ factory_boy>2.0.0
 South
 
 simple_translation
+django-hvad
 
 # ==============================================================
 # Packages needed for running the tests. Needed by contributors.

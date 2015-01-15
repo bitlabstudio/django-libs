@@ -8,6 +8,16 @@ logging.getLogger("factory").setLevel(logging.WARN)
 
 SITE_ID = 1
 
+LANGUAGE_CODE = 'en'
+
+LANGUAGES = [
+    ('en', 'English'),
+    ('de', 'Deutsch'),
+]
+USE_I18N = True
+USE_L10N = True
+USE_TZ = True
+
 
 PROJECT_ROOT = os.path.dirname(__file__)
 
@@ -52,6 +62,7 @@ EXTERNAL_APPS = [
     'django.contrib.sitemaps',
     'django.contrib.sites',
     'django_nose',
+    'hvad',
     'mailer',
     'south',
 ]

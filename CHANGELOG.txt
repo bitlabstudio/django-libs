@@ -1,5 +1,6 @@
 === 1.65.X ===
 
+- added hvad model mixin
 - updated hvad factory mixin
 - added get_site template tag
 - added domain variable to email context

@@ -16,7 +16,6 @@ from django.contrib.sites.models import Site
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.utils.timezone import now
 
-from mailer.models import MessageLog
 from PIL import Image
 from hashlib import md5
 import factory
@@ -143,23 +142,6 @@ class UserFactory(factory.DjangoModelFactory):
         return user
 
 
-class MessageLogFactory(factory.DjangoModelFactory):
-    """
-    Creates a new ``MessageLog`` object.
-
-    We only use this factory for testing purposes (management command:
-    "cleanup_mailer_messagelog").
-
-    """
-    FACTORY_FOR = MessageLog
-
-    message_data = 'foo'
-    when_added = factory.Sequence(lambda n: now())
-    priority = '3'
-    result = '1'
-    log_message = 'foo'
-
-
 class SiteFactory(factory.DjangoModelFactory):
     """
     Creates a new ``Site`` object.
@@ -169,3 +151,25 @@ class SiteFactory(factory.DjangoModelFactory):
 
     name = factory.Sequence(lambda n: 'Example {}'.format(n))
     domain = factory.Sequence(lambda n: 'example{}.com'.format(n))
+
+
+try:
+    from mailer.models import MessageLog
+except ImportError:  # mailer not installed
+    pass
+else:
+    class MessageLogFactory(factory.DjangoModelFactory):
+        """
+        Creates a new ``MessageLog`` object.
+
+        We only use this factory for testing purposes (management command:
+        "cleanup_mailer_messagelog").
+
+        """
+        FACTORY_FOR = MessageLog
+
+        message_data = 'foo'
+        when_added = factory.Sequence(lambda n: now())
+        priority = '3'
+        result = '1'
+        log_message = 'foo'

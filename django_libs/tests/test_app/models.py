@@ -2,12 +2,24 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
+from hvad.models import TranslatableModel, TranslatedFields
 from simple_translation.translation_pool import translation_pool
 
 from ...models_mixins import (
+    TranslationModelMixin,
     SimpleTranslationMixin,
     SimpleTranslationPublishedManager,
 )
+
+
+class HvadDummy(TranslationModelMixin, TranslatableModel):
+    """Dummy model to test hvad stuff."""
+    translations = TranslatedFields(
+        title=models.CharField(
+            verbose_name=_('Title'),
+            max_length=256,
+        ),
+    )
 
 
 class DummyProfile(SimpleTranslationMixin, models.Model):

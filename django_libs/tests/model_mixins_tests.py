@@ -2,9 +2,30 @@
 from mock import Mock
 
 from django.test import TestCase
+from django.utils.translation import activate
 
-from .test_app.factories import DummyProfileTranslationFactory
-from .test_app.models import DummyProfile
+from .test_app.factories import (
+    DummyProfileTranslationFactory,
+    HvadDummyFactory,
+)
+from .test_app.models import DummyProfile, HvadDummy
+
+
+class TranslationModelMixinTestCase(TestCase):
+    """Tests for the ``TranslationModelMixin`` model mixin."""
+    longMessage = True
+
+    def test_functions(self):
+        translated_obj = HvadDummyFactory()
+        self.assertEqual(translated_obj.translation_getter('title'), 'title1')
+        untranslated_obj = HvadDummy()
+        self.assertIsNone(untranslated_obj.translation_getter('title'))
+        untranslated_obj.translate('de')
+        untranslated_obj.title = 'foo'
+        untranslated_obj.save()
+        activate('de')
+        self.assertEqual(untranslated_obj.translation_getter('title'), 'foo')
+        activate('en')
 
 
 class SimpleTranslationMixinTestCase(TestCase):

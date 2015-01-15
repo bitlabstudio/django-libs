@@ -125,7 +125,7 @@ class HTML2PlainParser(HTMLParser):
     def handle_data(self, data):
         """Handles data between tags."""
         # Only proceed with unignored elements
-        if not self.lasttag in self.ignored_elements:
+        if self.lasttag not in self.ignored_elements:
             # Remove any predefined linebreaks
             text = data.replace('\n', '')
             # If there's some text left, proceed!

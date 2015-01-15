@@ -1,5 +1,4 @@
 """Tests for the email utils of ``django_libs``."""
-from django.contrib.sites.models import Site
 from django.core import mail
 from django.test import TestCase
 

@@ -1,2 +1,2 @@
 # -*- coding: utf-8 -*-
-__version__ = '1.65.7'
+__version__ = '1.66.0'

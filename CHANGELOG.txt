@@ -1,5 +1,6 @@
 === 1.66.X ===
 
+- remove all simple-translation support
 
 === 1.65.X ===
 

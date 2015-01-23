@@ -59,7 +59,7 @@ just one line of code.
 
 Example:
 
-..code-block:: python
+.. code:: python
 
     # Say your form has an image field
     from django import forms

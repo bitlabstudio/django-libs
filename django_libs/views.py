@@ -201,7 +201,7 @@ class UpdateCookieAJAXView(View):
             return HttpResponseForbidden()
         response = HttpResponse('done')
         days = request.POST.get('cookie_days', 100)
-        date = datetime.datetime.utcnow() + datetime.timedelta(days=days)
+        date = datetime.datetime.utcnow() + datetime.timedelta(days=int(days))
         expires = datetime.datetime.strftime(date, "%a, %d-%b-%Y %H:%M:%S GMT")
         response.set_cookie(
             request.POST['cookie_key'],

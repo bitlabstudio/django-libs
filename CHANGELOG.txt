@@ -1,6 +1,7 @@
 === 1.66.X ===
 
 - remove all simple-translation support
+- enhanced ignorable user agents
 
 === 1.65.X ===
 

@@ -27,6 +27,7 @@ IGNORABLE_404_USER_AGENTS = [
     re.compile(r'savetheworldheritage.org', re.I),
     re.compile(r'Test Certificate Info', re.I),
     re.compile(r'Twitterbot', re.I),
+    re.compile(r'WinHttp.WinHttpRequest.5', re.I),
     re.compile(r'XoviBot', re.I),
     re.compile(r'Yahoo! Slurp', re.I),
     re.compile(r'YandexBot', re.I),

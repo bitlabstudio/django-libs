@@ -362,10 +362,10 @@ class ViewRequestFactoryTestMixin(object):
 
     def get_request(self, method=RequestFactory().get, ajax=False, data=None,
                     user=AnonymousUser(), add_session=False, session_dict={},
-                    **kwargs):
+                    view_kwargs=None, **kwargs):
         if data is not None:
             kwargs.update({'data': data})
-        req = method(self.get_url(), **kwargs)
+        req = method(self.get_url(view_kwargs=view_kwargs), **kwargs)
         req.user = user
         # the messages framework only works with the FallbackStorage in case of
         # requestfactory tests
@@ -390,12 +390,13 @@ class ViewRequestFactoryTestMixin(object):
         return req
 
     def get_get_request(self, ajax=False, data=None, user=None,
-                        add_session=False, session_dict={}, **kwargs):
+                        add_session=False, session_dict={}, view_kwargs=None,
+                        **kwargs):
         if user is None:
             user = self.get_user()
         return self.get_request(
             ajax=ajax, data=data, user=user, add_session=add_session,
-            session_dict=session_dict, **kwargs)
+            session_dict=session_dict, view_kwargs=view_kwargs, **kwargs)
 
     def get_post_request(self, ajax=False, data=None, user=None,
                          add_session=False, session_dict={}, **kwargs):
@@ -462,7 +463,7 @@ class ViewRequestFactoryTestMixin(object):
         """
         return {}
 
-    def get_url(self):
+    def get_url(self, view_kwargs=None):
         """
         Returns the url to be used in the request factory.
 
@@ -477,7 +478,7 @@ class ViewRequestFactoryTestMixin(object):
             # just don't care and return '/', which in most cases is enough
             return '/'
         view_args = self.get_view_args()
-        view_kwargs = self.get_view_kwargs()
+        view_kwargs = view_kwargs or self.get_view_kwargs()
         return reverse(view_name, args=view_args, kwargs=view_kwargs)
 
     def get_view_class(self):
@@ -496,7 +497,7 @@ class ViewRequestFactoryTestMixin(object):
         """Creates a response from a GET request."""
         req = self.get_get_request(
             user=user, data=data, ajax=ajax, add_session=add_session,
-            session_dict=session_dict)
+            session_dict=session_dict, view_kwargs=kwargs)
         view = self.get_view()
         if kwargs is None:
             kwargs = {}

@@ -1,6 +1,9 @@
 Factories
 =========
 
+IMPORTANT: The following factories are still available, but no longer
+maintained. We recommend to use https://github.com/klen/mixer for fixtures.
+
 HvadFactoryMixin
 ++++++++++++++++
 
@@ -14,13 +17,16 @@ write your factory as if it was a normal model, but make sure to add a
     import factory
     from django_libs.tests.factories import HvadFactoryMixin
 
-    class NewsEntryFactory(HvadFactoryMixin, factory.DjangoModelFactory):
-        FACTORY_FOR = NewsEntry
+    from .. import models
 
+    class NewsEntryFactory(HvadFactoryMixin, factory.DjangoModelFactory):
         language_code = 'en'  # This is important
         title = factory.Sequence(lambda x: 'A title {0}'.format(x))
         slug = factory.Sequence(lambda x: 'a-title-{0}'.format(x))
         is_published = True
+
+        class Meta:
+            model = models.NewsEntry
 
 
 UserFactory

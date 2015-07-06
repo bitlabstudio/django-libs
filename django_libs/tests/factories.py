@@ -1,12 +1,6 @@
 """
-Factories that are common to most Django apps.
-
-The factories in this module shall help to create test fixtures for models that
-are global to all Django projects and could be shared by tests of specialized
-apps.
-
-For example each app will need to create a user, therefore this module shall
-provide facilities for user generation.
+IMPORTANT: The following factories are still available, but no longer
+maintained. We recommend to use https://github.com/klen/mixer for fixtures.
 
 """
 from io import BytesIO
@@ -81,10 +75,11 @@ class UserFactory(factory.DjangoModelFactory):
     Password will be ``test123`` by default.
 
     """
-    FACTORY_FOR = User
-
     username = factory.Sequence(lambda n: md5(str(n)).hexdigest()[0:30])
     email = factory.Sequence(lambda n: 'user{0}@example.com'.format(n))
+
+    class Meta:
+        model = User
 
     @classmethod
     def _prepare(cls, create, **kwargs):
@@ -103,10 +98,11 @@ class SiteFactory(factory.DjangoModelFactory):
     Creates a new ``Site`` object.
 
     """
-    FACTORY_FOR = Site
-
     name = factory.Sequence(lambda n: 'Example {}'.format(n))
     domain = factory.Sequence(lambda n: 'example{}.com'.format(n))
+
+    class Meta:
+        model = Site
 
 
 try:
@@ -122,10 +118,11 @@ else:
         "cleanup_mailer_messagelog").
 
         """
-        FACTORY_FOR = MessageLog
-
         message_data = 'foo'
         when_added = factory.Sequence(lambda n: now())
         priority = '3'
         result = '1'
         log_message = 'foo'
+
+        class Meta:
+            model = MessageLog

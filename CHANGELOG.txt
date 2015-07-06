@@ -2,6 +2,7 @@
 
 - remove all simple-translation support
 - enhanced ignorable user agents
+- updated factories
 
 === 1.65.X ===
 

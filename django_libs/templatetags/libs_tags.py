@@ -357,6 +357,8 @@ def navactive(request, url, exact=0, use_resolver=1):
         except Resolver404:
             # Indicates, that a simple url string is used (e.g. '/index/')
             match = request.path
+    else:
+        match = request.path
 
     if exact and url == match:
         return 'active'

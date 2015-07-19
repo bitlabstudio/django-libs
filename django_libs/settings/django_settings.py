@@ -11,6 +11,7 @@ IGNORABLE_404_URLS = [
 
 IGNORABLE_404_USER_AGENTS = [
     re.compile(r'AhrefsBot', re.I),
+    re.compile(r'BacklinkCrawler', re.I),
     re.compile(r'Baiduspider', re.I),
     re.compile(r'bingbot', re.I),
     re.compile(r'BLEXBot', re.I),

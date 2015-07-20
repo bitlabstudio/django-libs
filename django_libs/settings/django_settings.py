@@ -28,6 +28,7 @@ IGNORABLE_404_USER_AGENTS = [
     re.compile(r'MJ12bot', re.I),
     re.compile(r'msnbot', re.I),
     re.compile(r'publiclibraryarchive.org', re.I),
+    re.compile(r'RU_Bot', re.I),
     re.compile(r'savetheworldheritage.org', re.I),
     re.compile(r'seoscanners', re.I),
     re.compile(r'Test Certificate Info', re.I),

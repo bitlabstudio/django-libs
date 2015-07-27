@@ -15,6 +15,7 @@ IGNORABLE_404_USER_AGENTS = [
     re.compile(r'Baiduspider', re.I),
     re.compile(r'bingbot', re.I),
     re.compile(r'BLEXBot', re.I),
+    re.compile(r'Cliqzbot', re.I),
     re.compile(r'coccoc', re.I),
     re.compile(r'DotBot', re.I),
     re.compile(r'EasouSpider', re.I),

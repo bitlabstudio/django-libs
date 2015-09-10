@@ -33,7 +33,7 @@ def send_email(request, extra_context, subject_template, body_template,
     else:
         context = extra_context
     if request and request.get_host():
-        context.update({'domain': '{}://{}'.format(
+        context.update({'domain': u'{}://{}'.format(
             'https' if request.is_secure() else 'http', request.get_host())})
     else:
         context.update({'domain': u'http://{}'.format(

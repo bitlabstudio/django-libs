@@ -36,7 +36,8 @@ def send_email(request, extra_context, subject_template, body_template,
         context.update({'domain': '{}://{}'.format(
             'https' if request.is_secure() else 'http', request.get_host())})
     else:
-        context.update({'domain': Site.objects.get_current().domain})
+        context.update({'domain': u'http://{}'.format(
+            Site.objects.get_current().domain)})
     subject = render_to_string(subject_template, context)
     subject = ''.join(subject.splitlines())
     message_html = render_to_string(body_template, context)

@@ -3,6 +3,7 @@
 - remove all simple-translation support
 - enhanced ignorable user agents
 - updated factories
+- refined domain context in send_email
 
 === 1.65.X ===
 

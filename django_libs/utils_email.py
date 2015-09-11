@@ -6,7 +6,10 @@ from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.utils.encoding import force_text
 
-import mailer
+try:
+    import mailer
+except ImportError:
+    pass
 
 from .utils import html_to_plain_text
 
@@ -33,11 +36,15 @@ def send_email(request, extra_context, subject_template, body_template,
     else:
         context = extra_context
     if request and request.get_host():
-        context.update({'domain': u'{}://{}'.format(
-            'https' if request.is_secure() else 'http', request.get_host())})
+        context.update({
+            'domain': request.get_host(),
+            'protocol': 'https://' if request.is_secure() else 'http://',
+        })
     else:
-        context.update({'domain': u'http://{}'.format(
-            Site.objects.get_current().domain)})
+        context.update({
+            'domain': Site.objects.get_current().domain,
+            'protocol': 'http://',
+        })
     subject = render_to_string(subject_template, context)
     subject = ''.join(subject.splitlines())
     message_html = render_to_string(body_template, context)

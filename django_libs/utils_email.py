@@ -36,15 +36,15 @@ def send_email(request, extra_context, subject_template, body_template,
     else:
         context = extra_context
     if request and request.get_host():
-        context.update({
-            'domain': request.get_host(),
-            'protocol': 'https://' if request.is_secure() else 'http://',
-        })
+        domain = request.get_host()
+        protocol = 'https://' if request.is_secure() else 'http://'
     else:
-        context.update({
-            'domain': Site.objects.get_current().domain,
-            'protocol': 'http://',
-        })
+        domain = getattr(settings, 'DOMAIN', Site.objects.get_current().domain)
+        protocol = getattr(settings, 'PROTOCOL', 'http://')
+    context.update({
+        'domain': domain,
+        'protocol': protocol,
+    })
     subject = render_to_string(subject_template, context)
     subject = ''.join(subject.splitlines())
     message_html = render_to_string(body_template, context)

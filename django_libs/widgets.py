@@ -1,7 +1,7 @@
 """Custom form widgets."""
 from django.conf import settings
 from django.forms import widgets, TextInput
-from django.forms.util import flatatt
+from django.forms.utils import flatatt
 from django.template import Context
 from django.template.loader import get_template
 from django.utils.html import conditional_escape

@@ -4,6 +4,7 @@
 - enhanced ignorable user agents
 - updated factories
 - refined domain context in send_email
+- south is now optional
 
 === 1.65.X ===
 

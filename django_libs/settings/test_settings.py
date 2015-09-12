@@ -26,11 +26,11 @@ DATABASES = {
 PASSWORD_HASHERS = (
     'django.contrib.auth.hashers.MD5PasswordHasher',
 )
+SOUTH_TESTS_MIGRATE = False
 
 
 EMAIL_SUBJECT_PREFIX = '[test] '
 EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
-SOUTH_TESTS_MIGRATE = False
 
 
 TEST_RUNNER = 'django_libs.testrunner.NoseCoverageTestRunner'

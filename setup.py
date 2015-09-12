@@ -27,7 +27,12 @@ setup(
         'factory_boy>2.4.0',
         'beautifulsoup4>4.0.0',
         'Pillow',
-        'South',
         'django-hvad',
-    ]
+    ],
+    tests_require=[
+        'django-nose',
+        'coverage',
+        'django-coverage',
+    ],
+    test_suite='django_libs.tests.runtests.runtests',
 )

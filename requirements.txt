@@ -3,11 +3,8 @@
 # ===========================================================================
 # Packages essential to this app. Needed by anyone who wants to use this app.
 # ===========================================================================
+django
 Sphinx
-django-mailer
-factory_boy>2.4.0
-South
-
 django-hvad
 
 # ==============================================================
@@ -17,6 +14,7 @@ mock
 django-nose
 coverage
 django-coverage
+fabric
 ipdb
 flake8>=2.1.0
 beautifulsoup4==4.3.2

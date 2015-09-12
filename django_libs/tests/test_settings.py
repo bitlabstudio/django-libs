@@ -55,7 +55,6 @@ EXTERNAL_APPS = [
     'django.contrib.admindocs',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.comments',
     'django.contrib.messages',
     'django.contrib.sessions',
     'django.contrib.staticfiles',
@@ -64,7 +63,6 @@ EXTERNAL_APPS = [
     'django_nose',
     'hvad',
     'mailer',
-    'south',
 ]
 
 INTERNAL_APPS = [

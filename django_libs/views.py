@@ -6,7 +6,10 @@ from functools import update_wrapper
 
 from django.conf import settings
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from django.contrib.comments.models import Comment
+try:
+    from django_comments.models import Comment
+except ImportError:
+    pass
 from django.http import Http404, HttpResponse, HttpResponseForbidden
 from django.template import loader, Context
 from django.views.generic import TemplateView, View

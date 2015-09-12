@@ -1,6 +1,9 @@
 """Tests for the view classes of ``django-libs``."""
 from django.contrib.sites.models import Site
-from django_comments.models import Comment
+try:
+    from django_comments.models import Comment
+except ImportError:
+    pass
 from django.contrib.contenttypes.models import ContentType
 from django.test import TestCase
 from django.views.generic import TemplateView, View

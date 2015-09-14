@@ -167,7 +167,7 @@ class HTML2PlainParser(HTMLParser):
 def html_to_plain_text(html):
     """Converts html code into formatted plain text."""
     # Use BeautifulSoup to normalize the html
-    soup = BeautifulSoup(html, "lxml")
+    soup = BeautifulSoup(html, "html.parser")
     # Init the parser
     parser = HTML2PlainParser()
     parser.feed(str(soup))

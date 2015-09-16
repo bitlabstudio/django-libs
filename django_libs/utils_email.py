@@ -15,7 +15,8 @@ from .utils import html_to_plain_text
 
 
 def send_email(request, extra_context, subject_template, body_template,
-               from_email, recipients, priority="medium"):
+               from_email, recipients, priority="medium", reply_to=None,
+               headers={}):
     """
     Sends an email based on templates for subject and body.
 
@@ -29,8 +30,14 @@ def send_email(request, extra_context, subject_template, body_template,
     :param from_email: String that represents the sender of the email.
     :param recipients: A list of tuples of recipients. The tuples are similar
         to the ADMINS setting.
+    :param priority: Sets the priority of the email (only used by django-mailer
+        to prioritise email sendings).
+    :param reply_to: Optional email address to reply to.
+    :param headers: Additional dictionary to add header attributes.
 
     """
+    if reply_to:
+        headers.update({'Reply-To': reply_to})
     if request:
         context = RequestContext(request, extra_context)
     else:
@@ -63,10 +70,10 @@ def send_email(request, extra_context, subject_template, body_template,
             to=recipients,
             bcc=None,
             attachments=None,
-            headers=None,
+            headers=headers,
         )
         email = EmailMultiAlternatives(
             email.subject, email.body, email.from_email, email.to,
-            headers=None)
+            headers=headers)
         email.attach_alternative(message_html, "text/html")
         email.send()

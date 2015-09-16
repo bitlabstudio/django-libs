@@ -5,6 +5,7 @@
 - updated factories
 - refined domain context in send_email
 - south is now optional
+- added reply_to and headers attributes to send_email
 
 === 1.65.X ===
 

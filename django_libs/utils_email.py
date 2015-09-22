@@ -1,4 +1,5 @@
 """Utility functions for sending emails."""
+import django
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core.mail import EmailMessage, EmailMultiAlternatives
@@ -37,7 +38,11 @@ def send_email(request, extra_context, subject_template, body_template,
 
     """
     if reply_to:
-        headers.update({'Reply-To': reply_to})
+        if django.get_version() >= '1.8':
+            # The reply_to argument has been added in 1.8
+            reply_to = [reply_to]
+        else:
+            headers.update({'Reply-To': reply_to})
     if request:
         context = RequestContext(request, extra_context)
     else:
@@ -63,17 +68,20 @@ def send_email(request, extra_context, subject_template, body_template,
         subject = force_text(subject)
         message = force_text(message_plaintext)
 
-        email = EmailMessage(
-            subject=subject,
-            body=message,
-            from_email=from_email,
-            to=recipients,
-            bcc=None,
-            attachments=None,
-            headers=headers,
-        )
-        email = EmailMultiAlternatives(
-            email.subject, email.body, email.from_email, email.to,
-            headers=headers)
+        if django.get_version() >= '1.8':
+            # The reply_to argument has been added in 1.8
+            email = EmailMessage(
+                subject=subject, body=message, from_email=from_email,
+                to=recipients, headers=headers, reply_to=reply_to)
+            email = EmailMultiAlternatives(
+                email.subject, email.body, email.from_email, email.to,
+                headers=email.extra_headers, reply_to=reply_to)
+        else:
+            email = EmailMessage(
+                subject=subject, body=message, from_email=from_email,
+                to=recipients, headers=headers)
+            email = EmailMultiAlternatives(
+                email.subject, email.body, email.from_email, email.to,
+                headers=email.extra_headers)
         email.attach_alternative(message_html, "text/html")
         email.send()

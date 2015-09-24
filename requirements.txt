@@ -18,6 +18,6 @@ fabric
 ipdb
 flake8>=2.1.0
 beautifulsoup4==4.3.2
--e git+git://github.com/pinax/django-mailer.git@919805e25fc18b06487b25414d4e5d5e05a92108#egg=mailer
+django-mailer>=1.0
 Pillow
 user-agents

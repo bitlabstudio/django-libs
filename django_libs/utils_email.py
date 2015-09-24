@@ -62,8 +62,9 @@ def send_email(request, extra_context, subject_template, body_template,
     message_html = render_to_string(body_template, context)
     message_plaintext = html_to_plain_text(message_html)
     if settings.EMAIL_BACKEND == 'mailer.backend.DbBackend':
-        mailer.send_html_mail(subject, message_plaintext, message_html,
-                              from_email, recipients, priority=priority)
+        mailer.send_html_mail(
+            subject, message_plaintext, message_html, from_email, recipients,
+            priority=priority, headers=headers)
     else:
         subject = force_text(subject)
         message = force_text(message_plaintext)

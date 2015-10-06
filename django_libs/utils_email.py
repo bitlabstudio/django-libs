@@ -37,12 +37,13 @@ def send_email(request, extra_context, subject_template, body_template,
     :param headers: Additional dictionary to add header attributes.
 
     """
-    if reply_to:
-        if django.get_version() >= '1.8':
-            # The reply_to argument has been added in 1.8
-            reply_to = [reply_to]
-        else:
-            headers.update({'Reply-To': reply_to})
+    if not reply_to:
+        reply_to = from_email
+    if django.get_version() >= '1.8':
+        # The reply_to argument has been added in 1.8
+        reply_to = [reply_to]
+    else:
+        headers.update({'Reply-To': reply_to})
     if request:
         context = RequestContext(request, extra_context)
     else:

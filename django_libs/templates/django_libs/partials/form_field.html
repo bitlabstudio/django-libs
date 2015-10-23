@@ -1,48 +1,50 @@
 {% load libs_tags %}
-{% get_form_field_type field as field_type %}
-{% if placeholder %}
-    {% add_form_widget_attr field 'placeholder' placeholder replace=1 as field %}
-{% endif %}
-<div class="form-group {% if field.errors %}has-error{% endif %}">
-    {% if not hide_label and "CheckboxInput" not in field_type %}
-        <label class="control-label {% if horizontal %}col-sm-4{% endif %}" for="{{ field.id_for_label }}">
-            <span {% if field.field.required %}class="required-label"{% endif %}>{% if field.field.required %}* {% endif %}{{ field.label }}</span>
-        </label>
-    {% elif horizontal and "CheckboxInput" in field_type %}
-    <label class="control-label col-sm-4"></label>
+{% if field %}
+    {% get_form_field_type field as field_type %}
+    {% if placeholder %}
+        {% add_form_widget_attr field 'placeholder' placeholder replace=1 as field %}
     {% endif %}
-    {% if horizontal %}<div class="col-sm-8">{% endif %}
-    {% if "CheckboxInput" in field_type %}
-        <div class="checkbox">
-            <label>
-                {{ field }}
+    <div class="form-group {% if field.errors %}has-error{% endif %}">
+        {% if not hide_label and "CheckboxInput" not in field_type %}
+            <label class="control-label {% if horizontal %}col-sm-4{% endif %}" for="{{ field.id_for_label }}">
                 <span {% if field.field.required %}class="required-label"{% endif %}>{% if field.field.required %}* {% endif %}{{ field.label }}</span>
-                {% if field.help_text %}
-                    <span data-class="popover" class="glyphicon glyphicon-question-sign" title="{{ field.label }}" data-content="{{ field.help_text }}"></span>
-                {% endif %}
             </label>
-        </div>
-    {% else %}
-        {% add_form_widget_attr field 'class' 'form-control' as field %}
-        {% if input_addon_pre or input_addon_post %}
-            <div class="input-group">
-                {% if input_addon_pre %}
-                    <span class="input-group-addon">{{ input_addon_pre }}</span>
-                {% endif %}
-                {{ field }}
-                {% if input_addon_post %}
-                    <span class="input-group-addon">{{ input_addon_post }}</span>
-                {% endif %}
+        {% elif horizontal and "CheckboxInput" in field_type %}
+        <label class="control-label col-sm-4"></label>
+        {% endif %}
+        {% if horizontal %}<div class="col-sm-8">{% endif %}
+        {% if "CheckboxInput" in field_type %}
+            <div class="checkbox">
+                <label>
+                    {{ field }}
+                    <span {% if field.field.required %}class="required-label"{% endif %}>{% if field.field.required %}* {% endif %}{{ field.label }}</span>
+                    {% if field.help_text %}
+                        <small class="text-muted"><em>{{ field.help_text }}</em></small>
+                    {% endif %}
+                </label>
             </div>
         {% else %}
-            {{ field }}
+            {% add_form_widget_attr field 'class' 'form-control' as field %}
+            {% if input_addon_pre or input_addon_post %}
+                <div class="input-group">
+                    {% if input_addon_pre %}
+                        <span class="input-group-addon">{{ input_addon_pre }}</span>
+                    {% endif %}
+                    {{ field }}
+                    {% if input_addon_post %}
+                        <span class="input-group-addon">{{ input_addon_post }}</span>
+                    {% endif %}
+                </div>
+            {% else %}
+                {{ field }}
+            {% endif %}
         {% endif %}
-    {% endif %}
-    {% if field.errors %}
-        <span class="help-block">{% for error in field.errors %}{{ error }}<br/> {% endfor %}</span>
-    {% endif %}
-    {% if field.help_text %}
-        <small class="text-muted"><em>{{ field.help_text }}</em></small>
-    {% endif %}
-    {% if horizontal %}</div>{% endif %}
-</div>
+        {% if field.errors %}
+            <span class="help-block">{% for error in field.errors %}{{ error }}<br/> {% endfor %}</span>
+        {% endif %}
+        {% if field.help_text %}
+            <small class="text-muted"><em>{{ field.help_text }}</em></small>
+        {% endif %}
+        {% if horizontal %}</div>{% endif %}
+    </div>
+{% endif %}

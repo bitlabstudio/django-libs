@@ -30,6 +30,15 @@
                     <small class="text-muted"><em>{{ field.help_text }}</em></small>
                 {% endif %}
             </div>
+        {% elif "RadioSelect" in field_type %}
+            {% for choice in field.field.choices %}
+                <div class="radio{% if inline %}-inline{% endif %}">
+                    <label>
+                        <input type="radio" name="{{ field.name }}" id="id_{{ field.name }}{{ forloop.count }}" value="{{ choice.0 }}" {% if choice.0 == field.value %}checked="checked"{% endif %} />
+                        {{ choice.1 }}
+                    </label>
+                </div>
+            {% endfor %}
         {% else %}
             {% add_form_widget_attr field 'class' 'form-control' as field %}
             {% if input_addon_pre or input_addon_post %}

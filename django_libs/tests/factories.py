@@ -75,7 +75,9 @@ class UserFactory(factory.DjangoModelFactory):
     Password will be ``test123`` by default.
 
     """
-    username = factory.Sequence(lambda n: md5(str(n)).hexdigest()[0:30])
+    username = factory.Sequence(
+        lambda n: md5(str(n).encode('utf-8')).hexdigest()[0:30]
+    )
     email = factory.Sequence(lambda n: 'user{0}@example.com'.format(n))
 
     class Meta:

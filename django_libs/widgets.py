@@ -1,7 +1,11 @@
 """Custom form widgets."""
+import django
 from django.conf import settings
 from django.forms import widgets, TextInput
-from django.forms.utils import flatatt
+if django.VERSION >= (1,7):
+    from django.forms.utils import flatatt
+else:
+    from django.forms.util import flatatt
 from django.template import Context
 from django.template.loader import get_template
 from django.utils.html import conditional_escape

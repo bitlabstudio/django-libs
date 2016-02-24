@@ -3,6 +3,7 @@ import datetime
 import importlib
 
 from django import template
+from django.template.base import TOKEN_BLOCK, TOKEN_VAR
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
@@ -426,14 +427,14 @@ def get_range_around(range_value, current_item, padding):
     left_bound = padding
     right_bound = range_value - padding
     if range_value <= total_items:
-        range_items = range(1, range_value+1)
+        range_items = range(1, range_value + 1)
         return {
             'range_items': range_items,
             'left_padding': False,
             'right_padding': False,
         }
     if current_item <= left_bound:
-        range_items = range(1, range_value+1)[:total_items]
+        range_items = range(1, range_value + 1)[:total_items]
         return {
             'range_items': range_items,
             'left_padding': range_items[0] > 1,
@@ -441,14 +442,14 @@ def get_range_around(range_value, current_item, padding):
         }
 
     if current_item >= right_bound:
-        range_items = range(1, range_value+1)[-total_items:]
+        range_items = range(1, range_value + 1)[-total_items:]
         return {
             'range_items': range_items,
             'left_padding': range_items[0] > 1,
             'right_padding': range_items[-1] < range_value,
         }
 
-    range_items = range(current_item-padding, current_item+padding+1)
+    range_items = range(current_item - padding, current_item + padding + 1)
     return {
         'range_items': range_items,
         'left_padding': True,
@@ -501,14 +502,6 @@ def render_analytics2_code():
     }
 
 
-class VerbatimNode(template.Node):
-    def __init__(self, text):
-        self.text = text
-
-    def render(self, context):
-        return self.text
-
-
 @register.simple_tag(takes_context=True)
 def save(context, key, value):
     """
@@ -549,6 +542,14 @@ def set_context(value):
     return value
 
 
+class VerbatimNode(template.Node):
+    def __init__(self, text):
+        self.text = text
+
+    def render(self, context):
+        return self.text
+
+
 @register.tag
 def verbatim(parser, token):
     """Tag to render x-tmpl templates with Django template code."""
@@ -557,14 +558,14 @@ def verbatim(parser, token):
         token = parser.tokens.pop(0)
         if token.contents == 'endverbatim':
             break
-        if token.token_type == template.TOKEN_VAR:
+        if token.token_type == TOKEN_VAR:
             text.append('{{ ')
-        elif token.token_type == template.TOKEN_BLOCK:
+        elif token.token_type == TOKEN_BLOCK:
             text.append('{%')
         text.append(token.contents)
-        if token.token_type == template.TOKEN_VAR:
+        if token.token_type == TOKEN_VAR:
             text.append(' }}')
-        elif token.token_type == template.TOKEN_BLOCK:
+        elif token.token_type == TOKEN_BLOCK:
             if not text[-1].startswith('='):
                 text[-1:-1] = [' ']
             text.append(' %}')

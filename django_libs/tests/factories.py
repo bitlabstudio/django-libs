@@ -10,8 +10,13 @@ from django.contrib.sites.models import Site
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.utils.timezone import now
 
-from PIL import Image
 from hashlib import md5
+
+try:
+    from PIL import Image
+except ImportError:
+    pass
+
 import factory
 
 

@@ -190,8 +190,8 @@ class UpdateSessionAJAXView(View):
     def dispatch(self, request, *args, **kwargs):
         if not (request.is_ajax() and request.method == 'POST'):
             return HttpResponseForbidden()
-        if (request.POST.get('session_name')
-                and request.POST.get('session_value')):
+        if (request.POST.get('session_name') and request.POST.get(
+                'session_value')):
             request.session[request.POST['session_name']] = request.POST[
                 'session_value']
         return HttpResponse('done')

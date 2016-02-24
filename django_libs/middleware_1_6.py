@@ -58,9 +58,8 @@ class CustomBrokenLinkEmailsMiddleware(object):
         Returns True if the given request *shouldn't* notify the site managers.
         """
         # '?' in referer is identified as search engine source
-        if (not referer or
-                (not self.is_internal_request(domain, referer)
-                    and '?' in referer)):
+        if (not referer or (not self.is_internal_request(
+                domain, referer) and '?' in referer)):
             return True
         return any(
             pattern.search(uri) for pattern in settings.IGNORABLE_404_URLS)

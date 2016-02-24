@@ -23,12 +23,7 @@ setup(
     url="https://github.com/bitmazk/django-libs",
     packages=find_packages(),
     include_package_data=True,
-    install_requires=[
-        'factory_boy>2.4.0',
-        'beautifulsoup4>4.0.0',
-        'Pillow',
-        'django-hvad',
-    ],
+    install_requires=[],
     tests_require=[
         'django-nose',
         'coverage',

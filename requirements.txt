@@ -4,8 +4,6 @@
 # Packages essential to this app. Needed by anyone who wants to use this app.
 # ===========================================================================
 django
-Sphinx
-django-hvad
 
 # ==============================================================
 # Packages needed for running the tests. Needed by contributors.
@@ -16,8 +14,5 @@ coverage
 django-coverage
 fabric
 ipdb
-flake8>=2.1.0
-beautifulsoup4==4.3.2
-django-mailer>=1.0
-Pillow
-user-agents
+factory_boy
+flake8

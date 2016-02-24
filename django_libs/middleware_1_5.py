@@ -23,9 +23,8 @@ class CustomCommonMiddleware(CommonMiddleware):
                 referer = request.META.get('HTTP_REFERER')
                 is_internal = _is_internal_request(domain, referer)
                 path = request.get_full_path()
-                if (referer
-                        and not _is_ignorable_404(path)
-                        and (is_internal or '?' not in referer)):
+                if (referer and not _is_ignorable_404(path) and
+                        (is_internal or '?' not in referer)):
                     ua = request.META.get('HTTP_USER_AGENT', '<none>')
                     ip = request.META.get('REMOTE_ADDR', '<none>')
 
@@ -57,8 +56,8 @@ class CustomCommonMiddleware(CommonMiddleware):
             else:
                 etag = '"%s"' % hashlib.md5(response.content).hexdigest()
             if etag is not None:
-                if (200 <= response.status_code < 300
-                        and request.META.get('HTTP_IF_NONE_MATCH') == etag):
+                if (200 <= response.status_code < 300 and
+                        request.META.get('HTTP_IF_NONE_MATCH') == etag):
                     cookies = response.cookies
                     response = http.HttpResponseNotModified()
                     response.cookies = cookies

@@ -5,10 +5,14 @@ from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 
-from bs4 import BeautifulSoup
 from HTMLParser import HTMLParser
 
 from .loaders import load_member_from_setting
+
+try:
+    from bs4 import BeautifulSoup
+except ImportError:
+    pass
 
 
 class conditional_decorator(object):
@@ -111,8 +115,8 @@ class HTML2PlainParser(HTMLParser):
         """Handles every start tag like e.g. <p>."""
         if (tag in self.newline_before_elements):
             self.text += '\n'
-        if (tag in self.stroke_before_elements
-                and not self.text.endswith(self.stroke_text)):
+        if (tag in self.stroke_before_elements and not
+                self.text.endswith(self.stroke_text)):
             # Put a stroke in front of every relevant element, if there is some
             # content between it and its predecessor
             self.text += self.stroke_text

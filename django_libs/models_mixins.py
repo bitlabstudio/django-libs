@@ -22,7 +22,7 @@ class HvadPublishedManager(TranslationManager):
             if not language:
                 self.model.objects.none()
             kwargs.update({'translations__language_code': language})
-        return self.get_query_set().filter(**kwargs)
+        return self.get_queryset().filter(**kwargs)
 
 
 class TranslationModelMixin(object):

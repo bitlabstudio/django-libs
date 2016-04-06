@@ -12,7 +12,7 @@ class TranslationModelMixinTestCase(TestCase):
 
     def test_functions(self):
         translated_obj = HvadDummyFactory()
-        self.assertEqual(translated_obj.translation_getter('title'), 'title1')
+        self.assertEqual(translated_obj.translation_getter('title'), 'title0')
         untranslated_obj = HvadDummy()
         self.assertIsNone(untranslated_obj.translation_getter('title'))
         untranslated_obj.translate('de')

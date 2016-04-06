@@ -1,5 +1,6 @@
 === 1.66.X ===
 
+- prepared app for Django 1.9
 - fixed flake8 errors and verbatim tag
 - remove all simple-translation support
 - enhanced ignorable user agents

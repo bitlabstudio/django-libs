@@ -16,7 +16,10 @@ try:
 except ImportError:
     from django.utils.encoding import smart_str as str_encode
 
-from django.utils.importlib import import_module
+try:
+    from importlib import import_module
+except ImportError:
+    from django.utils.importlib import import_module
 from django.utils.translation import (
     check_for_language,
     get_language,

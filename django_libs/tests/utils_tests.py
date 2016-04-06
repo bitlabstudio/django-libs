@@ -1,15 +1,10 @@
 """Tests for the utils of ``django_libs``."""
-from django.conf import settings
+import os
+
 from django.test import TestCase
-from django.contrib.auth.models import SiteProfileNotAvailable
 
 from ..utils import (
-    conditional_decorator,
-    create_random_string,
-    get_profile,
-    html_to_plain_text,
-)
-from .factories import UserFactory
+    conditional_decorator, create_random_string, html_to_plain_text)
 from test_app.models import DummyProfile
 
 
@@ -63,45 +58,6 @@ class CreateRandomStringTestCase(TestCase):
             3, msg=('Should return a random string with 3 characters.'))
 
 
-class GetProfileTestCase(TestCase):
-    """Tests for the ``get_profile`` function."""
-    longMessage = True
-
-    def setUp(self):
-        self.user = UserFactory()
-        self.old_get_profile_method = getattr(
-            settings, 'GET_PROFILE_METHOD', None)
-        self.old_auth_profile_module = getattr(
-            settings, 'AUTH_PROFILE_MODULE', None)
-        settings.AUTH_PROFILE_MODULE = (
-            'test_app.DummyProfile')
-
-    def tearDown(self):
-        if self.old_get_profile_method:
-            settings.GET_PROFILE_METHOD = self.old_get_profile_method
-        if self.old_auth_profile_module:
-            settings.AUTH_PROFILE_MODULE = self.old_auth_profile_module
-
-    def test_returns_profile(self):
-        """Test if the ``get_profile`` method returns a profile."""
-        profile = get_profile(self.user)
-        self.assertEqual(type(profile), DummyProfile, msg=(
-            'The method should return a DummyProfile instance.'))
-
-        settings.AUTH_PROFILE_MODULE = 'user_profileUserProfile'
-        self.assertRaises(SiteProfileNotAvailable, get_profile, self.user)
-
-        settings.AUTH_PROFILE_MODULE = 'test_app.DummyProfile'
-
-        settings.GET_PROFILE_METHOD = (
-            'django_libs.tests.utils_tests.get_profile_method')
-        DummyProfile.objects.all().delete()
-
-        profile = get_profile(self.user)
-        self.assertEqual(type(profile), DummyProfile, msg=(
-            'The method should return a DummyProfile instance.'))
-
-
 class HTMLToPlainTextTestCase(TestCase):
     """Tests for the ``html_to_plain_text`` function."""
     longMessage = True
@@ -125,7 +81,9 @@ class HTMLToPlainTextTestCase(TestCase):
             html_to_plain_text(html),
             '\n  * List element\n  * List element\n  * List element',
             msg='Should return a formatted plain text.')
-        with open('test_app/templates/html_email.html', 'rb') as file:
+        path = os.path.dirname(os.path.abspath(__file__)) + (
+            '/test_app/templates/html_email.html')
+        with open(path, 'rb') as file:
             self.assertIn('[1]: *|ARCHIVE|*\n', html_to_plain_text(file), msg=(
                 'Should return a formatted plain text.'))
 

@@ -12,8 +12,6 @@ from django.db.models.fields import FieldDoesNotExist
 from django.template.defaultfilters import truncatewords_html, stringfilter
 from django.utils.text import force_unicode
 
-from django_libs import utils
-
 from ..loaders import load_member
 
 
@@ -239,16 +237,6 @@ def get_verbose(obj, field_name=""):
         except FieldDoesNotExist:
             pass
     return ""
-
-
-@register.assignment_tag
-def get_profile_for(user):
-    """
-    Allows to call the get_profile utility function from django-libs in a
-    template.
-
-    """
-    return utils.get_profile(user)
 
 
 @register.assignment_tag

@@ -116,18 +116,6 @@ class GetVerboseTestCase(TestCase):
                 'Should return "" for a non-existant field.'))
 
 
-class GetProfileForTestCase(TestCase):
-    """Tests for the ``get_profile_for`` templatetag."""
-    longMessage = True
-
-    def setUp(self):
-        self.profile = DummyProfileFactory()
-        self.user = self.profile.user
-
-    def test_tag(self):
-        self.assertEqual(tags.get_profile_for(self.user), self.profile)
-
-
 class GetQueryParamsTestCase(TestCase):
     """Tests for the ``get_query_params`` templatetag."""
     longMessage = True

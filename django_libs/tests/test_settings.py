@@ -39,6 +39,15 @@ STATICFILES_DIRS = (
     os.path.join(__file__, 'test_static'),
 )
 
+MIDDLEWARE_CLASSES = (
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'django.middleware.common.CommonMiddleware',
+)
+
 TEMPLATES = [{
     'BACKEND': 'django.template.backends.django.DjangoTemplates',
     'APP_DIRS': True,
@@ -47,7 +56,7 @@ TEMPLATES = [{
         'context_processors': (
             'django.contrib.auth.context_processors.auth',
             'django.core.context_processors.i18n',
-            'django.core.context_processors.request',
+            'django.template.context_processors.request',
             'django.core.context_processors.media',
             'django.core.context_processors.static',
         )
@@ -65,6 +74,7 @@ EXTERNAL_APPS = [
     'django.contrib.sitemaps',
     'django.contrib.sites',
     'django_nose',
+    'mailer',
 ]
 
 INTERNAL_APPS = [

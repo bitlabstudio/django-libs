@@ -13,8 +13,6 @@ from django.core.urlresolvers import reverse, resolve
 from django.http import Http404
 from django.test import RequestFactory
 
-from django_libs.tests.factories import UserFactory
-
 
 class ViewTestMixin(object):
     """Mixin that provides commonly tested assertions."""
@@ -331,7 +329,7 @@ class ViewTestMixin(object):
         """
         if not url:
             url = self.get_url()
-        user_no_permissions = UserFactory()
+        user_no_permissions = AnonymousUser()
         self.login(user_no_permissions)
         resp = self.client.get(url, data=self.get_data_payload())
         self.assertRedirects(resp,

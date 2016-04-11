@@ -23,7 +23,7 @@ You can use this by inheriting the class::
             ),
         )
 
-This mixin will automatically return the title field if its ``__unicode__``
+This mixin will automatically return the title field if its ``__str__``
 function is called and it will always return a title string (no pk fallback or
 anything like that needed). If there's no translation available in the current
 language it searches for others.

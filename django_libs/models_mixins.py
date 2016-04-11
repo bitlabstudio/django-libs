@@ -1,6 +1,7 @@
 """Useful mixins for models."""
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
+from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import get_language
 
 from hvad.models import NoTranslation, TranslationManager
@@ -25,9 +26,10 @@ class HvadPublishedManager(TranslationManager):
         return self.get_queryset().filter(**kwargs)
 
 
+@python_2_unicode_compatible
 class TranslationModelMixin(object):
     """Mixin to provide custom django-hvad overrides."""
-    def __unicode__(self):
+    def __str__(self):
         return self.translation_getter('title')
 
     def check_for_result(self, language, translation, result, name):

@@ -4,6 +4,7 @@ maintained. We recommend to use https://github.com/klen/mixer for fixtures.
 
 """
 from io import BytesIO
+import warnings
 
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
@@ -25,6 +26,13 @@ class HvadFactoryMixin(object):
     Overrides ``_create`` and takes care of creating a translation.
 
     """
+    def __new__(cls, **kwargs):
+        warnings.warn(
+            'Factories are deprecated and will be removed in django_libs>=2.0.'
+            ' Please use https://github.com/klen/mixer instead.',
+            DeprecationWarning)
+        return super(HvadFactoryMixin, cls).__new__(**kwargs)
+
     @classmethod
     def _create(cls, target_class, *args, **kwargs):
         obj = target_class(*args, **kwargs)
@@ -55,6 +63,10 @@ class HvadFactoryMixin(object):
 class UploadedImageFactory(object):
     """Creates an uploaded image for testing."""
     def __new__(cls, **kwargs):
+        warnings.warn(
+            'Factories are deprecated and will be removed in django_libs>=2.0.'
+            ' Please use https://github.com/klen/mixer instead.',
+            DeprecationWarning)
         return cls._create_image(**kwargs)
 
     @classmethod
@@ -88,6 +100,13 @@ class UserFactory(factory.DjangoModelFactory):
     class Meta:
         model = User
 
+    def __new__(cls, **kwargs):
+        warnings.warn(
+            'Factories are deprecated and will be removed in django_libs>=2.0.'
+            ' Please use https://github.com/klen/mixer instead.',
+            DeprecationWarning)
+        return super(UserFactory, cls).__new__(**kwargs)
+
     @classmethod
     def _prepare(cls, create, **kwargs):
         password = 'test123'
@@ -111,6 +130,13 @@ class SiteFactory(factory.DjangoModelFactory):
     class Meta:
         model = Site
 
+    def __new__(cls, **kwargs):
+        warnings.warn(
+            'Factories are deprecated and will be removed in django_libs>=2.0.'
+            ' Please use https://github.com/klen/mixer instead.',
+            DeprecationWarning)
+        return super(SiteFactory, cls).__new__(**kwargs)
+
 
 try:
     from mailer.models import MessageLog
@@ -133,3 +159,11 @@ else:
 
         class Meta:
             model = MessageLog
+
+        def __new__(cls, **kwargs):
+            warnings.warn(
+                'Factories are deprecated and will be removed in'
+                ' django_libs>=2.0. Please use https://github.com/klen/mixer'
+                ' instead.',
+                DeprecationWarning)
+            return super(MessageLogFactory, cls).__new__(**kwargs)

@@ -19,7 +19,7 @@ class ColorField(CharField):
         super(ColorField, self).__init__(*args, **kwargs)
         self.validators.append(RegexValidator(
             regex='^([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$',
-            message='Only RGB color model inputs allowed, like 00000',
+            message='Only RGB color model inputs allowed, like FF00CC',
             code='nomatch'))
 
     def formfield(self, **kwargs):

@@ -19,6 +19,7 @@ Contents:
    context_processors
    decorators
    factories
+   fields
    forms
    javascript
    libs_tags
@@ -29,7 +30,6 @@ Contents:
    storage_support
    test_email_backend
    test_mixins
-   testrunner
    utils
    utils_email
    utils_log

@@ -46,23 +46,6 @@ styles. Now you can do this:
     {% endblockanyfilter %}
 
 
-block_truncatewords_html
-------------------------
-Allows to truncate any block of content. Calls Django's ``truncatewords_html``
-internally.
-
-This is useful when rendering other tags that generate content,
-such as django-cms' ``render_placeholder`` tag, which is not available
-as an assignment tag::
-
-    {% load libs_tags %}
-    {% block_truncatewords_html 15 %}
-        {% render_placeholder object.placeholder %}
-    {% endblocktruncatewordshtml %}
-
-The first parameter is the number of words you would like to truncate after.
-
-
 calculate_dimensions
 --------------------
 
@@ -365,31 +348,6 @@ css class::
 
 
 render_analytics_code
----------------------
-
-``render_analytics_code`` is an inclusion tag to render Google's analytics
-script code.
-
-Usage::
-
-    {% load libs_tags %}
-    {% render_analytics_code %}
-
-
-or (if you don't want to use the ``anonymizeIp`` setting)::
-
-    {% load libs_tags %}
-    ...
-    <head>
-    ...
-    {% render_analytics_code False %}
-    </head>
-
-If you would like to override the template used by the tag, please use
-``django_libs/analytics.html``.
-
-
-render_analytics2_code
 ----------------------
 
 The same as ``render_analytics_code`` but uses the new syntax and always uses
@@ -401,7 +359,7 @@ Usage::
     ...
     <head>
     ...
-    {% render_analytics2_code %}
+    {% render_analytics_code %}
     </head>
 
 
@@ -431,11 +389,6 @@ Usage::
         // Render block 2
         {% save "NEEDS_HR" 1 %}
     {% endif %}
-
-When you have to render lots of divicers, the above example can become more
-elegant when you replace the `if NEEDS_HR` block with::
-
-    {% include "django_libs/partials/dynamic_hr.html" %}
 
 
 sum

@@ -1,8 +1,43 @@
 Test Mixins
 ===========
 
-Usage
------
+ViewRequestFactoryTestMixin
+---------------------------
+
+In order to use the ``ViewRequestFactoryTestMixin`` you need to import it and
+add a few methods on your test case. A typical test case looks like this::
+
+    from django.test import TestCase
+
+    from django_libs.tests.mixins import ViewRequestFactoryTestMixin
+    from mixer.backend.django import mixer
+
+    from .. import views
+
+
+    class InvoiceDetailViewTestCase(ViewTestMixin, TestCase):
+        """Tests for the ``InvoiceDetailView`` generic class based view."""
+        view_class = views.InvoiceDetailView
+
+        def setUp(self):
+            self.invoice = mixer.blend('invoices.Invoice')
+            self.user = self.invoice.user
+
+        def get_view_kwargs(self):
+            return {'pk': self.invoice.pk}
+
+        def test_view(self):
+            self.is_not_callable()  # anonymous
+            self.is_callable(user=self.user)
+            self.is_postable(user=self.user, data={'amount': 1},
+                             to_url_name='invoice_list')
+            self.is_postable(user=self.user, data={'amount': 1}, ajax=True)
+
+Have a look at the docstrings in the code for further explanations:
+https://github.com/bitmazk/django-libs/blob/master/django_libs/tests/mixins.py
+
+ViewTestMixin
+-------------
 
 In order to use the ``ViewTestMixin`` you need to import it and implement
 a few methods on your test case. A typical test case looks like this::

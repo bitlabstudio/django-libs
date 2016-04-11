@@ -9,5 +9,7 @@ class AnalyticsTestCase(TestCase):
     longMessage = True
 
     def test_analytics(self):
-        self.assertEqual(analytics(''),
-                         {'ANALYTICS_TRACKING_ID': 'UA-THISISNOREAL-ID'})
+        self.assertEqual(
+            analytics(''), {
+                'ANALYTICS_TRACKING_ID': 'UA-THISISNOREAL-ID',
+                'ANALYTICS_DOMAIN': 'auto'})

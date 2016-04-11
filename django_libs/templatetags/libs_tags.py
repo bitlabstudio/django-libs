@@ -9,7 +9,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
 from django.core.urlresolvers import resolve, Resolver404
 from django.db.models.fields import FieldDoesNotExist
-from django.template.defaultfilters import truncatewords_html, stringfilter
+from django.template.defaultfilters import stringfilter
 from django.utils.encoding import force_text
 
 from ..loaders import load_member
@@ -78,43 +78,6 @@ class BlockAnyFilterNode(template.Node):
     def render(self, context):
         output = self.nodelist.render(context)
         return self.original_tag(output, *self.args)
-
-
-@register.tag('block_truncatewords_html')
-def block_truncatewords_html(parser, token):
-    """
-    DEPRECATED: Use block_anyfilter instead!
-
-    Allows to truncate any block of content.
-
-    This is useful when rendering other tags that generate content,
-    such as django-cms' ``render_placeholder`` tag, which is not available
-    as an assignment tag::
-
-        {% load libs_tags %}
-        {% block_truncatewords_html 15 %}
-            {% render_placeholder object.placeholder %}
-        {% endblocktruncatewordshtml %}
-
-    """
-    bits = token.contents.split()
-    try:
-        word_count = bits[1]
-    except IndexError:
-        word_count = 15
-    nodelist = parser.parse(('endblocktruncatewordshtml',))
-    parser.delete_first_token()
-    return BlockTruncateWordsHtmlNode(nodelist, word_count)
-
-
-class BlockTruncateWordsHtmlNode(template.Node):
-    def __init__(self, nodelist, word_count):
-        self.nodelist = nodelist
-        self.word_count = word_count
-
-    def render(self, context):
-        output = self.nodelist.render(context)
-        return truncatewords_html(output, self.word_count)
 
 
 @register.assignment_tag
@@ -233,7 +196,7 @@ def get_verbose(obj, field_name=""):
     """
     if hasattr(obj, "_meta") and hasattr(obj._meta, "get_field_by_name"):
         try:
-            return obj._meta.get_field_by_name(field_name)[0].verbose_name
+            return obj._meta.get_field(field_name).verbose_name
         except FieldDoesNotExist:
             pass
     return ""
@@ -462,22 +425,7 @@ def is_context_variable(context, variable_name):
 
 
 @register.inclusion_tag('django_libs/analytics.html')
-def render_analytics_code(anonymize_ip='anonymize'):
-    """
-    Renders the google analytics snippet.
-
-    :anonymize_ip: Use to add/refuse the anonymizeIp setting.
-
-    """
-    return {
-        'ANALYTICS_TRACKING_ID': getattr(
-            settings, 'ANALYTICS_TRACKING_ID', 'UA-XXXXXXX-XX'),
-        'anonymize_ip': anonymize_ip,
-    }
-
-
-@register.inclusion_tag('django_libs/analytics2.html')
-def render_analytics2_code():
+def render_analytics_code():
     """
     Renders the new google analytics snippet.
 

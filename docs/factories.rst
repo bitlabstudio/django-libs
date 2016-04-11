@@ -4,6 +4,8 @@ Factories
 IMPORTANT: The following factories are still available, but no longer
 maintained. We recommend to use https://github.com/klen/mixer for fixtures.
 
+Factories will be removed in v2.
+
 HvadFactoryMixin
 ++++++++++++++++
 

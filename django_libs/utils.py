@@ -3,7 +3,10 @@ import random
 
 from django.conf import settings
 
-from HTMLParser import HTMLParser
+try:
+    from html.parser import HTMLParser
+except ImportError:
+    from HTMLParser import HTMLParser
 
 try:
     from bs4 import BeautifulSoup
@@ -50,7 +53,7 @@ def create_random_string(length=7, chars='ABCDEFGHJKMNPQRSTUVWXYZ23456789',
 class HTML2PlainParser(HTMLParser):
     """Custom html parser to convert html code to plain text."""
     def __init__(self):
-        self.reset()
+        super(HTML2PlainParser, self).__init__()
         self.text = ''  # Used to push the results into a variable
         self.links = []  # List of aggregated links
 

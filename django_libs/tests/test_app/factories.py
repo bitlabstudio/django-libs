@@ -2,7 +2,7 @@
 import factory
 
 from ..factories import HvadFactoryMixin, UserFactory
-from models import DummyProfile, HvadDummy
+from .models import DummyProfile, HvadDummy
 
 
 class HvadDummyFactory(HvadFactoryMixin, factory.DjangoModelFactory):

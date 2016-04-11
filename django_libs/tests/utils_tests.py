@@ -5,7 +5,7 @@ from django.test import TestCase
 
 from ..utils import (
     conditional_decorator, create_random_string, html_to_plain_text)
-from test_app.models import DummyProfile
+from .test_app.models import DummyProfile
 
 
 def dummy_decorator(func):

@@ -53,7 +53,10 @@ def create_random_string(length=7, chars='ABCDEFGHJKMNPQRSTUVWXYZ23456789',
 class HTML2PlainParser(HTMLParser):
     """Custom html parser to convert html code to plain text."""
     def __init__(self):
-        super(HTML2PlainParser, self).__init__()
+        try:
+            super(HTML2PlainParser, self).__init__()
+        except TypeError:
+            self.reset()
         self.text = ''  # Used to push the results into a variable
         self.links = []  # List of aggregated links
 

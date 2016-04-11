@@ -1,0 +1,15 @@
+# ==============================================================
+# Packages needed for running the tests. Needed by contributors.
+# ==============================================================
+mock
+django-hvad
+django-nose
+coverage
+django-coverage
+django-mailer
+fabric3
+ipdb
+factory_boy
+flake8
+beautifulsoup4
+tox

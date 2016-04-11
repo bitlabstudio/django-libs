@@ -10,7 +10,7 @@ from django.contrib.sites.models import Site
 from django.core.urlresolvers import resolve, Resolver404
 from django.db.models.fields import FieldDoesNotExist
 from django.template.defaultfilters import truncatewords_html, stringfilter
-from django.utils.text import force_unicode
+from django.utils.encoding import force_text
 
 from ..loaders import load_member
 
@@ -42,7 +42,7 @@ def add_form_widget_attr(field, attr_name, attr_value, replace=0):
     """
     if not replace:
         attr = field.field.widget.attrs.get(attr_name, '')
-        attr += force_unicode(attr_value)
+        attr += force_text(attr_value)
         field.field.widget.attrs[attr_name] = attr
         return field
     else:

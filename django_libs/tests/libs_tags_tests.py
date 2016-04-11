@@ -124,24 +124,45 @@ class GetQueryParamsTestCase(TestCase):
         req = RequestFactory().get('/?foobar=1&barfoo=2')
 
         result = tags.get_query_params(req, 'foobar', 2)
-        self.assertEqual(result, 'foobar=2&barfoo=2', msg=(
+        self.assertIn('foobar=2', result, msg=(
+            'Should change the existing query parameter'))
+        self.assertIn('barfoo=2', result, msg=(
             'Should change the existing query parameter'))
 
         result = tags.get_query_params(req, 'page', 2)
-        self.assertEqual(result, 'foobar=1&barfoo=2&page=2', msg=(
-            'Should add the new parameter to the query'))
+        self.assertIn('foobar=1', result, msg=(
+            'Should change the existing query parameter'))
+        self.assertIn('barfoo=2', result, msg=(
+            'Should change the existing query parameter'))
+        self.assertIn('page=2', result, msg=(
+            'Should change the existing query parameter'))
 
         result = tags.get_query_params(req, 'page', 2, 'new', 42)
-        self.assertEqual(result, 'foobar=1&barfoo=2&page=2&new=42', msg=(
-            'Should add the new parameters to the query'))
+        self.assertIn('foobar=1', result, msg=(
+            'Should change the existing query parameter'))
+        self.assertIn('barfoo=2', result, msg=(
+            'Should change the existing query parameter'))
+        self.assertIn('page=2', result, msg=(
+            'Should change the existing query parameter'))
+        self.assertIn('new=42', result, msg=(
+            'Should change the existing query parameter'))
 
         result = tags.get_query_params(req, 'page', 2, 'barfoo', '!remove')
-        self.assertEqual(result, 'foobar=1&page=2', msg=(
+        self.assertIn('foobar=1', result, msg=(
+            'Should add new parameters and remove the ones marked for'
+            ' removal'))
+        self.assertIn('page=2', result, msg=(
             'Should add new parameters and remove the ones marked for'
             ' removal'))
 
         result = tags.get_query_params(req, 'page', 2, 'ghost', '!remove')
-        self.assertEqual(result, 'foobar=1&barfoo=2&page=2', msg=(
+        self.assertIn('foobar=1', result, msg=(
+            'Should not crash if the parameter marked for removal does not'
+            ' exist'))
+        self.assertIn('barfoo=2', result, msg=(
+            'Should not crash if the parameter marked for removal does not'
+            ' exist'))
+        self.assertIn('page=2', result, msg=(
             'Should not crash if the parameter marked for removal does not'
             ' exist'))
 
@@ -236,34 +257,34 @@ class GetRangeAround(TestCase):
 
     def test_tag(self):
         result = tags.get_range_around(1, 1, 2)
-        self.assertEqual(result['range_items'], [1], msg=(
+        self.assertEqual(list(result['range_items']), [1], msg=(
             'If only one value given, return that value'))
         self.assertFalse(result['left_padding'])
         self.assertFalse(result['right_padding'])
 
         result = tags.get_range_around(5, 1, 2)
-        self.assertEqual(result['range_items'], [1, 2, 3, 4, 5], msg=(
+        self.assertEqual(list(result['range_items']), [1, 2, 3, 4, 5], msg=(
             'If padding is so small, that all values fit into the range,'
             ' return all values.'))
         self.assertFalse(result['left_padding'])
         self.assertFalse(result['right_padding'])
 
         result = tags.get_range_around(6, 1, 2)
-        self.assertEqual(result['range_items'], [1, 2, 3, 4, 5], msg=(
+        self.assertEqual(list(result['range_items']), [1, 2, 3, 4, 5], msg=(
             'If center value is at the beginning of the range, return desired'
             ' amount of values after the center value.'))
         self.assertFalse(result['left_padding'])
         self.assertTrue(result['right_padding'])
 
         result = tags.get_range_around(6, 6, 2)
-        self.assertEqual(result['range_items'], [2, 3, 4, 5, 6], msg=(
+        self.assertEqual(list(result['range_items']), [2, 3, 4, 5, 6], msg=(
             'If center value is at the end of the range, return desired'
             ' amount of values from the end of the range.'))
         self.assertTrue(result['left_padding'])
         self.assertFalse(result['right_padding'])
 
         result = tags.get_range_around(8, 2, 2)
-        self.assertEqual(result['range_items'], [1, 2, 3, 4, 5], msg=(
+        self.assertEqual(list(result['range_items']), [1, 2, 3, 4, 5], msg=(
             'If center value is so close to the left bound that the distance'
             ' from left bound to center value is less or equal to the'
             ' padding, return the range beginning from the left bound'))
@@ -271,7 +292,7 @@ class GetRangeAround(TestCase):
         self.assertTrue(result['right_padding'])
 
         result = tags.get_range_around(8, 6, 2)
-        self.assertEqual(result['range_items'], [4, 5, 6, 7, 8], msg=(
+        self.assertEqual(list(result['range_items']), [4, 5, 6, 7, 8], msg=(
             'If center value is so close to the right bound that the distance'
             ' from right bound to center value is less or equal to the'
             ' padding, return the range so that it ends at the center value'))
@@ -279,7 +300,7 @@ class GetRangeAround(TestCase):
         self.assertFalse(result['right_padding'])
 
         result = tags.get_range_around(10, 5, 2)
-        self.assertEqual(result['range_items'], [3, 4, 5, 6, 7], msg=(
+        self.assertEqual(list(result['range_items']), [3, 4, 5, 6, 7], msg=(
             'If center value is in the middle of the range, return center'
             ' value surrounded by padding values'))
         self.assertTrue(result['left_padding'])

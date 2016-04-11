@@ -13,14 +13,14 @@ class LoadMemberTestCase(TestCase):
     """Tests for the ``load_member`` utility function."""
     def test_function(self):
         member = load_member('django_libs.loaders.load_member')
-        self.assertEqual(member.func_name, 'load_member')
+        self.assertEqual(member.__name__, 'load_member')
 
 
 class LoadMemberFromSetting(TestCase):
     """Tests for the ``load_member_from_setting`` utility function."""
     def test_function(self):
         member = load_member_from_setting('TEST_LOAD_MEMBER')
-        self.assertEqual(member.func_name, 'load_member')
+        self.assertEqual(member.__name__, 'load_member')
 
 
 class SplitFqnTestCase(TestCase):

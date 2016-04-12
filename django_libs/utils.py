@@ -1,5 +1,6 @@
 """Additional helpful utility functions."""
 import random
+import sys
 
 from django.conf import settings
 
@@ -11,7 +12,11 @@ except ImportError:
 try:
     from bs4 import BeautifulSoup
 except ImportError:
-    pass
+    sys.stderr.write('Warning: BeatifulSoup could not be imported! Created'
+                     ' fallback for tests to work.')
+
+    def BeautifulSoup(x, y):
+        return x
 
 
 class conditional_decorator(object):

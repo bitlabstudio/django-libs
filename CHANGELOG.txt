@@ -1,5 +1,6 @@
 === 1.67.X ===
 
+- Re-arranged utils
 - added fallback for BeautifulSoup import in utils
 - prepared app for Django 1.9 and Python 3.5
 - dropped support for Django<1.6

@@ -2,6 +2,8 @@
 import os
 import logging
 
+from ..settings.django_settings import *  # NOQA
+
 
 logging.getLogger("factory").setLevel(logging.WARN)
 

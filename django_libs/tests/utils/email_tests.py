@@ -3,10 +3,10 @@ from django.core import mail
 from django.test import TestCase
 
 from mailer.models import Message
+from mixer.backend.django import mixer
 from mock import Mock
 
-from .factories import SiteFactory
-from ..utils_email import send_email
+from ...utils.email import send_email
 
 
 class SendEmailTestCase(TestCase):
@@ -14,7 +14,7 @@ class SendEmailTestCase(TestCase):
     longMessage = True
 
     def test_send_email(self):
-        SiteFactory()
+        mixer.blend('sites.Site')
         request = Mock()
         request.is_secure = Mock(return_value=True)
         request.get_host = Mock(return_value='example.com')

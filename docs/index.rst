@@ -31,8 +31,6 @@ Contents:
    test_email_backend
    test_mixins
    utils
-   utils_email
-   utils_log
    views
    views_mixins
 

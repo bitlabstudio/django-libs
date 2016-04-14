@@ -1,5 +1,4 @@
 """Additional helpful utility functions."""
-import random
 import sys
 
 from django.conf import settings
@@ -11,48 +10,12 @@ except ImportError:
 
 try:
     from bs4 import BeautifulSoup
-except ImportError:
-    sys.stderr.write('Warning: BeatifulSoup could not be imported! Created'
+except ImportError:  # pragma: nocover
+    sys.stderr.write('Warning: BeautifulSoup could not be imported! Created'
                      ' fallback for tests to work.')
 
     def BeautifulSoup(x, y):
         return x
-
-
-class conditional_decorator(object):
-    """
-    Allows you to use decorators based on a condition.
-
-    Useful to require login only if a setting is set::
-
-        @conditional_decorator(method_decorator(login_required), settings.FOO)
-        def dispatch(self, request, *args, **kwargs):
-            return super(...).dispatch(...)
-
-    """
-    def __init__(self, dec, condition):
-        self.decorator = dec
-        self.condition = condition
-
-    def __call__(self, func):
-        if not self.condition:
-            # Return the function unchanged, not decorated.
-            return func
-        return self.decorator(func)
-
-
-def create_random_string(length=7, chars='ABCDEFGHJKMNPQRSTUVWXYZ23456789',
-                         repetitions=False):
-    """
-    Returns a random string, based on the provided arguments.
-
-    It returns capital letters and numbers by default.
-    Ambiguous characters are left out, repetitions will be avoided.
-
-    """
-    if repetitions:
-        return ''.join(random.choice(chars) for _ in range(length))
-    return ''.join(random.sample(chars, length))
 
 
 class HTML2PlainParser(HTMLParser):

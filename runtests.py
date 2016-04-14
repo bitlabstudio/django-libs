@@ -11,13 +11,18 @@ from fabric.colors import green, red
 
 
 if __name__ == '__main__':
+    # Kept some files for backwards compatibility. If support is dropped,
+    # remove it here
+    deprecated_files = '*utils_email*,*utils_log*'
+
     local('flake8 --ignore=E126 --ignore=W391 --statistics'
           ' --exclude=submodules,migrations,build .')
     local('coverage run --source="django_libs" manage.py test -v 2'
           ' --traceback --failfast --settings=django_libs.tests.settings'
           ' --pattern="*_tests.py"')
     local('coverage html -d coverage'
-          ' --omit="*__init__*,*/settings/*,*/migrations/*,*/tests/*,*admin*"')
+          ' --omit="*__init__*,*/settings/*,*/migrations/*,*/tests/*,'
+          '*admin*,{}"'.format(deprecated_files))
     total_line = local('grep -n pc_cov coverage/index.html', capture=True)
     percentage = float(re.findall(r'(\d+)%', total_line)[-1])
     if percentage < 100:

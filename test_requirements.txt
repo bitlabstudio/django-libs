@@ -9,6 +9,7 @@ django-coverage
 django-mailer
 fabric3
 ipdb
+mixer
 factory_boy
 flake8
 beautifulsoup4

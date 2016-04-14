@@ -1,4 +1,4 @@
-"""Useful defualt settings that you might want to use in all your projects."""
+"""Useful default settings that you might want to use in all your projects."""
 import re
 
 

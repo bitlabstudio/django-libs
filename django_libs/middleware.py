@@ -22,7 +22,8 @@ class AjaxRedirectMiddleware(object):
     """
     def process_response(self, request, response):
         if request.is_ajax():
-            if request.REQUEST.get('ajax_redirect_passthrough'):
+            if request.GET.get('ajax_redirect_passthrough', request.POST.get(
+                    'ajax_redirect_passthrough')):
                 return response
             if type(response) == HttpResponseRedirect:
                 response.status_code = 278

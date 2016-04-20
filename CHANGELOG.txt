@@ -1,5 +1,6 @@
 === 1.67.X ===
 
+- Replace request.REQUEST
 - Re-arranged utils
 - added fallback for BeautifulSoup import in utils
 - prepared app for Django 1.9 and Python 3.5

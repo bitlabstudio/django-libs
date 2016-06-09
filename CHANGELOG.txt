@@ -1,5 +1,6 @@
 === 1.67.X ===
 
+- fixed logging filter, if no user agent could be detected
 - Replace request.REQUEST
 - Re-arranged utils
 - added fallback for BeautifulSoup import in utils

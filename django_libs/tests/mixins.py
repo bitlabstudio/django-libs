@@ -594,8 +594,13 @@ class ViewRequestFactoryTestMixin(object):
             if next_url:
                 next_url = '?next={0}'.format(next_url)
             if to_url_name:
-                self.assertEqual(resolve(resp.url).url_name, to_url_name,
-                                 msg=msg)
+                try:
+                    self.assertEqual(resolve(resp.url).url_name, to_url_name,
+                                     msg=msg)
+                except AttributeError:
+                    raise AssertionError(
+                        'The response returned with a status code {}'.format(
+                            resp.status_code))
             else:
                 redirect_url = '{0}{1}'.format(to, next_url)
                 self.assertRedirects(resp, redirect_url, msg=msg)

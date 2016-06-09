@@ -53,7 +53,7 @@ class FilterIgnorable404URLs(logging.Filter):
             return True
 
         user_agent = request.META.get('HTTP_USER_AGENT')
-        if getattr(settings, 'IGNORABLE_404_USER_AGENTS'):
+        if user_agent and getattr(settings, 'IGNORABLE_404_USER_AGENTS'):
             is_ignorable = any(
                 pattern.search(user_agent)
                 for pattern in settings.IGNORABLE_404_USER_AGENTS)

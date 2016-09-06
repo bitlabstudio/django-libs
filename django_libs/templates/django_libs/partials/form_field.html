@@ -19,7 +19,7 @@
                     {{ field }}
                     <span {% if field.field.required %}class="required-label"{% endif %}>{% if field.field.required %}* {% endif %}{{ field.label }}</span>
                     {% if field.help_text %}
-                        <small class="text-muted"><em>{{ field.help_text }}</em></small>
+                        <small class="text-muted"><em>{{ field.help_text|safe }}</em></small>
                     {% endif %}
                 </label>
             </div>
@@ -27,7 +27,7 @@
             <div class="checkbox">
                 {{ field }}
                 {% if field.help_text %}
-                    <small class="text-muted"><em>{{ field.help_text }}</em></small>
+                    <small class="text-muted"><em>{{ field.help_text|safe }}</em></small>
                 {% endif %}
             </div>
         {% elif "RadioSelect" in field_type %}
@@ -59,7 +59,7 @@
             <span class="help-block">{% for error in field.errors %}{{ error }}<br/> {% endfor %}</span>
         {% endif %}
         {% if field.help_text %}
-            <small class="text-muted"><em>{{ field.help_text }}</em></small>
+            <small class="text-muted"><em>{{ field.help_text|safe }}</em></small>
         {% endif %}
         {% if horizontal %}</div>{% endif %}
     </div>

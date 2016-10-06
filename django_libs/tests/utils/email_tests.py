@@ -32,3 +32,18 @@ class SendEmailTestCase(TestCase):
                        'info@example.com', ['recipient@example.com'])
             self.assertEqual(Message.objects.count(), 1, msg=(
                 'An email should\'ve been sent'))
+
+    def test_cc_and_bcc(self):
+        send_email(
+            None,
+            {},
+            'subject.html',
+            'html_email.html',
+            'info@example.com',
+            ['recipient@example.com'],
+            cc=['cc@example.com'],
+            bcc=['bcc@example.com']
+        )
+        email = mail.outbox[0]
+        self.assertEqual(['cc@example.com'], email.cc)
+        self.assertEqual(['bcc@example.com'], email.bcc)

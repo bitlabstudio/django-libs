@@ -16,7 +16,7 @@ from .converter import html_to_plain_text
 
 def send_email(request, context, subject_template, body_template,
                from_email, recipients, priority="medium", reply_to=None,
-               headers={}):
+               headers=None, cc=None, bcc=None):
     """
     Sends an email based on templates for subject and body.
 
@@ -34,8 +34,10 @@ def send_email(request, context, subject_template, body_template,
         to prioritise email sendings).
     :param reply_to: Optional email address to reply to.
     :param headers: Additional dictionary to add header attributes.
-
+    :param cc: A list of CC recipients
+    :param bcc: A list of BCC recipients
     """
+    headers = headers or {}
     if not reply_to:
         reply_to = from_email
     if django.get_version() >= '1.8':
@@ -66,21 +68,19 @@ def send_email(request, context, subject_template, body_template,
     else:
         subject = force_text(subject)
         message = force_text(message_plaintext)
-
+        kwargs = {
+            'subject': subject,
+            'body': message,
+            'from_email': from_email,
+            'to': recipients,
+            'cc': cc,
+            'bcc': bcc,
+            'headers': headers,
+        }
         if django.get_version() >= '1.8':
             # The reply_to argument has been added in 1.8
-            email = EmailMessage(
-                subject=subject, body=message, from_email=from_email,
-                to=recipients, headers=headers, reply_to=reply_to)
-            email = EmailMultiAlternatives(
-                email.subject, email.body, email.from_email, email.to,
-                headers=email.extra_headers, reply_to=reply_to)
-        else:
-            email = EmailMessage(
-                subject=subject, body=message, from_email=from_email,
-                to=recipients, headers=headers)
-            email = EmailMultiAlternatives(
-                email.subject, email.body, email.from_email, email.to,
-                headers=email.extra_headers)
+            kwargs['reply_to'] = reply_to
+
+        email = EmailMultiAlternatives(**kwargs)
         email.attach_alternative(message_html, "text/html")
         email.send()

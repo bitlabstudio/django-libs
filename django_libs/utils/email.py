@@ -1,8 +1,7 @@
 """Utility functions for sending emails."""
-import django
 from django.conf import settings
 from django.contrib.sites.models import Site
-from django.core.mail import EmailMessage, EmailMultiAlternatives
+from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.encoding import force_text
 

@@ -28,7 +28,10 @@ class LibsImageWidget(widgets.ClearableFileInput):
     template_path = 'django_libs/partials/libs_image_widget.html'
 
     def __init__(self, attrs=None):
-        self.classes = attrs.get('class', '')
+        if attrs:
+            self.classes = attrs.get('class', '')
+        else:
+            self.classes = ''
         super(LibsImageWidget, self).__init__(attrs)
 
     def render(self, name, value, attrs=None):

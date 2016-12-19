@@ -115,7 +115,7 @@ def html_to_plain_text(html):
     soup = BeautifulSoup(html, "html.parser")
     # Init the parser
     parser = HTML2PlainParser()
-    parser.feed(str(soup))
+    parser.feed(str(soup.encode('utf-8')))
     # Strip the end of the plain text
     result = parser.text.rstrip()
     # Add footnotes

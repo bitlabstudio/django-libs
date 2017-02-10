@@ -33,6 +33,25 @@ add a few methods on your test case. A typical test case looks like this::
                              to_url_name='invoice_list')
             self.is_postable(user=self.user, data={'amount': 1}, ajax=True)
 
+
+    class InvoiceViewTestCase(ViewTestMixin, TestCase):
+        """Tests for the ``invoice`` (non-class-based) view."""
+
+        def setUp(self):
+            self.view = views.invoice
+            self.invoice = mixer.blend('invoices.Invoice')
+            self.user = self.invoice.user
+
+        def get_view_args(self):
+            return (self.invoice.pk, )
+
+        def test_view(self):
+            self.is_not_callable()  # anonymous
+            self.is_callable(user=self.user)
+            self.is_postable(user=self.user, data={'amount': 1},
+                             to_url_name='invoice_list')
+            self.is_postable(user=self.user, data={'amount': 1}, ajax=True)
+
 Have a look at the docstrings in the code for further explanations:
 https://github.com/bitmazk/django-libs/blob/master/django_libs/tests/mixins.py
 

@@ -65,7 +65,7 @@ class ViewTestMixin(object):
             self.get_url(view_kwargs=kwargs or self.get_view_kwargs()),
             data or self.get_data_payload(),
         )
-        if ajax or no_redirect:
+        if ajax:
             extra.update({'HTTP_X_REQUESTED_WITH': 'XMLHttpRequest'})
 
         # making the request
@@ -382,7 +382,7 @@ class ViewRequestFactoryTestMixin(object):
                 req.session[var] = session_dict[var]
         messages = FallbackStorage(req)
         setattr(req, '_messages', messages)
-        if ajax or no_redirect:
+        if ajax:
             req.META['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest'
         req = self.setUpRequest(req)
         if req is None:

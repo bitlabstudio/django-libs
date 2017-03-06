@@ -12,6 +12,7 @@
 - dropped support for Django<1.6
 - Removed deprecated stuff and updated docs
 - fixed init function of image widget
+- added variables to customize column sizes in horizontal forms
 
 === 1.66.X ===
 

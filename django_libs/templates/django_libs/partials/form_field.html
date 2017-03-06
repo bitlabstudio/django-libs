@@ -6,13 +6,13 @@
     {% endif %}
     <div class="form-group {% if field.errors %}has-error{% endif %}">
         {% if not hide_label and "CheckboxInput" not in field_type %}
-            <label class="control-label {% if horizontal %}col-sm-4{% endif %}" for="{{ field.id_for_label }}">
+            <label class="control-label {% if horizontal %}col-sm-{% if left_column_size %}{{ left_column_size }}{% else %}4{% endif %}{% endif %}" for="{{ field.id_for_label }}">
                 <span {% if field.field.required %}class="required-label"{% endif %}>{% if field.field.required %}* {% endif %}{{ field.label }}</span>
             </label>
         {% elif horizontal and "CheckboxInput" in field_type %}
-            <label class="control-label col-sm-4"></label>
+            <label class="control-label col-sm-{% if left_column_size %}{{ left_column_size }}{% else %}4{% endif %}"></label>
         {% endif %}
-        {% if horizontal %}<div class="col-sm-8">{% endif %}
+        {% if horizontal %}<div class="col-sm-{% if right_column_size %}{{ right_column_size }}{% else %}8{% endif %}">{% endif %}
         {% if "CheckboxInput" in field_type %}
             <div class="checkbox">
                 <label>

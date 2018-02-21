@@ -1,5 +1,6 @@
 === 1.67.X ===
 
+- Allow extra context for emails
 - Enabled request factory mixin to handle old views
 - Fixed unicode issue in html to plain text converter
 - Re-arranged send_email function to make a proper use of cc and bcc options

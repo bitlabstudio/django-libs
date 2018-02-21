@@ -9,6 +9,12 @@ from mock import Mock
 from ...utils.email import send_email
 
 
+def context_fn(request):
+    return {
+        'foo': 'bar',
+    }
+
+
 class SendEmailTestCase(TestCase):
     """Tests for the ``send_email`` function."""
     longMessage = True

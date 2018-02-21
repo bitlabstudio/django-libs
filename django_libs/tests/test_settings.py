@@ -88,6 +88,8 @@ INSTALLED_APPS = EXTERNAL_APPS + INTERNAL_APPS
 
 TEST_LOAD_MEMBER = 'django_libs.loaders.load_member'
 
+DJANGO_LIBS_EMAIL_CONTEXT = 'django_libs.tests.utils.email_tests.context_fn'
+
 AUTH_PROFILE_MODULE = 'django_libs.tests.test_app.DummyProfile'
 
 ANALYTICS_TRACKING_ID = 'UA-THISISNOREAL-ID'

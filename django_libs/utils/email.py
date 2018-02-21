@@ -11,6 +11,7 @@ except ImportError:  # pragma: nocover
     pass
 
 from .converter import html_to_plain_text
+from ..loaders import load_member_from_setting
 
 
 def send_email(request, context, subject_template, body_template,
@@ -39,6 +40,12 @@ def send_email(request, context, subject_template, body_template,
     headers = headers or {}
     if not reply_to:
         reply_to = from_email
+
+    # Add additional context
+    if hasattr(settings, 'DJANGO_LIBS_EMAIL_CONTEXT'):
+        context_fn = load_member_from_setting('DJANGO_LIBS_EMAIL_CONTEXT')
+        context.update(context_fn(request))
+
     if request and request.get_host():
         domain = request.get_host()
         protocol = 'https://' if request.is_secure() else 'http://'

@@ -9,19 +9,31 @@ from django.conf import settings
 from django.contrib.auth.models import AnonymousUser
 from django.contrib.messages.storage.fallback import FallbackStorage
 from django.contrib.sessions.middleware import SessionMiddleware
-from django.core.urlresolvers import reverse, resolve
 from django.http import Http404
 from django.test import RequestFactory
+
+try:  # django <= 1.6
+    from django.core.urlresolvers import resolve, reverse
+except ImportError:  # >= django 1.7
+    from django.urls import resolve, reverse
 
 
 class ViewTestMixin(object):
     """Mixin that provides commonly tested assertions."""
     longMessage = True
 
-    def _check_callable(self, method='get', data=None, message=None,
-                        kwargs=None, user=None, anonymous=False,
-                        and_redirects_to=None, status_code=None,
-                        called_by='is_callable', ajax=False, no_redirect=False,
+    def _check_callable(self,
+                        method='get',
+                        data=None,
+                        message=None,
+                        kwargs=None,
+                        user=None,
+                        anonymous=False,
+                        and_redirects_to=None,
+                        status_code=None,
+                        called_by='is_callable',
+                        ajax=False,
+                        no_redirect=False,
                         extra=None):
         """
         The method that does the actual assertions for ``is_callable`` and
@@ -86,25 +98,35 @@ class ViewTestMixin(object):
                 ' was 302, although ``and_redirects_to`` was not set.\n'
                 'Please use ``and_redirects_to`` for a test on redirects since'
                 ' the callable methods will default to 200 or 404 in the'
-                ' future.\n'
-            )
+                ' future.\n')
 
         # assertions
         if and_redirects_to:
             self.assertRedirects(
-                resp, and_redirects_to, status_code=status_code,
+                resp,
+                and_redirects_to,
+                status_code=status_code,
                 msg_prefix=('The view did not redirect as expected.'))
 
         else:
-            self.assertIn(resp.status_code, [status_code, 302], msg=(
-                message or
-                'The view should{0} be callable'.format(message_addin)))
+            self.assertIn(
+                resp.status_code, [status_code, 302],
+                msg=(message or
+                     'The view should{0} be callable'.format(message_addin)))
 
         return resp
 
-    def is_callable(self, method='get', data=None, message=None, kwargs=None,
-                    user=None, anonymous=False, and_redirects_to=None,
-                    status_code=None, ajax=False, no_redirect=False,
+    def is_callable(self,
+                    method='get',
+                    data=None,
+                    message=None,
+                    kwargs=None,
+                    user=None,
+                    anonymous=False,
+                    and_redirects_to=None,
+                    status_code=None,
+                    ajax=False,
+                    no_redirect=False,
                     extra=None):
         """
         A shortcut for an assertion on status code 200 or 302.
@@ -128,15 +150,31 @@ class ViewTestMixin(object):
 
         """
         return self._check_callable(
-            method=method, data=data, message=message, kwargs=kwargs,
-            user=user, anonymous=anonymous, and_redirects_to=and_redirects_to,
-            status_code=status_code, ajax=ajax, no_redirect=no_redirect,
-            called_by='is_callable', extra=extra)
+            method=method,
+            data=data,
+            message=message,
+            kwargs=kwargs,
+            user=user,
+            anonymous=anonymous,
+            and_redirects_to=and_redirects_to,
+            status_code=status_code,
+            ajax=ajax,
+            no_redirect=no_redirect,
+            called_by='is_callable',
+            extra=extra)
 
-    def is_not_callable(self, method='get', message=None, data=None,
-                        kwargs=None, user=None, anonymous=False,
-                        and_redirects_to=None, status_code=None, ajax=False,
-                        no_redirect=False, extra=None):
+    def is_not_callable(self,
+                        method='get',
+                        message=None,
+                        data=None,
+                        kwargs=None,
+                        user=None,
+                        anonymous=False,
+                        and_redirects_to=None,
+                        status_code=None,
+                        ajax=False,
+                        no_redirect=False,
+                        extra=None):
         """
         A shortcut for a common assertion on a 404 status code.
 
@@ -158,10 +196,18 @@ class ViewTestMixin(object):
 
         """
         return self._check_callable(
-            method=method, data=data, message=message, kwargs=kwargs,
-            user=user, anonymous=anonymous, and_redirects_to=and_redirects_to,
-            status_code=status_code, ajax=ajax, no_redirect=no_redirect,
-            called_by='is_not_callable', extra=extra)
+            method=method,
+            data=data,
+            message=message,
+            kwargs=kwargs,
+            user=user,
+            anonymous=anonymous,
+            and_redirects_to=and_redirects_to,
+            status_code=status_code,
+            ajax=ajax,
+            no_redirect=no_redirect,
+            called_by='is_not_callable',
+            extra=extra)
 
     def get_data_payload(self):
         """
@@ -283,8 +329,8 @@ class ViewTestMixin(object):
         if not url:
             url = self.get_url()
         resp = self.client.get(url)
-        self.assertRedirects(resp,
-                             '{0}?next={1}'.format(self.get_login_url(), url))
+        self.assertRedirects(resp, '{0}?next={1}'.format(
+            self.get_login_url(), url))
         return resp
 
     def should_be_callable_when_anonymous(self, url=None):
@@ -334,8 +380,8 @@ class ViewTestMixin(object):
         user_no_permissions = AnonymousUser()
         self.login(user_no_permissions)
         resp = self.client.get(url, data=self.get_data_payload())
-        self.assertRedirects(resp,
-                             '{0}?next={1}'.format(reverse('auth_login'), url))
+        self.assertRedirects(resp, '{0}?next={1}'.format(
+            reverse('auth_login'), url))
 
         self.login(user)
         resp = self.client.get(url, data=self.get_data_payload())
@@ -355,14 +401,22 @@ class ViewRequestFactoryTestMixin(object):
         which we are not using here.
 
         """
-        self.assertIn(resp.status_code, [301, 302], msg=msg or (
-            'Should redirect'))
-        self.assertEqual(resp._headers['location'][1], redirect_url,
-                         msg=msg or ('Should redirect to correct url.'))
+        self.assertIn(
+            resp.status_code, [301, 302], msg=msg or ('Should redirect'))
+        self.assertEqual(
+            resp._headers['location'][1],
+            redirect_url,
+            msg=msg or ('Should redirect to correct url.'))
 
-    def get_request(self, method=RequestFactory().get, ajax=False,
-                    no_redirect=False, data=None, user=AnonymousUser(),
-                    add_session=False, session_dict={}, view_kwargs=None,
+    def get_request(self,
+                    method=RequestFactory().get,
+                    ajax=False,
+                    no_redirect=False,
+                    data=None,
+                    user=AnonymousUser(),
+                    add_session=False,
+                    session_dict={},
+                    view_kwargs=None,
                     **kwargs):
         if data is not None:
             kwargs.update({'data': data})
@@ -391,25 +445,46 @@ class ViewRequestFactoryTestMixin(object):
                 ' the request again, when implementing `setUpRequest`.')
         return req
 
-    def get_get_request(self, ajax=False, no_redirect=False,
-                        data=None, user=None, add_session=False,
-                        session_dict={}, view_kwargs=None, **kwargs):
+    def get_get_request(self,
+                        ajax=False,
+                        no_redirect=False,
+                        data=None,
+                        user=None,
+                        add_session=False,
+                        session_dict={},
+                        view_kwargs=None,
+                        **kwargs):
         if user is None:
             user = self.get_user()
         return self.get_request(
-            ajax=ajax, no_redirect=no_redirect, data=data, user=user,
-            add_session=add_session, session_dict=session_dict,
-            view_kwargs=view_kwargs, **kwargs)
+            ajax=ajax,
+            no_redirect=no_redirect,
+            data=data,
+            user=user,
+            add_session=add_session,
+            session_dict=session_dict,
+            view_kwargs=view_kwargs,
+            **kwargs)
 
-    def get_post_request(self, ajax=False, no_redirect=False, data=None,
-                         user=None, add_session=False, session_dict={},
+    def get_post_request(self,
+                         ajax=False,
+                         no_redirect=False,
+                         data=None,
+                         user=None,
+                         add_session=False,
+                         session_dict={},
                          **kwargs):
         method = RequestFactory().post
         if user is None:
             user = self.get_user()
         return self.get_request(
-            method=method, ajax=ajax, no_redirect=no_redirect, data=data,
-            user=user, add_session=add_session, session_dict=session_dict,
+            method=method,
+            ajax=ajax,
+            no_redirect=no_redirect,
+            data=data,
+            user=user,
+            add_session=add_session,
+            session_dict=session_dict,
             **kwargs)
 
     def get_user(self):
@@ -499,12 +574,22 @@ class ViewRequestFactoryTestMixin(object):
             raise NotImplementedError('You need to define a view class.')
         return view_class.as_view()
 
-    def get(self, user=None, data=None, ajax=False, no_redirect=False,
-            add_session=False, session_dict={}, kwargs=None):
+    def get(self,
+            user=None,
+            data=None,
+            ajax=False,
+            no_redirect=False,
+            add_session=False,
+            session_dict={},
+            kwargs=None):
         """Creates a response from a GET request."""
         req = self.get_get_request(
-            user=user, data=data, ajax=ajax, no_redirect=no_redirect,
-            add_session=add_session, session_dict=session_dict,
+            user=user,
+            data=data,
+            ajax=ajax,
+            no_redirect=no_redirect,
+            add_session=add_session,
+            session_dict=session_dict,
             view_kwargs=kwargs)
         view = self.get_view()
         if kwargs is None:
@@ -514,12 +599,22 @@ class ViewRequestFactoryTestMixin(object):
         resp = view(req, *args, **kwargs)
         return resp
 
-    def post(self, user=None, data=None, ajax=False, no_redirect=False,
-             add_session=False, session_dict={}, kwargs=None):
+    def post(self,
+             user=None,
+             data=None,
+             ajax=False,
+             no_redirect=False,
+             add_session=False,
+             session_dict={},
+             kwargs=None):
         """Creates a response from a POST request."""
         req = self.get_post_request(
-            user=user, data=data, ajax=ajax, no_redirect=no_redirect,
-            session_dict=session_dict, add_session=add_session)
+            user=user,
+            data=data,
+            ajax=ajax,
+            no_redirect=no_redirect,
+            session_dict=session_dict,
+            add_session=add_session)
         view = self.get_view()
         if kwargs is None:
             kwargs = {}
@@ -554,21 +649,44 @@ class ViewRequestFactoryTestMixin(object):
         self.assertEqual(resp.status_code, 200, msg=msg)
         return resp
 
-    def is_callable(self, user=None, data=None, ajax=False, no_redirect=False,
-                    add_session=False, session_dict={}, kwargs=None, msg=None):
+    def is_callable(self,
+                    user=None,
+                    data=None,
+                    ajax=False,
+                    no_redirect=False,
+                    add_session=False,
+                    session_dict={},
+                    kwargs=None,
+                    msg=None):
         """Checks if the view can be called view GET."""
         resp = self.get(
-            user=user, data=data, ajax=ajax, no_redirect=no_redirect,
-            add_session=add_session, session_dict=session_dict, kwargs=kwargs)
+            user=user,
+            data=data,
+            ajax=ajax,
+            no_redirect=no_redirect,
+            add_session=add_session,
+            session_dict=session_dict,
+            kwargs=kwargs)
         self.assert200(resp, user, msg=msg)
         return resp
 
-    def is_forbidden(self, user=None, data=None, ajax=False, no_redirect=False,
-                     add_session=False, post=False, kwargs=None, msg=None):
+    def is_forbidden(self,
+                     user=None,
+                     data=None,
+                     ajax=False,
+                     no_redirect=False,
+                     add_session=False,
+                     post=False,
+                     kwargs=None,
+                     msg=None):
         """Checks if the view is not allowed to be called."""
         resp = self.get(
-            user=user, data=data, ajax=ajax, no_redirect=no_redirect,
-            add_session=add_session, kwargs=kwargs)
+            user=user,
+            data=data,
+            ajax=ajax,
+            no_redirect=no_redirect,
+            add_session=add_session,
+            kwargs=kwargs)
         user_msg = user or self.get_user()
         if self.get_view_class() is not None:
             # if it's a view class, we can append it to the message as class
@@ -583,34 +701,60 @@ class ViewRequestFactoryTestMixin(object):
         self.assertEqual(resp.status_code, 403, msg=msg)
         return resp
 
-    def is_not_callable(self, user=None, data=None, ajax=False,
-                        no_redirect=False, add_session=False, session_dict={},
-                        post=False, kwargs=None, msg=None):
+    def is_not_callable(self,
+                        user=None,
+                        data=None,
+                        ajax=False,
+                        no_redirect=False,
+                        add_session=False,
+                        session_dict={},
+                        post=False,
+                        kwargs=None,
+                        msg=None):
         """Checks if the view can not be called."""
         if post:
             call_obj = self.post
         else:
             call_obj = self.get
         self.assertRaises(
-            Http404, call_obj, user=user, data=data, ajax=ajax,
-            no_redirect=no_redirect, add_session=add_session,
-            session_dict=session_dict, kwargs=kwargs)
+            Http404,
+            call_obj,
+            user=user,
+            data=data,
+            ajax=ajax,
+            no_redirect=no_redirect,
+            add_session=add_session,
+            session_dict=session_dict,
+            kwargs=kwargs)
 
-    def is_postable(self, user=None, data=None, ajax=False, no_redirect=False,
-                    to=None, to_url_name=None, next_url='', add_session=False,
-                    session_dict={}, kwargs=None, msg=None):
+    def is_postable(self,
+                    user=None,
+                    data=None,
+                    ajax=False,
+                    no_redirect=False,
+                    to=None,
+                    to_url_name=None,
+                    next_url='',
+                    add_session=False,
+                    session_dict={},
+                    kwargs=None,
+                    msg=None):
         """Checks if the view handles POST correctly."""
         resp = self.post(
-            user=user, data=data, add_session=add_session,
-            session_dict=session_dict, kwargs=kwargs, ajax=ajax,
+            user=user,
+            data=data,
+            add_session=add_session,
+            session_dict=session_dict,
+            kwargs=kwargs,
+            ajax=ajax,
             no_redirect=no_redirect)
         if not (ajax or no_redirect) or to or to_url_name:
             if next_url:
                 next_url = '?next={0}'.format(next_url)
             if to_url_name:
                 try:
-                    self.assertEqual(resolve(resp.url).url_name, to_url_name,
-                                     msg=msg)
+                    self.assertEqual(
+                        resolve(resp.url).url_name, to_url_name, msg=msg)
                 except AttributeError:
                     raise AssertionError(
                         'The response returned with a status code {}'.format(
@@ -622,12 +766,23 @@ class ViewRequestFactoryTestMixin(object):
             self.assert200(resp, user, msg=msg)
         return resp
 
-    def redirects(self, to=None, to_url_name=None, next_url='', user=None,
-                  add_session=False, session_dict={}, kwargs=None, msg=None,
+    def redirects(self,
+                  to=None,
+                  to_url_name=None,
+                  next_url='',
+                  user=None,
+                  add_session=False,
+                  session_dict={},
+                  kwargs=None,
+                  msg=None,
                   data=None):
         """Checks for redirects from a GET request."""
-        resp = self.get(user=user, add_session=add_session, kwargs=kwargs,
-                        session_dict=session_dict, data=data)
+        resp = self.get(
+            user=user,
+            add_session=add_session,
+            kwargs=kwargs,
+            session_dict=session_dict,
+            data=data)
         if to or to_url_name:
             if next_url:
                 next_url = '?next={0}'.format(next_url)
@@ -636,8 +791,8 @@ class ViewRequestFactoryTestMixin(object):
                     msg = (
                         'Should redirect to correct to view with correct name.'
                     )
-                self.assertEqual(resolve(resp.url).url_name, to_url_name,
-                                 msg=msg)
+                self.assertEqual(
+                    resolve(resp.url).url_name, to_url_name, msg=msg)
             else:
                 redirect_url = '{0}{1}'.format(to, next_url)
                 self.assertRedirects(resp, redirect_url, msg=msg)
@@ -653,6 +808,7 @@ class ViewRequestFactoryTestMixin(object):
 
     def should_redirect_to_login_when_anonymous(self, add_session=False):
         resp = self.redirects(
-            to=self.get_login_url(), next_url=self.get_url(),
+            to=self.get_login_url(),
+            next_url=self.get_url(),
             add_session=add_session)
         return resp

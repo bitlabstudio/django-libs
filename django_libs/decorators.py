@@ -69,7 +69,10 @@ def http_auth(func):
     @wraps(func)
     def _decorator(request, *args, **kwargs):
         """Decorator to handle http authorizations."""
-        if request.user.is_authenticated():
+        is_authenticated = request.user.is_authenticated
+        authenticated = is_authenticated if isinstance(is_authenticated, bool)\
+            else is_authenticated()
+        if authenticated:
             return func(request, *args, **kwargs)
         if 'HTTP_AUTHORIZATION' in request.META.keys():
             authmeth, auth = request.META['HTTP_AUTHORIZATION'].split(' ', 1)

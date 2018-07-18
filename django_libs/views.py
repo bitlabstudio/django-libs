@@ -88,7 +88,10 @@ class HybridView(View):
         return view
 
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_authenticated():
+        is_authenticated = request.user.is_authenticated
+        authenticated = is_authenticated if isinstance(is_authenticated, bool)\
+            else is_authenticated()
+        if authenticated:
             view_kwargs = self.authed_view_kwargs or {}
             return self.authed_view(request, **view_kwargs)
 

@@ -1,6 +1,7 @@
 === 2.0.X ===
 
 - Django 2 compatibility
+- Added cc/bcc support to email sendings
 
 === 1.67.X ===
 

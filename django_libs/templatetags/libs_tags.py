@@ -3,7 +3,12 @@ import datetime
 import importlib
 
 from django import template
-from django.template.base import TOKEN_BLOCK, TOKEN_VAR
+try:
+    from django.template.base import TOKEN_BLOCK, TOKEN_VAR
+except ImportError:
+    from django.template.base import TokenType
+    TOKEN_BLOCK = TokenType.BLOCK
+    TOKEN_VAR = TokenType.VAR
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site

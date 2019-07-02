@@ -31,10 +31,10 @@ setup(
     ],
     test_suite='django_libs.tests.runtests.runtests',
     classifiers=[
-              'License :: OSI Approved :: MIT License',
-              'Programming Language :: Python',
-              'Programming Language :: Python :: 2.7',
-              'Programming Language :: Python :: 3',
-              'Programming Language :: Python :: 3.5',
-          ],
+        'License :: OSI Approved :: MIT License',
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.5',
+    ],
 )

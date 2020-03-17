@@ -307,6 +307,8 @@ def navactive(request, url, exact=0, use_resolver=1):
       view names but we will only compare it with ``request.path``.
 
     """
+    if not hasattr(request, 'path'):
+        return ''
     if use_resolver:
         try:
             if url == resolve(request.path).url_name:

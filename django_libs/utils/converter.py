@@ -4,6 +4,11 @@ import sys
 from django.conf import settings
 
 try:
+    from django.utils import six
+except ImportError:
+    import six
+
+try:
     from html.parser import HTMLParser
 except ImportError:
     from HTMLParser import HTMLParser
@@ -115,7 +120,12 @@ def html_to_plain_text(html):
     soup = BeautifulSoup(html, "html.parser")
     # Init the parser
     parser = HTML2PlainParser()
-    parser.feed(str(soup.encode('utf-8')))
+    if six.PY2:
+        soup = soup.encode('utf-8')
+        soup = bytes(soup)
+    else:
+        soup = str(soup)
+    parser.feed(soup)
     # Strip the end of the plain text
     result = parser.text.rstrip()
     # Add footnotes

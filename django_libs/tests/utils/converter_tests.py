@@ -63,4 +63,4 @@ class HTMLToPlainTextTestCase(TestCase):
         )
         result = html_to_plain_text(html)
         self.assertEqual(result, expected, msg=(
-            'Should replace links nicely'))
+            'Should replace <br/> nicely'))

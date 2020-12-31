@@ -18,6 +18,11 @@ try:
 except ImportError:
     pass
 
+try:
+    from factory import DjangoModelFactory
+except ImportError:
+    from factory.django import DjangoModelFactory
+
 import factory
 
 
@@ -78,7 +83,7 @@ class UploadedImageFactory(object):
         return self._image
 
 
-class UserFactory(factory.DjangoModelFactory):
+class UserFactory(DjangoModelFactory):
     """
     Creates a new ``User`` object.
 
@@ -119,7 +124,7 @@ class UserFactory(factory.DjangoModelFactory):
         return user
 
 
-class SiteFactory(factory.DjangoModelFactory):
+class SiteFactory(DjangoModelFactory):
     """
     Creates a new ``Site`` object.
 
@@ -143,7 +148,7 @@ try:
 except ImportError:  # mailer not installed
     pass
 else:
-    class MessageLogFactory(factory.DjangoModelFactory):
+    class MessageLogFactory(DjangoModelFactory):
         """
         Creates a new ``MessageLog`` object.
 

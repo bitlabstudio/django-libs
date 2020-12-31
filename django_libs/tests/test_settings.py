@@ -50,6 +50,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
 )
 
+MIDDLEWARE = MIDDLEWARE_CLASSES
+
 TEMPLATES = [{
     'BACKEND': 'django.template.backends.django.DjangoTemplates',
     'APP_DIRS': True,
@@ -57,6 +59,7 @@ TEMPLATES = [{
     'OPTIONS': {
         'context_processors': (
             'django.contrib.auth.context_processors.auth',
+            'django.contrib.messages.context_processors.messages',
             'django.template.context_processors.i18n',
             'django.template.context_processors.request',
             'django.template.context_processors.media',

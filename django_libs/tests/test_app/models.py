@@ -19,7 +19,7 @@ class HvadDummy(TranslationModelMixin, TranslatableModel):
 
 class DummyProfile(models.Model):
     """Just a dummy profile model for testing purposes."""
-    user = models.ForeignKey('auth.User')
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     dummy_field = models.CharField(
         verbose_name=_('Dummy Field'),
         max_length=128,

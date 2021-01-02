@@ -1,7 +1,10 @@
 """Useful mixins for models."""
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
-from django.utils.encoding import python_2_unicode_compatible
+try:
+    from django.utils.encoding import python_2_unicode_compatible
+except ImportError:
+    from six import python_2_unicode_compatible
 from django.utils.translation import get_language
 
 from hvad.models import NoTranslation, TranslationManager

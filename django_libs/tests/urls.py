@@ -8,6 +8,6 @@ admin.autodiscover()
 
 urlpatterns = [
     url(r'^index/test/$', lambda x: HttpResponse('Success'), name='index'),
-    url(r'^admin-.+/', include(admin.site.urls)),
+    url(r'^admin-.+/', include(admin.site.urls[0])),
     url(r'^', include('django_libs.tests.test_app.urls')),
 ]

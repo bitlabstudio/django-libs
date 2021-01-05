@@ -40,7 +40,7 @@ class EmailBackend(SmtpEmailBackend):
 
 
 class WhitelistEmailBackend(SmtpEmailBackend):
-    """
+    r"""
     Email backend that sends only these emails, that match the whitelist
     setting.
 

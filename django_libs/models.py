@@ -7,7 +7,7 @@ try:
 except ImportError:
     pass
 else:
-    add_introspection_rules([], ["^django_libs\.models\.ColorField"])
+    add_introspection_rules([], [r"^django_libs\.models\.ColorField"])
 
 from .widgets import ColorPickerWidget
 

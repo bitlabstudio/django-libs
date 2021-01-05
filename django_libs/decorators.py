@@ -53,7 +53,7 @@ def lockfile(lockfile_name, lock_wait_timeout=-1):
 
 def get_username(identifier):
     """Checks if a string is a email adress or not."""
-    pattern = re.compile('.+@\w+\..+')
+    pattern = re.compile(r'.+@\w+\..+')
     if pattern.match(identifier):
         try:
             user = User.objects.get(email=identifier)

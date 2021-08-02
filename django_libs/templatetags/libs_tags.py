@@ -12,7 +12,7 @@ except ImportError:
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
-from django.db.models.fields import FieldDoesNotExist
+from django.core.exceptions import FieldDoesNotExist
 from django.template.defaultfilters import stringfilter
 from django.utils.encoding import force_text
 

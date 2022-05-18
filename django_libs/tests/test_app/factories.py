@@ -1,16 +1,16 @@
 """Just some factories for the test app."""
 import factory
 
-from ..factories import DjangoModelFactory, HvadFactoryMixin, UserFactory
-from .models import DummyProfile, HvadDummy
+from ..factories import DjangoModelFactory, ParlerFactoryMixin, UserFactory
+from .models import DummyProfile, ParlerDummy
 
 
-class HvadDummyFactory(HvadFactoryMixin, DjangoModelFactory):
+class ParlerDummyFactory(ParlerFactoryMixin, DjangoModelFactory):
     """Factory for the ``HvadDummy`` model."""
     title = factory.Sequence(lambda n: 'title{}'.format(n))
 
     class Meta:
-        model = HvadDummy
+        model = ParlerDummy
 
 
 class DummyProfileFactory(DjangoModelFactory):

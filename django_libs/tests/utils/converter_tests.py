@@ -27,12 +27,15 @@ class HTMLToPlainTextTestCase(TestCase):
         )
         self.assertEqual(
             html_to_plain_text(html),
-            '\n  * List element\n  * List element\n  * List element',
+            (
+                '* List element                            '
+                '\n  * List element                            '
+                '\n  * List element'
+            ),
             msg='Should return a formatted plain text.')
-        path = os.path.dirname(os.path.abspath(__file__)) + (
-            '/../test_app/templates/html_email.html')
-        with open(path, 'rb') as file:
-            self.assertIn('[1]: *|ARCHIVE|*\n', html_to_plain_text(file), msg=(
+        path = os.path.dirname(os.path.abspath(__file__)) + ('/../test_app/templates/html_email.html')
+        with open(path, 'r') as file:
+            self.assertIn('[1]: *|ARCHIVE|*\n', html_to_plain_text(file.readlines()), msg=(
                 'Should return a formatted plain text.'))
 
     def test_replace_links(self):
@@ -43,12 +46,9 @@ class HTMLToPlainTextTestCase(TestCase):
             <span>T3</span>
             """
         )
-        expected = (
-            "T1 link[1] T2\nT3\n\n[1]: www.example.com\n"
-        )
+        expected = "T1 link[1] T2            \n            T3\n\n[1]: www.example.com\n"
         result = html_to_plain_text(html)
-        self.assertEqual(result, expected, msg=(
-            'Should replace links nicely'))
+        self.assertEqual(result, expected, msg=('Should replace links nicely'))
 
     def test_replace_br(self):
         html = (
@@ -58,9 +58,6 @@ class HTMLToPlainTextTestCase(TestCase):
             <span>Text3</span>
             """
         )
-        expected = (
-            "Text1\nText2\n\n\nText3"
-        )
         result = html_to_plain_text(html)
-        self.assertEqual(result, expected, msg=(
+        self.assertEqual(result, 'Text1\nText2            \n\n            Text3', msg=(
             'Should replace <br/> nicely'))

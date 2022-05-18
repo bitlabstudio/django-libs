@@ -1,5 +1,5 @@
 """Tests for the templatetags of the ``project-kairos`` project."""
-from mock import Mock, patch
+from unittest.mock import Mock, patch
 
 from django.contrib.contenttypes.models import ContentType
 from django.template import Context, Template

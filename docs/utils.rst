@@ -133,7 +133,7 @@ placed in the context. You are able to easily build links::
     <a href="{{ protocol }}{{ domain }}{% url "home" %}">Home</a>
 
 Have a look at the docstrings in the code for further explanations:
-https://github.com/bitmazk/django-libs/blob/master/django_libs/utils_email.py
+https://github.com/bitlabstudio/django-libs/blob/master/django_libs/utils_email.py
 
 In order to use it, include the following code::
 

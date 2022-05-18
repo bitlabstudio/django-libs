@@ -1,0 +1,5 @@
+[flake8]
+ignore = E402, W503, C901
+max-line-length = 120
+max-complexity = 15
+exclude = */migrations/

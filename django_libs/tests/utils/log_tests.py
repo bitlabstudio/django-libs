@@ -1,7 +1,7 @@
 """Tests for the log utils of ``django_libs``."""
-from django.test import TestCase
+from unittest.mock import Mock
 
-from mock import Mock
+from django.test import TestCase
 
 from ...utils.log import AddCurrentUser, FilterIgnorable404URLs
 

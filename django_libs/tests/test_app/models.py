@@ -1,14 +1,14 @@
 """Models for the ``test_app`` app."""
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
-from hvad.models import TranslatableModel, TranslatedFields
+from parler.models import TranslatableModel, TranslatedFields
 
 from ...models_mixins import TranslationModelMixin
 
 
-class HvadDummy(TranslationModelMixin, TranslatableModel):
-    """Dummy model to test hvad stuff."""
+class ParlerDummy(TranslationModelMixin, TranslatableModel):
+    """Dummy model to test parler stuff."""
     translations = TranslatedFields(
         title=models.CharField(
             verbose_name=_('Title'),

@@ -1,16 +1,11 @@
 """Useful mixins for models."""
-from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
-try:
-    from django.utils.encoding import python_2_unicode_compatible
-except ImportError:
-    from six import python_2_unicode_compatible
 from django.utils.translation import get_language
 
-from hvad.models import NoTranslation, TranslationManager
+from parler.managers import TranslationManager
 
 
-class HvadPublishedManager(TranslationManager):
+class ParlerPublishedManager(TranslationManager):
     """
     Returns all objects, which are published and in the currently
     active language if check_language is True (default).
@@ -29,7 +24,6 @@ class HvadPublishedManager(TranslationManager):
         return self.get_queryset().filter(**kwargs)
 
 
-@python_2_unicode_compatible
 class TranslationModelMixin(object):
     """Mixin to provide custom django-hvad overrides."""
     def __str__(self):
@@ -55,32 +49,4 @@ class TranslationModelMixin(object):
         4. Use any translation
 
         """
-        stuff = self.safe_translation_getter(name, NoTranslation)
-        if stuff is not NoTranslation:
-            return stuff
-
-        translation = None
-        result = None
-
-        # Check for the current language
-        translation, result = self.check_for_result(
-            get_language(), translation, result, name)
-
-        # Check for the current main language
-        translation, result = self.check_for_result(
-            get_language()[:2], translation, result, name)
-
-        # Check for the default language
-        translation, result = self.check_for_result(
-            settings.LANGUAGE_CODE, translation, result, name)
-
-        if not result:
-            # Check for any available language
-            for trans in self.translations.all():  # pragma: nocover
-                translation = trans
-                result = getattr(translation, name, '')
-                if result:
-                    break
-
-        setattr(self, self._meta.translations_cache, translation)
-        return result
+        return self.safe_translation_getter(name, any_language=True)

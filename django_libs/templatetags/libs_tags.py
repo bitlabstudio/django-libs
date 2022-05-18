@@ -3,29 +3,23 @@ import datetime
 import importlib
 
 from django import template
-try:
-    from django.template.base import TOKEN_BLOCK, TOKEN_VAR
-except ImportError:
-    from django.template.base import TokenType
-    TOKEN_BLOCK = TokenType.BLOCK
-    TOKEN_VAR = TokenType.VAR
+from django.template.base import TokenType
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
 from django.core.exceptions import FieldDoesNotExist
 from django.template.defaultfilters import stringfilter
-from django.utils.encoding import force_text
-
-try:  # django <= 1.6
-    from django.core.urlresolvers import resolve, Resolver404
-except ImportError:  # >= django 1.7
-    from django.urls import resolve, Resolver404
+from django.utils.encoding import force_str
+from django.urls import resolve, Resolver404
 
 from ..loaders import load_member
 
 register = template.Library()
 register_tag = register.assignment_tag if hasattr(
     register, 'assignment_tag') else register.simple_tag
+
+TOKEN_BLOCK = TokenType.BLOCK
+TOKEN_VAR = TokenType.VAR
 
 
 @register_tag
@@ -52,7 +46,7 @@ def add_form_widget_attr(field, attr_name, attr_value, replace=0):
     """
     if not replace:
         attr = field.field.widget.attrs.get(attr_name, '')
-        attr += force_text(attr_value)
+        attr += force_str(attr_value)
         field.field.widget.attrs[attr_name] = attr
         return field
     else:
@@ -205,7 +199,7 @@ def get_verbose(obj, field_name=""):
     :param field_name: The requested field value in string format.
 
     """
-    if hasattr(obj, "_meta") and hasattr(obj._meta, "get_field_by_name"):
+    if hasattr(obj, "_meta") and hasattr(obj._meta, "get_field"):
         try:
             return obj._meta.get_field(field_name).verbose_name
         except FieldDoesNotExist:

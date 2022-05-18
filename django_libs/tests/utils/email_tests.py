@@ -1,10 +1,11 @@
 """Tests for the email utils of ``django_libs``."""
+from unittest.mock import Mock
+
 from django.core import mail
 from django.test import TestCase
 
 from mailer.models import Message
 from mixer.backend.django import mixer
-from mock import Mock
 
 from ...utils.email import send_email
 

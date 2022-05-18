@@ -20,7 +20,7 @@ setup(
     keywords='django, common, reusable, kickstart',
     author='Martin Brochhaus',
     author_email='mbrochh@gmail.com',
-    url="https://github.com/bitmazk/django-libs",
+    url="https://github.com/bitlabstudio/django-libs",
     packages=find_packages(),
     include_package_data=True,
     install_requires=[],

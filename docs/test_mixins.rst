@@ -53,7 +53,7 @@ add a few methods on your test case. A typical test case looks like this::
             self.is_postable(user=self.user, data={'amount': 1}, ajax=True)
 
 Have a look at the docstrings in the code for further explanations:
-https://github.com/bitmazk/django-libs/blob/master/django_libs/tests/mixins.py
+https://github.com/bitlabstudio/django-libs/blob/master/django_libs/tests/mixins.py
 
 ViewTestMixin
 -------------
@@ -298,4 +298,4 @@ Then still, it is a handy shortcut.
 * should_be_callable_when_has_correct_permissions
 
 Have a look at the docstrings in the code for further explanations:
-https://github.com/bitmazk/django-libs/blob/master/django_libs/tests/mixins.py
+https://github.com/bitlabstudio/django-libs/blob/master/django_libs/tests/mixins.py

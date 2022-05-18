@@ -140,9 +140,7 @@ class PaginatedCommentAJAXView(TemplateView):
                     if item == self.comment:
                         # The special comment is indeed part of all comments,
                         # so let's calculate the page it should be on
-                        page = math.ceil(
-                            float(index) /
-                            default_settings.COMMENTS_PAGINATE_BY)
+                        page = math.ceil(float(index) / default_settings.COMMENTS_PAGINATE_BY)
                     index += 1
 
         if page:
@@ -191,7 +189,7 @@ class RapidPrototypingView(TemplateView):
 class UpdateSessionAJAXView(View):
     """View to update a session variable in an AJAX post."""
     def dispatch(self, request, *args, **kwargs):
-        if not (request.is_ajax() and request.method == 'POST'):
+        if not (self.request.headers.get('x-requested-with') == 'XMLHttpRequest' and request.method == 'POST'):
             return HttpResponseForbidden()
         if (request.POST.get('session_name') and request.POST.get(
                 'session_value')):
@@ -203,7 +201,7 @@ class UpdateSessionAJAXView(View):
 class UpdateCookieAJAXView(View):
     """View to update a cookie in an AJAX post."""
     def dispatch(self, request, *args, **kwargs):
-        if not (request.is_ajax() and request.method == 'POST'):
+        if not (self.request.headers.get('x-requested-with') == 'XMLHttpRequest' and request.method == 'POST'):
             return HttpResponseForbidden()
         response = HttpResponse('done')
         days = int(request.POST.get('cookie_days', 100))

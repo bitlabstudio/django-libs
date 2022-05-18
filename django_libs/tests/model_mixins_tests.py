@@ -2,8 +2,8 @@
 from django.test import TestCase
 from django.utils.translation import activate
 
-from .test_app.factories import HvadDummyFactory
-from .test_app.models import HvadDummy
+from .test_app.factories import ParlerDummyFactory
+from .test_app.models import ParlerDummy
 
 
 class TranslationModelMixinTestCase(TestCase):
@@ -11,13 +11,13 @@ class TranslationModelMixinTestCase(TestCase):
     longMessage = True
 
     def test_functions(self):
-        translated_obj = HvadDummyFactory()
+        translated_obj = ParlerDummyFactory()
         self.assertEqual(translated_obj.translation_getter('title'), 'title0')
-        untranslated_obj = HvadDummy()
+        untranslated_obj = ParlerDummy()
         self.assertIsNone(untranslated_obj.translation_getter('title'))
-        untranslated_obj.translate('de')
-        untranslated_obj.title = 'foo'
+        untranslated_obj.set_current_language('de')
+        untranslated_obj.title = 'DE'
         untranslated_obj.save()
         activate('de')
-        self.assertEqual(untranslated_obj.translation_getter('title'), 'foo')
+        self.assertEqual(untranslated_obj.translation_getter('title'), 'DE')
         activate('en')

@@ -22,20 +22,13 @@ class EmailBackend(SmtpEmailBackend):
     """
     def _send(self, email_message):
         """A helper method that does the actual sending."""
-        if not email_message.recipients() or \
-                not settings.TEST_EMAIL_BACKEND_RECIPIENTS:
+        if not email_message.recipients() or not settings.TEST_EMAIL_BACKEND_RECIPIENTS:
             return False
         from_email = sanitize_address(
             email_message.from_email, email_message.encoding)
         recipients = [sanitize_address(addr, email_message.encoding)
                       for name, addr in settings.TEST_EMAIL_BACKEND_RECIPIENTS]
-        try:
-            self.connection.sendmail(
-                from_email, recipients, email_message.message().as_string())
-        except:
-            if not self.fail_silently:
-                raise
-            return False
+        self.connection.sendmail(from_email, recipients, email_message.message().as_string())
         return True
 
 
@@ -60,20 +53,13 @@ class WhitelistEmailBackend(SmtpEmailBackend):
     """
     def _send(self, email_message):
         """A helper method that does the actual sending."""
-        from_email = sanitize_address(
-            email_message.from_email, email_message.encoding)
+        from_email = sanitize_address(email_message.from_email, email_message.encoding)
         recipients = self.clean_recipients(email_message)
 
         if not recipients:
             return False
 
-        try:
-            self.connection.sendmail(
-                from_email, recipients, email_message.message().as_string())
-        except:
-            if not self.fail_silently:
-                raise
-            return False
+        self.connection.sendmail(from_email, recipients, email_message.message().as_string())
         return True
 
     def clean_recipients(self, email_message):

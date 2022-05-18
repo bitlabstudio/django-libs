@@ -37,7 +37,7 @@ class AjaxResponseMixin(object):
 
     def get_template_names(self):
         names = super(AjaxResponseMixin, self).get_template_names()
-        if self.request.is_ajax():
+        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
             count = 0
             for name in names:
                 filename_split = list(os.path.split(name))

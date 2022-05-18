@@ -12,21 +12,12 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.utils.timezone import now
 
 from hashlib import md5
-
-try:
-    from PIL import Image
-except ImportError:
-    pass
-
-try:
-    from factory import DjangoModelFactory
-except ImportError:
-    from factory.django import DjangoModelFactory
-
+from PIL import Image
+from factory.django import DjangoModelFactory
 import factory
 
 
-class HvadFactoryMixin(object):
+class ParlerFactoryMixin(object):
     """
     Overrides ``_create`` and takes care of creating a translation.
 
@@ -36,33 +27,7 @@ class HvadFactoryMixin(object):
             'Factories are deprecated and will be removed in django_libs>=2.0.'
             ' Please use https://github.com/klen/mixer instead.',
             DeprecationWarning)
-        return super(HvadFactoryMixin, cls).__new__(**kwargs)
-
-    @classmethod
-    def _create(cls, target_class, *args, **kwargs):
-        obj = target_class(*args, **kwargs)
-
-        # Factory boy and hvad behave a bit weird. When getting the object,
-        # obj.some_translatable_field is actually set although no translation
-        # object exists, yet. We have to cache the translatable values ...
-        cached_values = {}
-        for field in obj._translated_field_names:
-            if field in ['id', 'master', 'master_id', 'language_code']:
-                continue
-            cached_values[field] = getattr(obj, field)
-
-        # ... because when calling translate, the translatable values will be
-        # lost on the obj ...
-        obj.translate(obj.language_code)
-        for field in obj._translated_field_names:
-            if field in ['id', 'master', 'master_id', 'language_code']:
-                continue
-            # ... so here we will put them back on the object, this time they
-            # will be saved on the translatable object.
-            setattr(obj, field, cached_values[field])
-
-        obj.save()
-        return obj
+        return super().__new__(**kwargs)
 
 
 class UploadedImageFactory(object):

@@ -46,7 +46,7 @@ To get the latest stable release from PyPi::
 
 To get the latest commit from GitHub::
 
-    $ pip install -e git://github.com/bitmazk/django-libs.git#egg=django_libs
+    $ pip install -e git://github.com/bitlabstudio/django-libs.git#egg=django_libs
 
 Usage
 -----

@@ -1,17 +1,12 @@
 """Custom form widgets."""
-import django
 from django.conf import settings
 from django.forms import widgets, TextInput
 from django.template import Context
 from django.template.loader import get_template
 from django.utils.html import conditional_escape
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext_lazy
-
-if django.VERSION >= (1, 7):
-    from django.forms.utils import flatatt
-else:
-    from django.forms.util import flatatt
+from django.utils.translation import gettext_lazy
+from django.forms.utils import flatatt
 
 
 class LibsImageWidget(widgets.ClearableFileInput):
@@ -22,9 +17,9 @@ class LibsImageWidget(widgets.ClearableFileInput):
 
     """
 
-    initial_text = ugettext_lazy('Currently')
-    input_text = ugettext_lazy('Change')
-    clear_checkbox_label = ugettext_lazy('Clear')
+    initial_text = gettext_lazy('Currently')
+    input_text = gettext_lazy('Change')
+    clear_checkbox_label = gettext_lazy('Clear')
     template_path = 'django_libs/partials/libs_image_widget.html'
 
     def __init__(self, attrs=None):

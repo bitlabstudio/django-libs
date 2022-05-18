@@ -3,7 +3,7 @@ from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 
 try:
     import mailer
@@ -57,14 +57,12 @@ def send_email(request, context, subject_template, body_template,
         'domain': domain,
         'protocol': protocol,
     })
-    subject = render_to_string(template_name=subject_template,
-                               context=context, request=request)
+    subject = render_to_string(template_name=subject_template, context=context, request=request)
     subject = ''.join(subject.splitlines())
-    message_html = render_to_string(template_name=body_template,
-                                    context=context, request=request)
+    message_html = render_to_string(template_name=body_template, context=context, request=request)
     message_plaintext = html_to_plain_text(message_html)
-    subject = force_text(subject)
-    message = force_text(message_plaintext)
+    subject = force_str(subject)
+    message = force_str(message_plaintext)
     email = EmailMultiAlternatives(
         subject=subject,
         body=message,

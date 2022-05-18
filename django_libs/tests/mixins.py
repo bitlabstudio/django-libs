@@ -111,8 +111,7 @@ class ViewTestMixin(object):
         else:
             self.assertIn(
                 resp.status_code, [status_code, 302],
-                msg=(message or
-                     'The view should{0} be callable'.format(message_addin)))
+                msg=(message or 'The view should{0} be callable'.format(message_addin)))
 
         return resp
 

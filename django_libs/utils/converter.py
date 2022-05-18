@@ -127,7 +127,7 @@ def html_to_plain_text(html):
         soup = str(soup)
     parser.feed(soup)
     # Strip the end of the plain text
-    result = parser.text.rstrip()
+    result = parser.text.strip()
     # Add footnotes
     if parser.links:
         result += '\n\n'

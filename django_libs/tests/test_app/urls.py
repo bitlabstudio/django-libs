@@ -1,5 +1,5 @@
 """URLs for the test app."""
-from django.conf.urls import url
+from django.urls import path, re_path
 from django.http import HttpResponse
 from django.views.generic import View
 
@@ -13,17 +13,13 @@ anonymous_view_kwargs = {'anonymous': True}
 
 
 urlpatterns = [
-    url(r'^$', views.HybridView.as_view(
+    path('', views.HybridView.as_view(
         authed_view=authed_view,
         authed_view_kwargs=authed_view_kwargs,
         anonymous_view=anonymous_view,
         anonymous_view_kwargs=anonymous_view_kwargs),
         name='dummy_hybrid'),
-    url(r'^update-session/$', views.UpdateSessionAJAXView,
-        name='update_session'),
-    url(r'^update-cookie/$', views.UpdateCookieAJAXView,
-        name='update_cookie'),
-    url(r'^prototype/(?P<template_path>.*)$',
-        views.RapidPrototypingView.as_view(),
-        name='prototype'),
+    path('update-session/', views.UpdateSessionAJAXView.as_view(), name='update_session'),
+    path('update-cookie/', views.UpdateCookieAJAXView.as_view(), name='update_cookie'),
+    re_path(r'^prototype/(?P<template_path>.*)$', views.RapidPrototypingView.as_view(), name='prototype'),
 ]

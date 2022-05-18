@@ -15,8 +15,7 @@ if __name__ == '__main__':
     # remove it here
     deprecated_files = '*utils_email*,*utils_log*'
 
-    local('flake8 --ignore=E126 --ignore=W391 --statistics'
-          ' --exclude=submodules,migrations,build .')
+    local('flake8 --statistics .')
     local('coverage run --source="django_libs" manage.py test -v 2'
           ' --traceback --failfast --settings=django_libs.tests.settings'
           ' --pattern="*_tests.py"')

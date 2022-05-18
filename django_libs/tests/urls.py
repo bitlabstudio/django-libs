@@ -1,5 +1,5 @@
 """URLs to run the tests."""
-from django.conf.urls import include, url
+from django.urls import include, path
 from django.contrib import admin
 from django.http import HttpResponse
 
@@ -7,7 +7,7 @@ admin.autodiscover()
 
 
 urlpatterns = [
-    url(r'^index/test/$', lambda x: HttpResponse('Success'), name='index'),
-    url(r'^admin-.+/', include(admin.site.urls[0])),
-    url(r'^', include('django_libs.tests.test_app.urls')),
+    path('index/test/', lambda x: HttpResponse('Success'), name='index'),
+    path('admin/', admin.site.urls),
+    path('', include('django_libs.tests.test_app.urls')),
 ]

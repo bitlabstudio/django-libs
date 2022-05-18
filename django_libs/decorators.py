@@ -57,7 +57,7 @@ def get_username(identifier):
     if pattern.match(identifier):
         try:
             user = User.objects.get(email=identifier)
-        except:
+        except User.DoesNotExist:
             raise Http404
         else:
             return user.username

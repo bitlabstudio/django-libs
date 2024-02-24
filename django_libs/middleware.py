@@ -25,7 +25,7 @@ class AjaxRedirectMiddleware:
 
     def __call__(self, request):
         response = self.get_response(request)
-        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             if request.GET.get('ajax_redirect_passthrough', request.POST.get(
                     'ajax_redirect_passthrough')):
                 return response

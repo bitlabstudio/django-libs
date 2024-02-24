@@ -8,7 +8,7 @@ from django.http import HttpResponseRedirect
 from django.utils.encoding import force_text
 
 
-class AjaxRedirectMiddleware(object):
+class AjaxRedirectMiddleware:
     """
     Middleware that sets a made up status code when a redirect has happened.
 
@@ -20,7 +20,11 @@ class AjaxRedirectMiddleware(object):
     parameter.
 
     """
-    def process_response(self, request, response):
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        response = self.get_response(request)
         if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
             if request.GET.get('ajax_redirect_passthrough', request.POST.get(
                     'ajax_redirect_passthrough')):
@@ -30,7 +34,7 @@ class AjaxRedirectMiddleware(object):
         return response
 
 
-class ErrorMiddleware(object):
+class ErrorMiddleware:
     """Alter HttpRequest objects on Error."""
 
     def process_exception(self, request, exception):
@@ -89,12 +93,16 @@ class SSLRedirect:
         return HttpResponseRedirect(newurl)
 
 
-class CustomBrokenLinkEmailsMiddleware(object):
+class CustomBrokenLinkEmailsMiddleware:
     """Custom version that adds the user to the error email."""
-    def process_response(self, request, response):
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
         """
         Send broken link emails for relevant 404 NOT FOUND responses.
         """
+        response = self.get_response(request)
         if response.status_code == 404 and not settings.DEBUG:
             domain = request.get_host()
             path = request.get_full_path()
